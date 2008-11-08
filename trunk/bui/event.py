@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from bui.abstract import AbstractContainer
 
 '''
 TODO:
@@ -17,17 +18,19 @@ class ElementEvent(object):
 
 class EventManager(object):
     def __init__(self, root_container, element_height):
+        assert isinstance(root_container, AbstractContainer)
+        
         self.element_height = element_height
         
         self.element_events = {}
-        self.events = {}
+        self.key_events = {}
         
         self.max_event_id = 1
         
-        self.construct_element_event_ids(root_container)
-        # self.construct_event_ids(event_list) # needs event_list via __init__ ! reuse above func for this
+        self._construct_element_event_ids(root_container)
+        # self._construct_key_event_ids(event_list) # needs event_list via __init__ ! reuse above func for this
     
-    def construct_element_event_ids(self, element):
+    def _construct_element_event_ids(self, element):
         if element.children:
             for child in element.children:
                 event_handler = None
@@ -35,7 +38,7 @@ class EventManager(object):
                 if child.event_handler:
                     event_handler = globals()[child.event_handler]
                 else:
-                    handler_name = str(child.name).replace(' ', '_').lower()
+                    handler_name = str(child.name).replace(' ', '_').lower() + '_event'
                     
                     if globals().has_key(handler_name):
                         event_handler = globals()[handler_name]
@@ -43,7 +46,7 @@ class EventManager(object):
                 if event_handler:
                     self._add_element_event(child, event_handler)
                 
-                self.construct_element_event_ids(child)
+                self._construct_element_event_ids(child)
     
     def _add_element_event(self, elem, handler):
         elem.event = self.max_event_id
@@ -65,6 +68,6 @@ class EventManager(object):
                 new_elem_root.initialize_element_heights(self.element_height)
                 new_elem_root.initialize_element_widths(new_elem_root.parent.width)
     
-    def event(self, evt, val):
-        if self.events.has_key(evt):
-            self.events[evt]()
+    def key_event(self, evt, val):
+        if self.key_events.has_key(evt):
+            self.key_events[evt]()

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractContainer
+from bui.abstract import AbstractContainer
 
 class EmptyContainer(AbstractContainer):
     def render(self, coord):

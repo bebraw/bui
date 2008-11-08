@@ -12,7 +12,7 @@ TODO:
 
 class Application(object):
     def __init__(self, structure, namespace, element_height=20):
-        self.root_container = parse_structure(structure)
+        self.root_container = parse_structure(structure, namespace)
         self.root_container.initialize_element_heights(element_height)
         self.root_container.initialize_element_widths(self.root_container.width)
         

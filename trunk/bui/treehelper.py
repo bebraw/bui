@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from parser import * #parse_structure
+from bui.parser import parse_structure
 
 '''
 TODO:
@@ -8,8 +8,8 @@ TODO:
 '''
 
 class TreeHelper(object):
-    def __init__(self, args=None):
-        super(TreeHelper, self).__init__(args)
+    def __init__(self, namespace, args=None):
+        super(TreeHelper, self).__init__(namespace, args)
         self.children = []
         
         if type(args) is dict and args.has_key('children'):
@@ -19,10 +19,10 @@ class TreeHelper(object):
                 
                 if class_name == 'UIStructure':
                     structure_name = class_args['name']
-                    ui_structure = globals()[structure_name]
-                    class_instance = parse_structure(ui_structure)
+                    ui_structure = namespace[structure_name]
+                    class_instance = parse_structure(ui_structure, namespace)
                 else:
-                    class_instance = globals()[class_name](args=class_args)
+                    class_instance = namespace[class_name](namespace, args=class_args)
                 
                 class_instance.parent = self
                 self.children.append(class_instance)
