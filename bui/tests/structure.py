@@ -29,6 +29,22 @@ VerticalContainer:
             width: 300
 '''
 
+structure_vertical_container_children = '''
+VerticalContainer:
+    width: 200
+    children:
+        - VerticalContainer:
+            name: foobar
+            visible: False
+            width: 50
+        - VerticalContainer:
+            name: foobar
+        - VerticalContainer:
+            name: foobar
+        - VerticalContainer:
+            name: barbar
+'''
+
 structure_horizontal_container_child = '''
 VerticalContainer:
     width: 200

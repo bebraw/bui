@@ -3,14 +3,15 @@ from bui.parser import parse_structure
 
 '''
 TODO:
--TreeHelper needs to see all containers and elements! check Applications for this!
 -add find_element (searches for root, then checks all children)
+-split the class up and make it testable!
 '''
 
 class TreeHelper(object):
     def __init__(self, namespace, args=None):
         super(TreeHelper, self).__init__(namespace, args)
         self.children = []
+        self.namespace = namespace
         
         if type(args) is dict and args.has_key('children'):
             for child in args['children']:
@@ -19,17 +20,17 @@ class TreeHelper(object):
                 
                 if class_name == 'UIStructure':
                     structure_name = class_args['name']
-                    ui_structure = namespace[structure_name]
-                    class_instance = parse_structure(ui_structure, namespace)
+                    ui_structure = self.namespace[structure_name]
+                    class_instance = parse_structure(ui_structure, self.namespace)
                 else:
-                    class_instance = namespace[class_name](namespace, args=class_args)
+                    class_instance = self.namespace[class_name](self.namespace, args=class_args)
                 
                 class_instance.parent = self
                 self.children.append(class_instance)
     
     def add_child_structure(self, structure, after):
         elem_index = self._find_index_of_last_child(name=after)
-        structure_root = parse_structure(structure)
+        structure_root = parse_structure(structure, self.namespace)
         structure_root.parent = self
         self.children.insert(elem_index, structure_root)
         

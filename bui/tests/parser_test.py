@@ -84,7 +84,7 @@ def test_parse_valid_structure_with_child_container():
     assert isinstance(child_element, EmptyElement)
     assert child_element.width == 50
 
-def test_parse_structure_with_uistructure():
+def test_parse_valid_structure_with_uistructure():
     root_container = parse_structure(structure_with_uistructure, globals())
     
     assert isinstance(root_container, VerticalContainer)
@@ -100,3 +100,45 @@ def test_parse_structure_with_uistructure():
     
     assert isinstance(child_element, EmptyElement)
     assert child_element.width == 80
+
+'''
+VerticalContainer:
+    width: 200
+    children:
+        - VerticalContainer:
+            name: foobar
+            visible: False
+            width: 50
+        - VerticalContainer:
+            name: foobar
+        - VerticalContainer:
+            name: foobar
+        - VerticalContainer:
+            name: barbar
+'''
+
+def test_parse_valid_structure_with_many_vertical_containers():
+    root_container = parse_structure(structure_vertical_container_children, globals())
+    
+    assert isinstance(root_container, VerticalContainer)
+    assert root_container.width == 200
+    assert len(root_container.children) == 4
+    
+    child_container = root_container.children[0]
+    
+    assert isinstance(child_container, VerticalContainer)
+    assert child_container.name == 'foobar'
+    assert child_container.visible == False
+    assert child_container.width == 50
+    
+    child_container = root_container.children[1]
+    
+    assert child_container.name == 'foobar'
+    
+    child_container = root_container.children[2]
+    
+    assert child_container.name == 'foobar'
+    
+    child_container = root_container.children[3]
+    
+    assert child_container.name == 'barbar'
