@@ -6,7 +6,6 @@ class ConstraintManager(object):
         self.root_container = root_container
         
         self.initialize_constraint_list(namespace)
-        #self.check_constraints() # TODO! should be called explicitly?
     
     def initialize_constraint_list(self, namespace):
         self.constraints = ConstraintContainer()
@@ -16,7 +15,7 @@ class ConstraintManager(object):
                 self.constraints.append(namespace[func_name])
     
     def check_constraints(self):
-        for constraint in self.constraints: # implement __iter__ for this!
+        for constraint in self.constraints:
             constraint(self.root_container)
 
 class ConstraintContainer(object):
@@ -24,22 +23,22 @@ class ConstraintContainer(object):
         self.constraints = {}
     
     def __getitem__(self, item):
-        i = 0
-        
-        for priority, funcs in self.constraints.iteritems():
-            for func in funcs:
-                if i == item:
-                    return func
-                
-                i += 1
+        for i, func in enumerate(self):
+            if i == item:
+                return func
     
     def __len__(self):
         total_len = 0
         
-        for priority, funcs in self.constraints.iteritems():
-            total_len += len(funcs)
+        for func in self:
+            total_len += 1
         
         return total_len
+    
+    def __iter__(self):
+        for funcs in self.constraints.values():
+            for func in funcs:
+                yield func
     
     def _get_priority(self, func):
         doc_str = func.__doc__
