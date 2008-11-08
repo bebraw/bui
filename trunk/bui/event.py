@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.abstract import AbstractContainer
+from bui.container import AbstractContainer
 
 '''
 TODO:
@@ -17,7 +17,7 @@ class ElementEvent(object):
         self.handler = handler
 
 class EventManager(object):
-    def __init__(self, root_container, element_height):
+    def __init__(self, root_container, namespace, element_height):
         assert isinstance(root_container, AbstractContainer)
         
         self.element_height = element_height
@@ -27,26 +27,26 @@ class EventManager(object):
         
         self.max_event_id = 1
         
-        self._construct_element_event_ids(root_container)
-        # self._construct_key_event_ids(event_list) # needs event_list via __init__ ! reuse above func for this
+        self._construct_element_event_ids(root_container, namespace)
+        # self._construct_key_event_ids(event_list, namespace) # needs event_list via __init__ ! reuse above func for this
     
-    def _construct_element_event_ids(self, element):
+    def _construct_element_event_ids(self, element, namespace):
         if element.children:
             for child in element.children:
                 event_handler = None
                 
                 if child.event_handler:
-                    event_handler = globals()[child.event_handler]
+                    event_handler = namespace[child.event_handler]
                 else:
-                    handler_name = str(child.name).replace(' ', '_').lower() + '_event'
+                    handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
                     
                     if globals().has_key(handler_name):
-                        event_handler = globals()[handler_name]
+                        event_handler = namespace[handler_name]
                 
                 if event_handler:
                     self._add_element_event(child, event_handler)
                 
-                self._construct_element_event_ids(child)
+                self._construct_element_event_ids(child, namespace)
     
     def _add_element_event(self, elem, handler):
         elem.event = self.max_event_id
