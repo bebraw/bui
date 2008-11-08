@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from bui.application import Application
+from bui.container import VerticalContainer
 
-test_structure = '''
-VerticalContainer:
-    width: 400
-'''
+from structure import minimal_structure
 
 def test_create_application():
-    app = Application(test_structure, globals())
+    app = Application(minimal_structure, globals())
     #assert file_content is None

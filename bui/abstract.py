@@ -9,10 +9,9 @@ TODO:
 class AbstractObject(object):
     suitable_values = None
     
-    def __init__(self, args=None):
+    def __init__(self, namespace, args=None):
         self.visible = True # is this on right abstraction level?
-        
-        super(AbstractObject, self).__init__(args)
+        super(AbstractObject, self).__init__(namespace, args)
         
         if type(args) is dict:
             for suitable_value in self.suitable_values:
