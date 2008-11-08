@@ -80,11 +80,11 @@ class AbstractObject(object):
                 child.initialize_element_widths(element_width, child)
 
 class AbstractContainer(AbstractObject, TreeHelper):
-    suitable_values = ('name', 'visible', 'width', 'height', 'min_width', 'max_width', )
+    suitable_values = ('name', 'visible', 'width', 'height', )
     
     def has_only_container_children(self):
         for child in self.children:
             return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
 
 class AbstractElement(AbstractObject, TreeHelper):
-    pass
+    suitable_values = ('width', )
