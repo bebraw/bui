@@ -3,54 +3,42 @@ import sys
 
 from bui.constraint import ConstraintContainer, ConstraintManager
 
-# IMPORTANT! Note that test names should not end with _constraint as
-# this messes up with the constraint naming convention which we are
-# testing here!
-
-# TODO: check_constraints! also validation of root_container!
+root_container_name = 'test_container'
 
 def priority_is_zero_constraint(root_elem):
     '''priority=0'''
-    pass
+    assert root_elem == root_container_name
 
 def priority_is_one_constraint(root_elem):
     '''priority=1'''
-    pass
+    assert root_elem == root_container_name
 
 def priority_is_two_constraint(root_elem):
     '''priority=2'''
-    pass
+    assert root_elem == root_container_name
 
 def priority_is_two_too_constraint(root_elem):
     '''priority=2'''
-    pass
+    assert root_elem == root_container_name
 
 def priority_is_negative_constraint(root_elem):
     '''priority=-3'''
-    pass
+    assert root_elem == root_container_name
 
 def priority_is_not_int_constraint(root_elem):
     '''priority=cat'''
-    pass
+    assert root_elem == root_container_name
 
 def some_constraint(root_elem):
-    pass # could assert that root_elem is really root_elem
+    assert root_elem == root_container_name
 
 class TestConstraintManager():
-    def setup_class(self):
-        self.constraint_manager = ConstraintManager(root_container=None, namespace=globals())
-    
-    def test_initialize_constraint_list(self):
-        self.constraint_manager.initialize_constraint_list(globals())
-        
+    def setup_method(self, method):
+        self.constraint_manager = ConstraintManager(root_container=root_container_name, namespace=globals())
         assert len(self.constraint_manager.constraints) == 7
     
-    def test_constraints_in_right_order_in_constraint_list(self):
-        self.constraint_manager.initialize_constraint_list(globals())
-        
-        assert hasattr(self.constraint_manager, 'constraints')
-        assert len(self.constraint_manager.constraints) == 7
-        assert self.constraint_manager.constraints[0] == priority_is_one_constraint
+    def test_check_constraints(self):
+        self.constraint_manager.check_constraints()
 
 class TestConstraintContainer():
     def setup_method(self, method):
@@ -106,3 +94,15 @@ class TestConstraintContainer():
         assert len(self.constraint_container) == 2
         assert self.constraint_container[0] == priority_is_two_constraint
         assert self.constraint_container[1] == priority_is_negative_constraint
+    
+    def test_container_iter(self):
+        test_funcs = (priority_is_two_constraint, priority_is_not_int_constraint, priority_is_one_constraint, )
+        expected_funcs = (priority_is_one_constraint, priority_is_two_constraint, priority_is_not_int_constraint)
+        self.constraint_container.append(test_funcs[0])
+        self.constraint_container.append(test_funcs[1])
+        self.constraint_container.append(test_funcs[2])
+        
+        assert len(self.constraint_container) == 3
+        
+        for i, func in enumerate(self.constraint_container):
+            assert func == expected_funcs[i]
