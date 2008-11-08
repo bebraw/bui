@@ -2,18 +2,17 @@
 from Blender import Draw
 
 from bui.application import Application
+from bui.blender.element import *
 from bui.blender.event import BlenderEventManager
-
-'''
-TODO:
--handle some Blender related namespace stuff (imports!)
-'''
+from bui.container import *
+from bui.element import *
 
 class BlenderApplication(Application):
-    def __init__(self, structure, element_height=20):
-        super(BlenderApplication, self).__init__(structure, element_height)
+    def __init__(self, structure, namespace, element_height=20):
+        namespace.update(globals())
+        super(BlenderApplication, self).__init__(structure, namespace, element_height)
         
-        self.event_manager = BlenderEventManager(self.root_container, element_height)
+        self.event_manager = BlenderEventManager(self.root_container, element_height, namespace)
     
     def run(self):
-        Draw.Register(self._gui, self.event_manager.event, self.event_manager.element_event)
+        Draw.Register(self._gui, self.event_manager.key_event, self.event_manager.element_event)

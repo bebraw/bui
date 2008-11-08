@@ -276,5 +276,5 @@ def layer_objects_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(ui_structure)
+    app = BlenderApplication(ui_structure, globals())
     app.run()

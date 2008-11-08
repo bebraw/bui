@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw
 
-from bui.abstract import AbstractElement
-
-'''
-TODO:
--get significant stuff from AbstractElement and put it to AbstractBlenderElement
-'''
+from bui.element import AbstractElement
 
 class AbstractBlenderElement(AbstractElement):
     suitable_values = ('name', 'width', 'height', 'tooltip', 'value', 'max_input_length', 'event_handler', 'variable', ) # these should be defined for each elem separately?
     
-    def __init__(self, args=None):
+    def __init__(self, namespace, args=None):
         self.name = ''
         self.event = 0
         self.tooltip = ''
         self.value = 0
         self.max_input_length = 0
-        super(AbstractBlenderElement, self).__init__(args)
+        super(AbstractBlenderElement, self).__init__(namespace, args)
     
     def update_value(self, evt, val):
         self.value = val
