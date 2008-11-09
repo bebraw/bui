@@ -3,12 +3,6 @@ from bui.container import AbstractContainer
 from bui.parser import read_yaml
 from bui.tree import TreeParent
 
-'''
-TODO:
--write iterator for ui tree children (makes it easier to use construct_button_event_ids) + cleans up code
--enhance key event handling!
-'''
-
 PRINT_BUTTON_EVENT_NAMES = False
 
 class ElementEvent(object):

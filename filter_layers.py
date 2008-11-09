@@ -156,8 +156,6 @@ VerticalContainer:
 '''
 
 # ------------------------ HOTKEYS ---------------------
-
-# TODO: pass these to app and parse to event list
 hotkeys = '''
 q: quit_script
 '''
@@ -301,5 +299,5 @@ def layer_objects_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(ui_structure, globals())
+    app = BlenderApplication(ui_structure, hotkeys, globals())
     app.run()

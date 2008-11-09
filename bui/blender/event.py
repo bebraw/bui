@@ -4,9 +4,11 @@ from Blender.Window import Types
 
 from bui.event import EventManager
 
+# TODO: need to handle mapping between blender keycodes and generic ones!
+
 class BlenderEventManager(EventManager):
-    def __init__(self, root_container, namespace, element_height):
-        super(BlenderEventManager, self).__init__(root_container, namespace, element_height)
+    def __init__(self, root_container, keys, namespace, element_height):
+        super(BlenderEventManager, self).__init__(root_container, keys, namespace, element_height)
     
     def button_event(self, evt):
         super(BlenderEventManager, self).__init__(evt)
