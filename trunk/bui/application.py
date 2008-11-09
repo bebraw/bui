@@ -8,7 +8,7 @@ class Application(object):
     def __init__(self, structure, keys, namespace, element_height=20):
         self.root_container = unserialize(structure, namespace)
         self.root_container.initialize_element_heights(element_height)
-        self.root_container.initialize_element_widths(self.root_container.width)
+        self.root_container.initialize_element_widths()
         
         self.constraint_manager = ConstraintManager(self.root_container, namespace)
         self.event_manager = EventManager(self.root_container, keys, namespace, element_height)

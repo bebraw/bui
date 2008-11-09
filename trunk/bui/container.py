@@ -13,57 +13,56 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         for child in self.children:
             return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
     
-    def initialize_element_heights(self, element_height, elem=None):
-        if elem is None:
-            elem = self
+    def initialize_element_heights(self, element_height): # test this!
+        def initialize_element_heights_recursion(element_height, elem):
+            if not hasattr(elem, 'height'):
+                elem.height = element_height
+            
+            if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
+                elem.height = 0
+            
+            if hasattr(elem, 'children'):
+                for child in elem.children:
+                    initialize_element_heights_recursion(element_height, child)
         
-        if not hasattr(elem, 'height'):
-            elem.height = element_height
-        
-        if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
-            elem.height = 0
-        
-        if hasattr(elem, 'children'):
-            for child in elem.children:
-                self.initialize_element_heights(element_height, child)
+        initialize_element_heights_recursion(element_height, self)
     
-    def initialize_element_widths(self, element_width, elem=None):
-        def calculate_children_widths(children, width):
-            children_widths = len(children)*[None]
-            width_left = width
-            free_indices = []
-            
-            # TODO: doesn't handle predef-free-predef-free case yet? (should it?)
-            for i, child in enumerate(children):
-                children_widths[i] = child.width
+    def initialize_element_widths(self): # test this!
+        def initialize_element_widths_recursion(element_width, elem):
+            def calculate_children_widths(children, width):
+                children_widths = len(children)*[None]
+                width_left = width
+                free_indices = []
                 
-                if child.width:
-                    width_left -= child.width
-                else:
-                    free_indices.append(i)
+                # TODO: doesn't handle predef-free-predef-free case yet? (should it?)
+                for i, child in enumerate(children):
+                    children_widths[i] = child.width if hasattr(child, 'width') else None
+                    
+                    if hasattr(child, 'width'):
+                        width_left -= child.width
+                    else:
+                        free_indices.append(i)
+                
+                amount = len(free_indices)
+                avg_per_child = width_left / amount if amount else 0
+                extra_pixels = width_left - amount * avg_per_child
+                
+                for i, free_index in enumerate(free_indices):
+                    children_widths[free_index] = avg_per_child if i >= extra_pixels else avg_per_child + 1
+                
+                for i, child in enumerate(children):
+                    child.width = children_widths[i]
             
-            amount = len(free_indices)
-            avg_per_child = width_left / amount if amount else 0
-            extra_pixels = width_left - amount * avg_per_child
-            
-            for i, free_index in enumerate(free_indices):
-                children_widths[free_index] = avg_per_child if i >= extra_pixels else avg_per_child + 1
-            
-            for i, child in enumerate(children):
-                child.width = children_widths[i]
+            if hasattr(elem, 'children'):
+                if isinstance(elem, HorizontalContainer):
+                    calculate_children_widths(elem.children, elem.width if hasattr(elem, 'width') else element_width)
+                
+                for child in elem.children:
+                    initialize_element_widths_recursion(element_width, child)
+            elif not hasattr(elem, 'width'):
+                elem.width = element_width
         
-        if elem is None:
-            elem = self
-        
-        if not hasattr(elem, 'width'):
-            elem.width = element_width
-        
-        if isinstance(elem, HorizontalContainer):
-            calculate_children_widths(elem.children, elem.width)
-        
-        for child in elem.children:
-            if isinstance(child, AbstractContainer):
-                child.initialize_element_widths(element_width, child)
+        initialize_element_widths_recursion(self.width, self)
 
 class EmptyContainer(AbstractContainer):
     def render(self, coord):

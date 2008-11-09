@@ -5,9 +5,11 @@ from bui.blender.application import BlenderApplication
 # -------------------- UI STRUCTURE ----------------
 ui_structure = '''
 VerticalContainer:
+    name: root_vertical
     width: 400
     children:
         - HorizontalContainer:
+            name: test_hori
             children:
                 - Label:
                     name: Test script
@@ -17,8 +19,10 @@ VerticalContainer:
                     event_handler: quit_script
                     width: 20
         - EmptyContainer:
+            name: empty_cont
             height: 10
         - HorizontalContainer:
+            name: last_hori
             children:
                 - PushButton:
                     name: Do something

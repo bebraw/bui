@@ -17,7 +17,7 @@ def unserialize(document, namespace):
                 
                 class_instance.parent = current_object
                 current_object.children.append(class_instance)
-                unserialize_structure(current_object, class_args, namespace)
+                unserialize_structure(class_instance, class_args, namespace)
     
     structure = read_yaml(document)
     root_class_name = structure.keys()[0]

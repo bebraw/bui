@@ -4,6 +4,7 @@ class AbstractObject(object):
     suitable_values = ('event_handler', 'height', 'name', 'visible', 'width', )
     
     def __init__(self, args=None):
+        self.name = ''
         self.visible = True
         super(AbstractObject, self).__init__(args)
         

@@ -3,7 +3,7 @@ from bui.container import AbstractContainer
 from bui.parser import read_yaml
 from bui.tree import TreeParent
 
-PRINT_BUTTON_EVENT_NAMES = False
+PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class ElementEvent(object):
     def __init__(self, element, handler):
@@ -74,7 +74,7 @@ class EventManager(object):
             if new_elem_root:
                 self._construct_element_event_ids(new_elem_root)
                 new_elem_root.initialize_element_heights(self.element_height)
-                new_elem_root.initialize_element_widths(new_elem_root.parent.width)
+                new_elem_root.initialize_element_widths()
     
     def key_event(self, evt, val):
         if self.key_events.has_key(evt):
