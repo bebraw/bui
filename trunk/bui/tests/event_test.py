@@ -1,7 +1,16 @@
 # -*- coding: utf-8 -*-
-from bui.container import AbstractContainer
+from bui.container import VerticalContainer
+from bui.element import EmptyElement
 from bui.event import EventManager
+from bui.parser import parse_structure
+
+from structure import structure_for_event_tests
 
 class TestEventManager():
     def test_create_event_manager(self):
-        self.event_manager = EventManager(AbstractContainer(globals()), 20, globals())
+        pass
+        #root_container = parse_structure(structure_for_event_tests, globals())
+        #self.event_manager = EventManager(root_container, 20, globals())
+    
+    def test_foobar(self):
+        pass

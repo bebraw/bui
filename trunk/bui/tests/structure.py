@@ -73,3 +73,18 @@ VerticalContainer:
         - EmptyElement:
             width: 50
 '''
+
+structure_for_event_tests = '''
+VerticalContainer:
+    width: 200
+    children:
+        EmptyElement:
+            name: Add monkey
+            width: 40
+        EmptyElement:
+            name: Add giraffe
+            width: 20
+        EmptyElement:
+            name: Delete animals
+            event_handler: delete_all
+'''
