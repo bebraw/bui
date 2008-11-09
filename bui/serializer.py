@@ -17,10 +17,7 @@ def serialize(document, namespace):
                     
                 class_instance.parent = current_object
                 
-                if hasattr(current_object, 'children'):
-                    current_object.children.append(class_instance)
-                else:
-                    current_object.children = [class_instance, ]
+                current_object.children.append(class_instance)
                 
                 serialize_structure(current_object, class_args, namespace)
     
