@@ -10,9 +10,8 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         self.y_offset = 0
     
     def has_only_container_children(self):
-        if hasattr(self, 'children'):
-            for child in self.children:
-                return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
+        for child in self.children:
+            return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
     
     def initialize_element_heights(self, element_height, elem=None):
         if elem is None:
@@ -59,13 +58,12 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         if not hasattr(elem, 'width'):
             elem.width = element_width
         
-        if hasattr(self, 'children'):
-            if isinstance(elem, HorizontalContainer):
-                calculate_children_widths(elem.children, elem.width)
-            
-            for child in elem.children:
-                if isinstance(child, AbstractContainer):
-                    child.initialize_element_widths(element_width, child)
+        if isinstance(elem, HorizontalContainer):
+            calculate_children_widths(elem.children, elem.width)
+        
+        for child in elem.children:
+            if isinstance(child, AbstractContainer):
+                child.initialize_element_widths(element_width, child)
 
 class EmptyContainer(AbstractContainer):
     def render(self, coord):

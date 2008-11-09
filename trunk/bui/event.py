@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.container import AbstractContainer
+from bui.tree import TreeParent
 
 '''
 TODO:
@@ -31,7 +32,7 @@ class EventManager(object):
         # self._construct_key_event_ids(event_list, namespace) # needs event_list via __init__ ! reuse above func for this
     
     def _construct_element_event_ids(self, elem, namespace):
-        if hasattr(elem, 'children'):
+        if isinstance(elem, TreeParent):
             for child in elem.children:
                 event_handler = None
                 

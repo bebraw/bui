@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class TreeChild(object):
+    def __init__(self, args=None):
+        super(TreeChild, self).__init__(args)
+        self.parent = None # should generalize this to parents later?
+    
     def find_parent(self, name):
         parent = self.parent
         
@@ -29,6 +33,10 @@ class TreeChild(object):
         # should this be actually an external func?
 
 class TreeParent(object):
+    def __init__(self, args=None):
+        super(TreeParent, self).__init__(args)
+        self.children = []
+    
     def add_child_structure(self, structure, after):
         elem_index = self._find_index_of_last_child(name=after)
         structure_root = parse_structure(structure, self.namespace) # namespace is a bit problematic
@@ -53,18 +61,17 @@ class TreeParent(object):
         return last_layer
     
     def _child_recursion(self, func, arg=None):
-        if hasattr(self, 'children'):
-            for child in self.children:
-                ret = func(child, self, arg)
+        for child in self.children:
+            ret = func(child, self, arg)
+            
+            if ret:
+                return ret
+            
+            if isinstance(child, TreeParent):
+                child_ret = child._child_recursion(func, arg)
                 
-                if ret:
-                    return ret
-                
-                if isinstance(child, TreeParent):
-                    child_ret = child._child_recursion(func, arg)
-                    
-                    if child_ret:
-                        return child_ret
+                if child_ret:
+                    return child_ret
     
     def find_child(self, name=None, variable=None):
         def match_child_name(child, elem, name):
