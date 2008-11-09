@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 from parser import read_yaml
 
-def extract_class_name_and_args():
-    pass
-
 def serialize(document, namespace):
     def serialize_structure(current_object, args, namespace):
-        #assert isinstance(args, dict)
-        
         if args.has_key('children'):
             for child in args['children']:
                 class_name = child.keys()[0]
