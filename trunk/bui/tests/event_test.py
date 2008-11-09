@@ -4,7 +4,7 @@ import bui.event
 from bui.container import VerticalContainer
 from bui.element import EmptyElement
 from bui.event import EventManager
-from bui.serializer import serialize
+from bui.serializer import unserialize
 
 from structure import minimal_structure, structure_for_event_tests, structure_keys
 
@@ -19,13 +19,13 @@ def delete_all(elem):
 def add_to_ui_structure(elem):
     # could assert elem here!
     root_elem = elem.find_root_element()
-    structure_root = serialize(minimal_structure, globals())
+    structure_root = unserialize(minimal_structure, globals())
     root_elem.add_child_structure(structure_root)
     return structure_root
 
 class TestEventManager():
     def setup_method(self, method):
-        self.root_container = serialize(structure_for_event_tests, globals())
+        self.root_container = unserialize(structure_for_event_tests, globals())
         self.add_monkey_elem = self.root_container.children[0]
         self.delete_all_elem = self.root_container.children[2]
         self.add_to_ui_structure = self.root_container.children[3]

@@ -51,9 +51,10 @@ class EventManager(object):
     def _construct_key_event_ids(self, keys):
         keys_structure = read_yaml(keys)
         
-        for key, func_name in keys_structure.items():
-            if self.namespace.has_key(func_name):
-                self.key_events[key] = self.namespace[func_name]
+        if isinstance(keys_structure, dict):
+            for key, func_name in keys_structure.items():
+                if self.namespace.has_key(func_name):
+                    self.key_events[key] = self.namespace[func_name]
     
     def _add_element_event(self, elem, handler):
         elem.event = self.max_event_id

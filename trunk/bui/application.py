@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from constraint import ConstraintManager
 from event import EventManager
-from serializer import serialize
+from serializer import unserialize
 from window import WindowManager
 
 class Application(object):
     def __init__(self, structure, keys, namespace, element_height=20):
-        self.root_container = serialize(structure, namespace)
+        self.root_container = unserialize(structure, namespace)
         self.root_container.initialize_element_heights(element_height)
         self.root_container.initialize_element_widths(self.root_container.width)
         

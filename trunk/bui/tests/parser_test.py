@@ -8,6 +8,7 @@ def test_read_invalid_file():
     assert file_content is None
 
 def test_read_valid_file():
+    # IMPORTANT! Note that this passes only if py.test is ran at the tests directory.
     file_content = read_yaml('valid.yaml') 
     assert file_content == {'a': 1, 'b': {'c': 5, 'd': 4, }, }
 

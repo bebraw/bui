@@ -204,7 +204,7 @@ def root_container_left(root_elem):
 def root_container_right(root_elem):
     elem.y_offset += 20
 
-def quit_script(elem=None):
+def quit_script(elem):
     Draw.Exit()
 
 # ----------------------- UI CONSTRAINTS --------------
