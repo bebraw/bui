@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractObject
-from treehelper import TreeHelper
+from tree import TreeChild, TreeParent
 
-class AbstractContainer(AbstractObject, TreeHelper):
-    suitable_values = ('name', 'visible', 'width', 'height', )
-    
+class AbstractContainer(TreeChild, TreeParent, AbstractObject):
     def __init__(self, namespace, args=None):
         super(AbstractContainer, self).__init__(namespace, args)
         
@@ -14,21 +12,21 @@ class AbstractContainer(AbstractObject, TreeHelper):
     def has_only_container_children(self):
         for child in self.children:
             return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
-
+    
     def initialize_element_heights(self, element_height, elem=None):
         if elem is None:
             elem = self
         
         if elem.height is None:
             elem.height = element_height
-
+        
         if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
             elem.height = 0
         
         if elem.children:
             for child in elem.children:
                 self.initialize_element_heights(element_height, child)
-
+    
     def initialize_element_widths(self, element_width, elem=None):
         def calculate_children_widths(children, width):
             children_widths = len(children)*[None]

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractObject
-from treehelper import TreeHelper
+from tree import TreeChild
 
-class AbstractElement(AbstractObject, TreeHelper):
-    suitable_values = ('width', )
+class AbstractElement(TreeChild, AbstractObject):
+    pass
 
 class EmptyElement(AbstractElement): 
     def render(self, coord):

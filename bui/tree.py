@@ -1,15 +1,32 @@
 # -*- coding: utf-8 -*-
-from bui.parser import parse_structure
+from parser import parse_structure
 
-'''
-TODO:
--add find_element (searches for root, then checks all children)
--split the class up and make it testable!
-'''
+class TreeChild(object):
+    def find_parent(self, name):
+        parent = self.parent
+        
+        if not parent:
+            return None
+        
+        if parent.name == name:
+            return parent
+        
+        return parent.find_parent(name)
+    
+    def find_root_element(self, elem=None):
+        parent = self.parent
+        
+        if elem:
+            parent = elem.parent
+        
+        if not parent:
+            return elem
+        
+        return self.find_root_element(parent)
 
-class TreeHelper(object):
+class TreeParent(object):
     def __init__(self, namespace, args=None):
-        super(TreeHelper, self).__init__(namespace, args)
+        super(TreeParent, self).__init__(namespace, args)
         self.children = []
         self.namespace = namespace
         
@@ -50,28 +67,6 @@ class TreeHelper(object):
                 break
         
         return last_layer
-    
-    def find_parent(self, name):
-        parent = self.parent
-        
-        if not parent:
-            return None
-        
-        if parent.name == name:
-            return parent
-        
-        return parent.find_parent(name)
-    
-    def find_root_element(self, elem=None):
-        parent = self.parent
-        
-        if elem:
-            parent = elem.parent
-        
-        if not parent:
-            return elem
-        
-        return self.find_root_element(parent)
     
     def _child_recursion(self, func, arg=None):
         for child in self.children:

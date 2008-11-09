@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
-from treehelper import TreeHelper
-
-'''
-TODO:
--clean up abstract classes (suitable_values, __init__)
-'''
 
 class AbstractObject(object):
-    suitable_values = None
+    suitable_values = ('event_handler', 'height', 'name', 'visible', 'width', )
     
     def __init__(self, namespace, args=None):
-        self.visible = True # is this on right abstraction level?
+        self.visible = True
         super(AbstractObject, self).__init__(namespace, args)
         
         if type(args) is dict:
