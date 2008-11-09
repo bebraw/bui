@@ -2,6 +2,9 @@
 from parser import parse_structure
 
 class TreeChild(object):
+    #def __init__(self, parent):
+    #    self.parent = parent
+    
     def find_parent(self, name):
         parent = self.parent
         
@@ -23,13 +26,22 @@ class TreeChild(object):
             return elem
         
         return self.find_root_element(parent)
+    
+    #def find_element(self, name):
+    #    pass # should try to find elem with given name. in this case can use only parent info
+        # note that TreeParent should implement this too (knows only children). how to sync these behaviors?
+        # should this be actually an external func?
 
 class TreeParent(object):
+    #def __init__(self, children):
+    #    self.children = children
+    
     def __init__(self, namespace, args=None):
         super(TreeParent, self).__init__(namespace, args)
         self.children = []
         self.namespace = namespace
         
+        # this part should be in some external class that handles serializing (Serializer?)
         if type(args) is dict and args.has_key('children'):
             for child in args['children']:
                 class_name = child.keys()[0]
@@ -47,7 +59,7 @@ class TreeParent(object):
     
     def add_child_structure(self, structure, after):
         elem_index = self._find_index_of_last_child(name=after)
-        structure_root = parse_structure(structure, self.namespace)
+        structure_root = parse_structure(structure, self.namespace) # namespace is a bit problematic
         structure_root.parent = self
         self.children.insert(elem_index, structure_root)
         
