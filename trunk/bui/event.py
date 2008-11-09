@@ -3,7 +3,6 @@ from bui.container import AbstractContainer
 
 '''
 TODO:
--handle event seeking
 -PRINT_BUTTON_EVENT_NAMES should be False here and redefined upper if wanted!
 -write iterator for ui tree children (makes it easier to use construct_button_event_ids) + cleans up code
 -enhance key event handling!
