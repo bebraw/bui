@@ -11,7 +11,7 @@ class Application(object):
         self.root_container.initialize_element_widths(self.root_container.width)
         
         self.constraint_manager = ConstraintManager(self.root_container, namespace)
-        self.event_manager = EventManager(self.root_container, element_height, namespace)
+        self.event_manager = EventManager(self.root_container, namespace, element_height)
         self.window_manager = WindowManager()
     
     def run(self):
