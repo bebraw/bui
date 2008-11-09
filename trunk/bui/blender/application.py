@@ -9,11 +9,11 @@ from bui.container import *
 from bui.element import *
 
 class BlenderApplication(Application):
-    def __init__(self, structure, namespace, element_height=20):
+    def __init__(self, structure, keys, namespace, element_height=20):
         namespace.update(globals())
-        super(BlenderApplication, self).__init__(structure, namespace, element_height)
+        super(BlenderApplication, self).__init__(structure, keys, namespace, element_height)
         
-        self.event_manager = BlenderEventManager(self.root_container, namespace, element_height)
+        self.event_manager = BlenderEventManager(self.root_container, keys, namespace, element_height)
         self.window_manager = BlenderWindowManager()
     
     def run(self):
