@@ -19,6 +19,7 @@ class EventManager(object):
     def __init__(self, root_container, namespace, element_height):
         assert isinstance(root_container, AbstractContainer)
         
+        self.root_container = root_container
         self.element_height = element_height
         
         self.element_events = {}
@@ -26,7 +27,7 @@ class EventManager(object):
         
         self.max_event_id = 1
         
-        self._construct_element_event_ids(root_container, namespace)
+        self._construct_element_event_ids(self.root_container, namespace)
         # self._construct_key_event_ids(event_list, namespace) # needs event_list via __init__ ! reuse above func for this
     
     def _construct_element_event_ids(self, element, namespace):
@@ -69,4 +70,4 @@ class EventManager(object):
     
     def key_event(self, evt, val):
         if self.key_events.has_key(evt):
-            self.key_events[evt]()
+            self.key_events[evt](self.root_container)
