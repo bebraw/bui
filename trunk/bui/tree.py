@@ -16,16 +16,16 @@ class TreeChild(object):
         
         return parent.find_parent(name)
     
-    def find_root_element(self, elem=None):
-        parent = self.parent
-        
-        if elem:
+    def find_root_element(self):
+        def find_root_element_recursion(elem):
             parent = elem.parent
+            
+            if not parent:
+                return elem
+            
+            return find_root_element_recursion(parent)
         
-        if not parent:
-            return elem
-        
-        return self.find_root_element(parent)
+        return find_root_element_recursion(self)
     
     #def find_element(self, name):
     #    pass # should try to find elem with given name. in this case can use only parent info
@@ -37,28 +37,9 @@ class TreeParent(object):
         super(TreeParent, self).__init__(args)
         self.children = []
     
-    def add_child_structure(self, structure, after):
-        elem_index = self._find_index_of_last_child(name=after)
-        structure_root = parse_structure(structure, self.namespace) # namespace is a bit problematic
+    def add_child_structure(self, structure_root):
         structure_root.parent = self
-        self.children.insert(elem_index, structure_root)
-        
-        return structure_root
-    
-    def _find_index_of_last_child(self, name):
-        found_layer = False
-        last_layer = 0
-        
-        for i, child in enumerate(self.children):
-            last_layer = i
-            
-            if child.name == name:
-                found_layer = True
-                last_layer += 1
-            elif found_layer:
-                break
-        
-        return last_layer
+        self.children.append(structure_root)
     
     def _child_recursion(self, func, arg=None):
         for child in self.children:

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from bui.container import AbstractContainer
+from bui.parser import read_yaml
 from bui.tree import TreeParent
 
 '''
 TODO:
--PRINT_BUTTON_EVENT_NAMES should be False here and redefined upper if wanted!
 -write iterator for ui tree children (makes it easier to use construct_button_event_ids) + cleans up code
 -enhance key event handling!
 '''
 
-PRINT_BUTTON_EVENT_NAMES = True
+PRINT_BUTTON_EVENT_NAMES = False
 
 class ElementEvent(object):
     def __init__(self, element, handler):
@@ -17,10 +17,14 @@ class ElementEvent(object):
         self.handler = handler
 
 class EventManager(object):
-    def __init__(self, root_container, namespace, element_height):
+    def __init__(self, root_container, keys, namespace, element_height):
         assert isinstance(root_container, AbstractContainer)
+        assert isinstance(keys, str)
+        assert isinstance(namespace, dict)
+        assert isinstance(element_height, int)
         
         self.root_container = root_container
+        self.namespace = namespace
         self.element_height = element_height
         
         self.element_events = {}
@@ -28,27 +32,34 @@ class EventManager(object):
         
         self.max_event_id = 1
         
-        self._construct_element_event_ids(self.root_container, namespace)
-        # self._construct_key_event_ids(event_list, namespace) # needs event_list via __init__ ! reuse above func for this
+        self._construct_element_event_ids(self.root_container)
+        self._construct_key_event_ids(keys)
     
-    def _construct_element_event_ids(self, elem, namespace):
+    def _construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
             for child in elem.children:
                 event_handler = None
                 
                 if hasattr(child, 'event_handler'):
-                    event_handler = namespace[child.event_handler]
+                    event_handler = self.namespace[child.event_handler]
                 else:
                     if hasattr(child, 'name'):
                         handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
                         
-                        if globals().has_key(handler_name):
-                            event_handler = namespace[handler_name]
+                        if self.namespace.has_key(handler_name):
+                            event_handler = self.namespace[handler_name]
                 
                 if event_handler:
                     self._add_element_event(child, event_handler)
                 
-                self._construct_element_event_ids(child, namespace)
+                self._construct_element_event_ids(child)
+    
+    def _construct_key_event_ids(self, keys):
+        keys_structure = read_yaml(keys)
+        
+        for key, func_name in keys_structure.items():
+            if self.namespace.has_key(func_name):
+                self.key_events[key] = self.namespace[func_name]
     
     def _add_element_event(self, elem, handler):
         elem.event = self.max_event_id
@@ -66,7 +77,7 @@ class EventManager(object):
             new_elem_root = func(elem)
             
             if new_elem_root:
-                self.construct_button_event_ids(new_elem_root)
+                self._construct_element_event_ids(new_elem_root)
                 new_elem_root.initialize_element_heights(self.element_height)
                 new_elem_root.initialize_element_widths(new_elem_root.parent.width)
     
