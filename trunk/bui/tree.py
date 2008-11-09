@@ -53,25 +53,29 @@ class TreeParent(object):
         return last_layer
     
     def _child_recursion(self, func, arg=None):
-        for child in self.children:
-            ret = func(child, self, arg)
-            
-            if ret:
-                return ret
-            
-            child_ret = child._child_recursion(func, arg)
-            
-            if child_ret:
-                return child_ret
+        if hasattr(self, 'children'):
+            for child in self.children:
+                ret = func(child, self, arg)
+                
+                if ret:
+                    return ret
+                
+                if isinstance(child, TreeParent):
+                    child_ret = child._child_recursion(func, arg)
+                    
+                    if child_ret:
+                        return child_ret
     
     def find_child(self, name=None, variable=None):
         def match_child_name(child, elem, name):
-            if child.name == name:
-                return child
+            if hasattr(child, 'name'):
+                if child.name == name:
+                    return child
         
         def match_child_variable(child, elem, var):
-            if child.variable == var:
-                return child
+            if hasattr(child, 'variable'):
+                if child.variable == var:
+                    return child
         
         if name:
             return self._child_recursion(match_child_name, name)
