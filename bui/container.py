@@ -3,27 +3,28 @@ from abstract import AbstractObject
 from tree import TreeChild, TreeParent
 
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
-    def __init__(self, namespace, args=None):
-        super(AbstractContainer, self).__init__(namespace, args)
+    def __init__(self, args=None):
+        super(AbstractContainer, self).__init__(args)
         
         self.x_offset = 0
         self.y_offset = 0
     
     def has_only_container_children(self):
-        for child in self.children:
-            return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
+        if hasattr(self, 'children'):
+            for child in self.children:
+                return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
     
     def initialize_element_heights(self, element_height, elem=None):
         if elem is None:
             elem = self
         
-        if elem.height is None:
+        if not hasattr(elem, 'height'):
             elem.height = element_height
         
         if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
             elem.height = 0
         
-        if elem.children:
+        if hasattr(self, 'children'):
             for child in elem.children:
                 self.initialize_element_heights(element_height, child)
     
@@ -58,7 +59,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         if elem.width is None:
             elem.width = element_width
         
-        if elem.children:
+        if hasattr(self, 'children'):
             if isinstance(elem, HorizontalContainer):
                 calculate_children_widths(elem.children, elem.width)
             

@@ -3,20 +3,16 @@
 class AbstractObject(object):
     suitable_values = ('event_handler', 'height', 'name', 'visible', 'width', )
     
-    def __init__(self, namespace, args=None):
+    def __init__(self, args=None):
         self.visible = True
-        super(AbstractObject, self).__init__(namespace, args)
+        super(AbstractObject, self).__init__(args)
         
-        # should this part go to Serializer?
         if type(args) is dict:
             for suitable_value in self.suitable_values:
                 arg_value = self.check_arg(args, suitable_value)
                 
                 if arg_value is not None:
                     self.__dict__[suitable_value] = arg_value
-    
-    def __getattr__(self, name):
-        return None
     
     def check_arg(self, dict, arg):
         if dict.has_key(arg):
