@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from Blender import Draw
+
+try:
+    from Blender import Draw
+except ImportError:
+    pass
 
 from bui.element import AbstractElement
 
@@ -12,8 +16,8 @@ class AbstractBlenderElement(AbstractElement):
         self.tooltip = ''
         self.value = 0
         self.max_input_length = 0
-        self.width = 0
-        self.height = 0
+        #self.width = 0
+        #self.height = 0
         super(AbstractBlenderElement, self).__init__(args)
     
     def update_value(self, evt, val):

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from bui.container import VerticalContainer
+from bui.container import *
 from bui.element import EmptyElement
 from bui.serializer import unserialize
+
+from bui.blender.element import *
 
 from structure import *
 
@@ -118,3 +120,38 @@ def test_unserialize_valid_structure_with_many_vertical_containers():
     child_container = root_container.children[3]
     
     assert child_container.name == 'barbar'
+
+'''
+VerticalContainer:
+    name: root_vertical
+    width: 400
+    children:
+        - HorizontalContainer:
+            name: test_hori
+            children:
+                - Label:
+                    name: Test script
+                - PushButton:
+                    name: X
+                    tooltip: Quit script
+                    event_handler: quit_script
+                    width: 20
+        - EmptyContainer:
+            name: empty_cont
+            height: 10
+        - HorizontalContainer:
+            name: last_hori
+            children:
+                - PushButton:
+                    name: Do something
+                    tooltip: Add some tool here
+                    width: 100
+'''
+def test_unserialize_valid_structure_for_simple_script():
+    root_container = unserialize(structure_for_simple_script, globals())
+    
+    assert isinstance(root_container, VerticalContainer)
+    assert root_container.width == 400
+    assert len(root_container.children) == 3
+    
+    # add more asserts...
