@@ -5,6 +5,12 @@ from treehelper import TreeHelper
 class AbstractContainer(AbstractObject, TreeHelper):
     suitable_values = ('name', 'visible', 'width', 'height', )
     
+    def __init__(self, namespace, args=None):
+        super(AbstractContainer, self).__init__(namespace, args)
+        
+        self.x_offset = 0
+        self.y_offset = 0
+    
     def has_only_container_children(self):
         for child in self.children:
             return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
@@ -79,6 +85,9 @@ class HorizontalContainer(AbstractContainer):
 
 class VerticalContainer(AbstractContainer):
     def render(self, coord):
+        coord.x += self.x_offset
+        coord.y += self.y_offset
+        
         for child in self.children:
             if child.visible:
                 coord.y -= child.height

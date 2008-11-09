@@ -155,6 +155,13 @@ VerticalContainer:
             height: 10
 '''
 
+# ------------------------ HOTKEYS ---------------------
+
+# TODO: pass these to app and parse to event list
+hotkeys = '''
+q: quit_script
+'''
+
 # ------------------------ EVENT HANDLERS --------------
 def toggle_layer_number(elem):
     layer_number = int(elem.name)
@@ -186,6 +193,18 @@ def delete_filter(elem):
     filters = elem.find_parent(name='filters')
     filter = elem.find_parent(name='filter')
     filters.children.remove(filter)
+
+def root_container_up(root_elem):
+    elem.x_offset += 20
+
+def root_container_down(root_elem):
+    elem.x_offset -= 20
+
+def root_container_left(root_elem):
+    elem.y_offset -= 20
+
+def root_container_right(root_elem):
+    elem.y_offset += 20
 
 def quit_script(elem=None):
     Draw.Exit()
