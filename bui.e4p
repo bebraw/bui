@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.2.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-11-09, 11:18:58 -->
+<!-- Saved: 2008-11-09, 11:47:23 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.2">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -34,10 +34,6 @@
     <Source>
       <Dir>bui</Dir>
       <Name>element.py</Name>
-    </Source>
-    <Source>
-      <Dir>bui</Dir>
-      <Name>treehelper.py</Name>
     </Source>
     <Source>
       <Dir>bui</Dir>
@@ -140,16 +136,20 @@
     <Source>
       <Dir>bui</Dir>
       <Dir>tests</Dir>
-      <Name>treehelper_test.py</Name>
-    </Source>
-    <Source>
-      <Dir>bui</Dir>
-      <Dir>tests</Dir>
       <Name>tree_test.py</Name>
     </Source>
     <Source>
       <Dir>bui</Dir>
       <Name>tree.py</Name>
+    </Source>
+    <Source>
+      <Dir>bui</Dir>
+      <Name>serializer.py</Name>
+    </Source>
+    <Source>
+      <Dir>bui</Dir>
+      <Dir>tests</Dir>
+      <Name>serializer_test.py</Name>
     </Source>
   </Sources>
   <Forms>
@@ -210,10 +210,6 @@
     <Other>
       <Dir>bui</Dir>
       <Name>element.py</Name>
-    </Other>
-    <Other>
-      <Dir>bui</Dir>
-      <Name>treehelper.py</Name>
     </Other>
     <Other>
       <Dir>bui</Dir>

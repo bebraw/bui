@@ -7,6 +7,7 @@ class AbstractObject(object):
         self.visible = True
         super(AbstractObject, self).__init__(namespace, args)
         
+        # should this part go to Serializer?
         if type(args) is dict:
             for suitable_value in self.suitable_values:
                 arg_value = self.check_arg(args, suitable_value)
