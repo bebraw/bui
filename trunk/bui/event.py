@@ -30,9 +30,9 @@ class EventManager(object):
         self._construct_element_event_ids(self.root_container, namespace)
         # self._construct_key_event_ids(event_list, namespace) # needs event_list via __init__ ! reuse above func for this
     
-    def _construct_element_event_ids(self, element, namespace):
-        if element.children:
-            for child in element.children:
+    def _construct_element_event_ids(self, elem, namespace):
+        if hasattr(elem, 'children'):
+            for child in elem.children:
                 event_handler = None
                 
                 if child.event_handler:

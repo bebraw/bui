@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-from parser import parse_structure
 
 class TreeChild(object):
-    #def __init__(self, parent):
-    #    self.parent = parent
-    
     def find_parent(self, name):
         parent = self.parent
         
@@ -33,30 +29,6 @@ class TreeChild(object):
         # should this be actually an external func?
 
 class TreeParent(object):
-    #def __init__(self, children):
-    #    self.children = children
-    
-    def __init__(self, namespace, args=None):
-        super(TreeParent, self).__init__(namespace, args)
-        self.children = []
-        self.namespace = namespace
-        
-        # this part should be in some external class that handles serializing (Serializer?)
-        if type(args) is dict and args.has_key('children'):
-            for child in args['children']:
-                class_name = child.keys()[0]
-                class_args = child.values()[0]
-                
-                if class_name == 'UIStructure':
-                    structure_name = class_args['name']
-                    ui_structure = self.namespace[structure_name]
-                    class_instance = parse_structure(ui_structure, self.namespace)
-                else:
-                    class_instance = self.namespace[class_name](self.namespace, args=class_args)
-                
-                class_instance.parent = self
-                self.children.append(class_instance)
-    
     def add_child_structure(self, structure, after):
         elem_index = self._find_index_of_last_child(name=after)
         structure_root = parse_structure(structure, self.namespace) # namespace is a bit problematic
