@@ -6,13 +6,15 @@ from bui.element import AbstractElement
 class AbstractBlenderElement(AbstractElement):
     suitable_values = ('name', 'width', 'height', 'tooltip', 'value', 'max_input_length', 'event_handler', 'variable', ) # these should be defined for each elem separately?
     
-    def __init__(self, namespace, args=None):
+    def __init__(self, args=None):
         self.name = ''
         self.event = 0
         self.tooltip = ''
         self.value = 0
         self.max_input_length = 0
-        super(AbstractBlenderElement, self).__init__(namespace, args)
+        self.width = 0
+        self.height = 0
+        super(AbstractBlenderElement, self).__init__(args)
     
     def update_value(self, evt, val):
         self.value = val

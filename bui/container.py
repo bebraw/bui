@@ -24,7 +24,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
             elem.height = 0
         
-        if hasattr(self, 'children'):
+        if hasattr(elem, 'children'):
             for child in elem.children:
                 self.initialize_element_heights(element_height, child)
     
@@ -56,7 +56,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         if elem is None:
             elem = self
         
-        if elem.width is None:
+        if not hasattr(elem, 'width'):
             elem.width = element_width
         
         if hasattr(self, 'children'):
@@ -75,10 +75,11 @@ class HorizontalContainer(AbstractContainer):
     def render(self, coord):
         tmp_x = coord.x
         
-        for child in self.children:
-            if child.visible:
-                child.render(coord)
-                coord.x += child.width
+        if hasattr(self, 'children'):
+            for child in self.children:
+                if child.visible:
+                    child.render(coord)
+                    coord.x += child.width
         
         coord.x = tmp_x
 
@@ -87,7 +88,8 @@ class VerticalContainer(AbstractContainer):
         coord.x += self.x_offset
         coord.y += self.y_offset
         
-        for child in self.children:
-            if child.visible:
-                coord.y -= child.height
-                child.render(coord)
+        if hasattr(self, 'children'):
+            for child in self.children:
+                if child.visible:
+                    coord.y -= child.height
+                    child.render(coord)

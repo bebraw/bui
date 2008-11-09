@@ -35,13 +35,14 @@ class EventManager(object):
             for child in elem.children:
                 event_handler = None
                 
-                if child.event_handler:
+                if hasattr(child, 'event_handler'):
                     event_handler = namespace[child.event_handler]
                 else:
-                    handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
-                    
-                    if globals().has_key(handler_name):
-                        event_handler = namespace[handler_name]
+                    if hasattr(child, 'name'):
+                        handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
+                        
+                        if globals().has_key(handler_name):
+                            event_handler = namespace[handler_name]
                 
                 if event_handler:
                     self._add_element_event(child, event_handler)

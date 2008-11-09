@@ -215,15 +215,17 @@ def layer_number_constraint(root_elem):
     layers = root_elem.find_child(name='layers')
     
     prev_layer_number = None
-    for i, layer in enumerate(layers.children):
-        layer_number_elem = layer.find_child(variable='layer_number')
-        layer_number = 0
-        
-        if layer_number_elem.name:
-            layer_number = int(layer_number_elem.name)
-        
-        if layer_number != i + 1:
-            layer_number_elem.name = str(i + 1)
+    
+    if hasattr(layers, 'children'):
+        for i, layer in enumerate(layers.children):
+            layer_number_elem = layer.find_child(variable='layer_number')
+            layer_number = 0
+            
+            if layer_number_elem.name:
+                layer_number = int(layer_number_elem.name)
+            
+            if layer_number != i + 1:
+                layer_number_elem.name = str(i + 1)
     
     # TODO: add check for upper limit (19 is max, if it goes to 20, get rid of that layer!)
 
@@ -231,9 +233,10 @@ def layer_number_selection_status_constraint(root_elem):
     layers = root_elem.find_child(name='layers')
     view_layers = Window.ViewLayers()
     
-    for i, layer in enumerate(layers.children):
-        layer_number_elem = layer.find_child(variable='layer_number')
-        layer_number_elem.value = i + 1 in view_layers 
+    if hasattr(layers, 'children'):
+        for i, layer in enumerate(layers.children):
+            layer_number_elem = layer.find_child(variable='layer_number')
+            layer_number_elem.value = i + 1 in view_layers 
 
 def show_filter_name_constraint(root_elem):
     def set_show_filter_name(filters_parent, name):
@@ -243,22 +246,24 @@ def show_filter_name_constraint(root_elem):
     
     layers = root_elem.find_child(name='layers')
     
-    for layer in layers.children:
-        filters = layer.find_child(name='filters')
-        name = 'Show filter'
+    if hasattr(layers, 'children'):
+        for layer in layers.children:
+            filters = layer.find_child(name='filters')
+            name = 'Show filter'
+            
+            if len(filters.children) > 2:
+                name += 's'
         
-        if len(filters.children) > 2:
-            name += 's'
-    
-        set_show_filter_name(filters, name)
+            set_show_filter_name(filters, name)
 
 def filter_visibility_constraint(root_elem):
     layers = root_elem.find_child(name='layers')
     
-    for layer in layers.children:
-        show_filter = layer.find_child(variable='show_filter')
-        filters = layer.find_child(name='filters')
-        filters.visible = show_filter.value
+    if hasattr(layers, 'children'):
+        for layer in layers.children:
+            show_filter = layer.find_child(variable='show_filter')
+            filters = layer.find_child(name='filters')
+            filters.visible = show_filter.value
 
 def layer_objects_constraint(root_elem):
     object_filter = ObjectFilter(scene=Scene.GetCurrent())
@@ -266,32 +271,33 @@ def layer_objects_constraint(root_elem):
     
     assign_all_objects_to_layer(layer=20)
     
-    for layer in layers.children:
-        filtered_objects = None
-        filters = layer.find_child(name='filters')
-        layer_number = layer.find_child(variable='layer_number')
-        
-        for child in filters.children:
-            if child.name == 'filter':
-                filter_type = child.find_child(variable='filter_type')
-                filter_name = child.find_child(variable='filter_name')
-                
-                if filter_type.value == 1:
-                    print 'filter data'
-                    filtered_objects = object_filter.data(filter_name.value)
-                if filter_type.value == 2:
-                    print 'filter name. TO BE IMPLEMENTED'
-                    #filtered_objects = object_filter.name_is(filter_name.value)
-                if filter_type.value == 3:
-                    print 'filter group. TO BE IMPLEMENTED'
-        
-        try:
-            for ob in filtered_objects:
-                layers = ob.layers
-                layers.append(int(layer_number.name))
-                ob.layers = layers
-        except TypeError:
-            pass
+    if hasattr(layers, 'children'):
+        for layer in layers.children:
+            filtered_objects = None
+            filters = layer.find_child(name='filters')
+            layer_number = layer.find_child(variable='layer_number')
+            
+            for child in filters.children:
+                if child.name == 'filter':
+                    filter_type = child.find_child(variable='filter_type')
+                    filter_name = child.find_child(variable='filter_name')
+                    
+                    if filter_type.value == 1:
+                        print 'filter data'
+                        filtered_objects = object_filter.data(filter_name.value)
+                    if filter_type.value == 2:
+                        print 'filter name. TO BE IMPLEMENTED'
+                        #filtered_objects = object_filter.name_is(filter_name.value)
+                    if filter_type.value == 3:
+                        print 'filter group. TO BE IMPLEMENTED'
+            
+            try:
+                for ob in filtered_objects:
+                    layers = ob.layers
+                    layers.append(int(layer_number.name))
+                    ob.layers = layers
+            except TypeError:
+                pass
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
