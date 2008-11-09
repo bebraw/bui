@@ -78,13 +78,20 @@ structure_for_event_tests = '''
 VerticalContainer:
     width: 200
     children:
-        EmptyElement:
+        - EmptyElement:
             name: Add monkey
             width: 40
-        EmptyElement:
+        - EmptyElement:
             name: Add giraffe
             width: 20
-        EmptyElement:
+        - EmptyElement:
             name: Delete animals
             event_handler: delete_all
+        - EmptyElement:
+            event_handler: add_to_ui_structure
+'''
+
+structure_keys = '''
+a: add_monkey
+d: delete_all
 '''
