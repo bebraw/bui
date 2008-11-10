@@ -27,7 +27,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         
         initialize_element_heights_recursion(element_height, self)
     
-    def initialize_element_widths(self): # test this!
+    def initialize_element_widths(self, element_width=None): # test this!
         def initialize_element_widths_recursion(element_width, elem):
             def calculate_children_widths(children, width):
                 children_widths = len(children)*[None]
@@ -62,6 +62,10 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
             elif not hasattr(elem, 'width'):
                 elem.width = element_width
         
+        if element_width:
+            self.width = element_width
+        #    initialize_element_widths_recursion(self.width, self)
+        #else:
         initialize_element_widths_recursion(self.width, self)
 
 class EmptyContainer(AbstractContainer):

@@ -108,10 +108,13 @@ VerticalContainer:
                     event_handler: delete_layer
                     width: 20
         - VerticalContainer:
-            name: filters
+            name: filters_container
             children:
-                - UIStructure:
-                    name: filter_structure
+                - VerticalContainer:
+                    name: filters
+                    children:
+                    - UIStructure:
+                        name: filter_structure
                 - HorizontalContainer:
                     children:
                         - EmptyElement:
@@ -176,7 +179,7 @@ def toggle_layer_number(elem):
 def add_layer(elem):
     root = elem.find_root_element()
     layers = root.find_child(name='layers')
-    return layers.add_child_structure(layer_structure)
+    return layers.add_child_structure(layer_structure, globals())
 
 def delete_layer(elem):
     layers = elem.find_parent(name='layers')
@@ -184,8 +187,9 @@ def delete_layer(elem):
     layers.children.remove(layer)
 
 def add_filter(elem):
-    filters = elem.find_parent(name='filters')
-    return filters.add_child_structure(filter_structure, after='filter') # need to figure out how to skip last HorizontalContainer containing "Add filter". is after a good solution?
+    filters_container = elem.find_parent(name='filters_container')
+    filters = filters_container.find_child(name='filters')
+    return filters.add_child_structure(filter_structure, globals())
 
 def delete_filter(elem):
     filters = elem.find_parent(name='filters')
@@ -249,7 +253,7 @@ def show_filter_name_constraint(root_elem):
             filters = layer.find_child(name='filters')
             name = 'Show filter'
             
-            if len(filters.children) > 2:
+            if len(filters.children) > 1:
                 name += 's'
         
             set_show_filter_name(filters, name)
@@ -260,7 +264,7 @@ def filter_visibility_constraint(root_elem):
     if hasattr(layers, 'children'):
         for layer in layers.children:
             show_filter = layer.find_child(variable='show_filter')
-            filters = layer.find_child(name='filters')
+            filters = layer.find_child(name='filters_container')
             filters.visible = show_filter.value
 
 def layer_objects_constraint(root_elem):
