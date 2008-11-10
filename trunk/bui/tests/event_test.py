@@ -19,9 +19,9 @@ def delete_all(elem):
 def add_to_ui_structure(elem):
     # could assert elem here!
     root_elem = elem.find_root_element()
-    structure_root = unserialize(minimal_structure, globals())
-    root_elem.add_child_structure(structure_root)
-    return structure_root
+    root_elem.initialize_element_heights(20)
+    root_elem.initialize_element_widths()
+    root_elem.add_child_structure(minimal_structure, globals())
 
 class TestEventManager():
     def setup_method(self, method):
@@ -45,14 +45,22 @@ class TestEventManager():
         assert len(self.event_manager.element_events) == 3
         assert self.event_manager.max_event_id == 4
     
+    def test_construct_element_event_ids(self):
+        # note that event ids have already been constructed once in __init__!
+        self.event_manager.construct_element_event_ids(self.root_container)
+        self.test_manager_has_right_element_events()
+    
     def test_trigger_element_events(self):
         self.event_manager.element_event(1)
         self.event_manager.element_event(2)
     
     def test_add_to_ui_structure(self):
+        assert len(self.root_container.children) == 4
+        
         self.event_manager.element_event(3)
         
-        assert self.root_container.children[4].width == 400
+        assert len(self.root_container.children) == 5
+        assert self.root_container.children[4].width == 200 # root container width restricts this!
     
     def test_manager_has_right_key_events(self):
         assert self.event_manager.key_events['a'] == add_monkey

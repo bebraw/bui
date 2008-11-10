@@ -179,7 +179,7 @@ def toggle_layer_number(elem):
 def add_layer(elem):
     root = elem.find_root_element()
     layers = root.find_child(name='layers')
-    return layers.add_child_structure(layer_structure, globals())
+    layers.add_child_structure(layer_structure, globals())
 
 def delete_layer(elem):
     layers = elem.find_parent(name='layers')
@@ -189,7 +189,7 @@ def delete_layer(elem):
 def add_filter(elem):
     filters_container = elem.find_parent(name='filters_container')
     filters = filters_container.find_child(name='filters')
-    return filters.add_child_structure(filter_structure, globals())
+    filters.add_child_structure(filter_structure, globals())
 
 def delete_filter(elem):
     filters = elem.find_parent(name='filters')

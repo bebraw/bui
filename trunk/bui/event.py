@@ -26,10 +26,10 @@ class EventManager(object):
         
         self.max_event_id = 1
         
-        self._construct_element_event_ids(self.root_container)
+        self.construct_element_event_ids(self.root_container)
         self._construct_key_event_ids(keys)
     
-    def _construct_element_event_ids(self, elem):
+    def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
             for child in elem.children:
                 event_handler = None
@@ -46,7 +46,16 @@ class EventManager(object):
                 if event_handler:
                     self._add_element_event(child, event_handler)
                 
-                self._construct_element_event_ids(child)
+                self.construct_element_event_ids(child)
+    
+    def _add_element_event(self, elem, handler):
+        for element_event in self.element_events.values():
+            if element_event.element is elem and element_event.handler is handler:
+                return
+        
+        elem.event = self.max_event_id
+        self.element_events[self.max_event_id] = ElementEvent(elem, handler)
+        self.max_event_id += 1
     
     def _construct_key_event_ids(self, keys):
         keys_structure = read_yaml(keys)
@@ -56,11 +65,6 @@ class EventManager(object):
                 if self.namespace.has_key(func_name):
                     self.key_events[key] = self.namespace[func_name]
     
-    def _add_element_event(self, elem, handler):
-        elem.event = self.max_event_id
-        self.element_events[self.max_event_id] = ElementEvent(elem, handler)
-        self.max_event_id += 1
-    
     def element_event(self, evt):
         if self.element_events.has_key(evt):
             elem = self.element_events[evt].element
@@ -69,12 +73,7 @@ class EventManager(object):
             if PRINT_BUTTON_EVENT_NAMES:
                 print func.__name__
             
-            new_elem_root = func(elem)
-            
-            if new_elem_root:
-                self._construct_element_event_ids(new_elem_root)
-                new_elem_root.initialize_element_heights(self.element_height)
-                new_elem_root.initialize_element_widths(self.root_container.width)
+            func(elem)
     
     def key_event(self, evt, val):
         if self.key_events.has_key(evt):
