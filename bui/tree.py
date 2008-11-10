@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from serializer import unserialize
 
 class TreeChild(object):
     def __init__(self, args=None):
@@ -37,9 +38,12 @@ class TreeParent(object):
         super(TreeParent, self).__init__(args)
         self.children = []
     
-    def add_child_structure(self, structure_root):
+    def add_child_structure(self, structure, namespace):
+        structure_root = unserialize(structure, namespace)
         structure_root.parent = self
         self.children.append(structure_root)
+        
+        return structure_root
     
     def _child_recursion(self, func, arg=None):
         for child in self.children:

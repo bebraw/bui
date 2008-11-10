@@ -74,7 +74,7 @@ class EventManager(object):
             if new_elem_root:
                 self._construct_element_event_ids(new_elem_root)
                 new_elem_root.initialize_element_heights(self.element_height)
-                new_elem_root.initialize_element_widths()
+                new_elem_root.initialize_element_widths(self.root_container.width)
     
     def key_event(self, evt, val):
         if self.key_events.has_key(evt):
