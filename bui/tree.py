@@ -38,6 +38,7 @@ class TreeParent(object):
         super(TreeParent, self).__init__(args)
         self.children = []
     
+    # this should be most likely separated from TreeParent as it deals with parent!
     def add_child_structure(self, structure, namespace):
         root_elem = self.find_root_element() # probably belongs outside this func
         
