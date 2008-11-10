@@ -82,7 +82,6 @@ def check_bones_constraint(root_elem):
             
             for elem in elems_to_remove:
                 bone_elems.children.remove(elem)
-                
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
