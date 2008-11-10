@@ -28,6 +28,8 @@ VerticalContainer:
                     name: Do something
                     tooltip: Add some tool here
                     width: 100
+                - Slider:
+                    name: Test slider
 '''
 
 # ------------------------ HOTKEYS ---------------------
@@ -36,7 +38,7 @@ q: quit_script
 '''
 
 # ------------------------ EVENT HANDLERS --------------
-def quit_script(elem=None):
+def quit_script(elem):
     Draw.Exit()
 
 # ----------------- INITIALIZATION -------------------

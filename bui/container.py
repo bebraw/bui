@@ -64,8 +64,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         
         if element_width:
             self.width = element_width
-        #    initialize_element_widths_recursion(self.width, self)
-        #else:
+        
         initialize_element_widths_recursion(self.width, self)
 
 class EmptyContainer(AbstractContainer):
