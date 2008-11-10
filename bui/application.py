@@ -19,5 +19,6 @@ class Application(object):
     
     def _gui(self):
         self.constraint_manager.check_constraints()
+        self.event_manager.construct_element_event_ids(self.root_container)
         self.window_manager.__init__()
         self.root_container.render(self.window_manager)

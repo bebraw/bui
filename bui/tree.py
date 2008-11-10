@@ -39,8 +39,13 @@ class TreeParent(object):
         self.children = []
     
     def add_child_structure(self, structure, namespace):
+        root_elem = self.find_root_element() # probably belongs outside this func
+        
         structure_root = unserialize(structure, namespace)
         structure_root.parent = self
+        structure_root.height = root_elem.height
+        structure_root.initialize_element_heights(20) # FIXME: REALLY EVIL HACK! probably belongs outside this func
+        structure_root.initialize_element_widths(root_elem.width) # probably belongs outside this func
         self.children.append(structure_root)
         
         return structure_root
