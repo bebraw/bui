@@ -21,15 +21,11 @@ VerticalContainer:
             name: armature_bones
 '''
 
-# TODO: it should be possible to write this ~without~ container structure!
 slider_structure = '''
-VerticalContainer:
-    children:
-        - Slider:
-            name: slider
-            min: 0.0
-            max: 1.0
-            value: 0.5
+Slider:
+    min: 0.0
+    max: 1.0
+    value: 0.5
 '''
 
 # ------------------------ HOTKEYS ---------------------
@@ -61,27 +57,28 @@ def check_bones_constraint(root_elem):
                     
                     if not bone_elem:
                         armature_bones_elem = root_elem.find_child(name='armature_bones')
-                        new_elem = armature_bones_elem.add_child_structure(slider_structure, globals())
-                        new_bone = new_elem.find_child(name='slider')
+                        new_bone = armature_bones_elem.add_child_structure(slider_structure, globals())
                         new_bone.name = bone_name
+                        new_bone.width = 200
+                        new_bone.height = 20
             
             # check if a bone has been removed
-            bone_elems = root_elem.find_child('armature_bones')
+            armature_bones = root_elem.find_child(name='armature_bones')
             elems_to_remove = []
             
-            for elem in bone_elems.children:
+            for armature_bone in armature_bones.children:
                 found_bone = False
                 
                 for bone_name in p.bones.keys():
-                    if elem.children[0].name == bone_name:
+                    if armature_bone.name == bone_name:
                         found_bone = True
                         break
                 
                 if not found_bone:
-                    elems_to_remove.append(elem)
+                    elems_to_remove.append(armature_bone)
             
             for elem in elems_to_remove:
-                bone_elems.children.remove(elem)
+                armature_bones.children.remove(elem)
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':

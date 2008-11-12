@@ -1,82 +1,51 @@
 # -*- coding: utf-8 -*-
-from serializer import unserialize
 
 class TreeChild(object):
-    def __init__(self, args=None):
+    def __init__(self, args=None, parent=None):
         super(TreeChild, self).__init__(args)
-        self.parent = None # should generalize this to parents later?
+        self.parent = parent
     
-    def find_parent(self, name):
+    def _parent_recursion(self, variable_name, variable_value):
+        if self.parent and self.parent.__dict__.has_key(variable_name):
+            if self.parent.__dict__[variable_name] == variable_value:
+                return self.parent
+            
+            return self.parent._parent_recursion(variable_name, variable_value)
+    
+    def find_parent(self, **kvargs):
+        if len(kvargs) == 1:
+            arg_key = kvargs.keys()[0]
+            arg_value = kvargs.values()[0]
+            return self._parent_recursion(arg_key, arg_value)
+    
+    def find_root_element(self):
         parent = self.parent
         
         if not parent:
-            return None
+            return self
         
-        if parent.name == name:
-            return parent
-        
-        return parent.find_parent(name)
-    
-    def find_root_element(self):
-        def find_root_element_recursion(elem):
-            parent = elem.parent
-            
-            if not parent:
-                return elem
-            
-            return find_root_element_recursion(parent)
-        
-        return find_root_element_recursion(self)
-    
-    #def find_element(self, name):
-    #    pass # should try to find elem with given name. in this case can use only parent info
-        # note that TreeParent should implement this too (knows only children). how to sync these behaviors?
-        # should this be actually an external func?
+        return self.parent.find_root_element()
 
 class TreeParent(object):
     def __init__(self, args=None):
         super(TreeParent, self).__init__(args)
         self.children = []
     
-    # this should be most likely separated from TreeParent as it deals with parent!
-    def add_child_structure(self, structure, namespace):
-        root_elem = self.find_root_element() # probably belongs outside this func
-        
-        structure_root = unserialize(structure, namespace)
-        structure_root.parent = self
-        structure_root.height = root_elem.height
-        structure_root.initialize_element_heights(20) # FIXME: REALLY EVIL HACK! probably belongs outside this func
-        structure_root.initialize_element_widths(root_elem.width) # probably belongs outside this func
-        self.children.append(structure_root)
-        
-        return structure_root
-    
-    def _child_recursion(self, func, arg=None):
-        for child in self.children:
-            ret = func(child, self, arg)
-            
-            if ret:
-                return ret
-            
-            if isinstance(child, TreeParent):
-                child_ret = child._child_recursion(func, arg)
+    def _child_recursion(self, variable_name, variable_value):
+        if self.children:
+            for child in self.children:
+                if child and child.__dict__.has_key(variable_name):
+                    if child.__dict__[variable_name] == variable_value:
+                        return child
                 
-                if child_ret:
-                    return child_ret
+                if isinstance(child, TreeParent):
+                    ret = child._child_recursion(variable_name, variable_value)
+                    
+                    if ret:
+                        return ret
     
-    def find_child(self, name=None, variable=None):
-        def match_child_name(child, elem, name):
-            if hasattr(child, 'name'):
-                if child.name == name:
-                    return child
-        
-        def match_child_variable(child, elem, var):
-            if hasattr(child, 'variable'):
-                if child.variable == var:
-                    return child
-        
-        if name:
-            return self._child_recursion(match_child_name, name)
-        
-        if variable:
-            return self._child_recursion(match_child_variable, variable)
+    def find_child(self, **kvargs):
+        if len(kvargs) == 1:
+            arg_key = kvargs.keys()[0]
+            arg_value = kvargs.values()[0]
+            return self._child_recursion(arg_key, arg_value)

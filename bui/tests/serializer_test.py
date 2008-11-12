@@ -16,7 +16,7 @@ def test_unserialize_valid_minimal_structure():
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 400
 
-def test_unserialize_valid_structure_with_child_container():
+def test_unserialize_valid_structure_with_vertical_child_container():
     root_container = unserialize(structure_vertical_container_child, globals())
     
     assert isinstance(root_container, VerticalContainer)
@@ -31,7 +31,7 @@ def test_unserialize_valid_structure_with_child_container():
     assert child_container.width == 300
     assert child_container.visible == False
 
-def test_unserialize_valid_structure_with_child_container():
+def test_unserialize_valid_structure_with_horizontal_child_container():
     root_container = unserialize(structure_horizontal_container_child, globals())
     
     assert isinstance(root_container, VerticalContainer)
