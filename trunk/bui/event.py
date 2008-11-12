@@ -74,6 +74,9 @@ class EventManager(object):
                 print func.__name__
             
             func(elem)
+            
+            self.root_container.initialize_element_heights(self.element_height)
+            self.root_container.initialize_element_widths()
     
     def key_event(self, evt, val):
         if self.key_events.has_key(evt):

@@ -19,8 +19,6 @@ def delete_all(elem):
 def add_to_ui_structure(elem):
     # could assert elem here!
     root_elem = elem.find_root_element()
-    root_elem.initialize_element_heights(20)
-    root_elem.initialize_element_widths()
     root_elem.add_child_structure(minimal_structure, globals())
 
 class TestEventManager():
@@ -57,7 +55,7 @@ class TestEventManager():
     def test_add_to_ui_structure(self):
         assert len(self.root_container.children) == 4
         
-        self.event_manager.element_event(3)
+        self.event_manager.element_event(3) # adds new VerticalContainer to the structure!
         
         assert len(self.root_container.children) == 5
         assert self.root_container.children[4].width == 200 # root container width restricts this!

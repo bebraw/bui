@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from tree import TreeChild
 
 class AbstractObject(object):
     suitable_values = ('event_handler', 'height', 'name', 'visible', 'width', )
@@ -18,3 +19,8 @@ class AbstractObject(object):
     def check_arg(self, dict, arg):
         if dict.has_key(arg):
             return dict[arg]
+
+class AbstractElement(TreeChild, AbstractObject):
+    def __init__(self, args=None):
+        self.children = []
+        super(AbstractElement, self).__init__(args)
