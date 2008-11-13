@@ -19,8 +19,14 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         return structure_root
     
     def has_only_container_children(self):
-        for child in self.children:
-            return isinstance(child, AbstractContainer) # not right but works. this needs a proper test!
+        if self.children:
+            for child in self.children:
+                if not isinstance(child, AbstractContainer):
+                    return False
+            
+            return True
+        
+        return False
     
     def initialize_element_heights(self, element_height): # test this!
         def initialize_element_heights_recursion(element_height, elem):
