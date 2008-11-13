@@ -3,6 +3,7 @@ from abstract import AbstractObject
 from serializer import unserialize
 from tree import TreeChild, TreeParent
 
+# IMPORTANT! This class needs to be here due to its dependency on HorizontalContainer!
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
     def __init__(self, args=None):
         super(AbstractContainer, self).__init__(args)
