@@ -11,12 +11,12 @@ class AbstractObject(object):
         
         if type(args) is dict:
             for suitable_value in self.suitable_values:
-                arg_value = self.check_arg(args, suitable_value)
+                arg_value = self._check_arg(args, suitable_value)
                 
                 if arg_value is not None:
                     self.__dict__[suitable_value] = arg_value
     
-    def check_arg(self, dict, arg):
+    def _check_arg(self, dict, arg):
         if dict.has_key(arg):
             return dict[arg]
 

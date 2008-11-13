@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.2.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-11-12, 21:53:10 -->
+<!-- Saved: 2008-11-13, 20:39:35 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.2">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -229,6 +229,11 @@
       <Dir>bui</Dir>
       <Dir>tests</Dir>
       <Name>container_test.py</Name>
+    </Source>
+    <Source>
+      <Dir>bui</Dir>
+      <Dir>tests</Dir>
+      <Name>abstract_test.py</Name>
     </Source>
   </Sources>
   <Forms>
