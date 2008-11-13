@@ -118,6 +118,11 @@ VerticalContainer:
                     width: 100
 '''
 
+empty_element = '''
+EmptyElement:
+    width: 100
+'''
+
 structure_keys = '''
 a: add_monkey
 d: delete_all
