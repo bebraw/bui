@@ -30,6 +30,13 @@ VerticalContainer:
                     width: 100
                 - Slider:
                     name: Test slider
+        - HorizontalContainer:
+            children:
+                - Number:
+                    name: Some number
+                - IntNumber:
+                    name: Some int number
+                    max: 100
 '''
 
 # ------------------------ HOTKEYS ---------------------
