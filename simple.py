@@ -41,10 +41,14 @@ VerticalContainer:
 
 # ------------------------ HOTKEYS ---------------------
 hotkeys = '''
+s: foobar
 q: quit_script
 '''
 
 # ------------------------ EVENT HANDLERS --------------
+def foobar(elem):
+    print 'foobar'
+
 def quit_script(elem):
     Draw.Exit()
 
