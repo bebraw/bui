@@ -33,7 +33,7 @@ class Label(AbstractBlenderElement):
 
 class TextBox(AbstractBlenderElement):
     def render(self, coord):
-        self.textbox = Draw.String(self.name + ':', self.event, coord.x, coord.y, self.width, self.height,
+        self.textbox = Draw.String(self.name + ': ', self.event, coord.x, coord.y, self.width, self.height,
                               self.value, self.max_input_length, self.tooltip, self.update_value)
 
 class ToggleButton(AbstractBlenderElement):
