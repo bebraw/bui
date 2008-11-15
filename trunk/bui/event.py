@@ -79,5 +79,5 @@ class EventManager(object):
             self.root_container.initialize_element_widths()
     
     def key_event(self, evt, val):
-        if self.key_events.has_key(evt):
+        if self.key_events.has_key(evt) and val: # TODO: make it possible to add "off" state too
             self.key_events[evt](self.root_container)
