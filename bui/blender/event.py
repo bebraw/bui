@@ -3,7 +3,6 @@ from Blender import Window
 from Blender.Window import Types
 
 from bui.event import EventManager
-from bui.parser import read_yaml
 
 from keys import BLENDER_KEYS
 
