@@ -126,4 +126,7 @@ EmptyElement:
 structure_keys = '''
 a: add_monkey
 d: delete_all
+s:
+    press: press_s
+    release: release_s
 '''

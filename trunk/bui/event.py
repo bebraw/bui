@@ -10,6 +10,11 @@ class ElementEvent(object):
         self.element = element
         self.handler = handler
 
+class KeyEvent(object):
+    def __init__(self):
+        self.press = None
+        self.release = None
+
 class EventManager(object):
     def __init__(self, root_container, keys, namespace, element_height):
         assert isinstance(root_container, AbstractContainer)
@@ -57,13 +62,29 @@ class EventManager(object):
         self.element_events[self.max_event_id] = ElementEvent(elem, handler)
         self.max_event_id += 1
     
-    def _construct_key_event_ids(self, keys):
+    def _construct_key_event_ids(self, keys, key_mapping=None):
         keys_structure = read_yaml(keys)
         
         if isinstance(keys_structure, dict):
-            for key, func_name in keys_structure.items():
-                if self.namespace.has_key(func_name):
-                    self.key_events[key] = self.namespace[func_name]
+            for key, value in keys_structure.items():
+                if key_mapping:
+                    key = key_mapping[key]
+                
+                if not self.key_events.has_key(key):
+                    self.key_events[key] = KeyEvent()
+                
+                if isinstance(value, dict):
+                    for event, func_name in value.items():
+                        if self.namespace.has_key(func_name):
+                            if event == 'press':
+                                self.key_events[key].press = self.namespace[func_name]
+                            elif event == 'release':
+                                self.key_events[key].release = self.namespace[func_name]
+                else:
+                    func_name = value
+                    
+                    if self.namespace.has_key(func_name):
+                        self.key_events[key].press = self.namespace[func_name]
     
     def element_event(self, evt):
         if self.element_events.has_key(evt):
@@ -78,6 +99,11 @@ class EventManager(object):
             self.root_container.initialize_element_heights(self.element_height)
             self.root_container.initialize_element_widths()
     
-    def key_event(self, evt, val):
-        if self.key_events.has_key(evt) and val: # TODO: make it possible to add "off" state too
-            self.key_events[evt](self.root_container)
+    def key_event(self, evt, pressed):
+        if self.key_events.has_key(evt):
+            key_event = self.key_events[evt]
+            
+            if pressed and key_event.press:
+                key_event.press(self.root_container)
+            elif key_event.release:
+                key_event.release(self.root_container)

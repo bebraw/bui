@@ -41,11 +41,21 @@ VerticalContainer:
 
 # ------------------------ HOTKEYS ---------------------
 hotkeys = '''
+d:
+    press: d_was_pressed
+    release: d_was_released
 s: foobar
 q: quit_script
 '''
 
 # ------------------------ EVENT HANDLERS --------------
+
+def d_was_pressed(elem):
+    print 'you pressed d!'
+
+def d_was_released(elem):
+    print 'you released d!'
+
 def foobar(elem):
     print 'foobar'
 
