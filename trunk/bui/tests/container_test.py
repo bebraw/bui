@@ -10,6 +10,15 @@ class TestAbstractContainer():
         
         assert abstract_container.x_offset == 0
         assert abstract_container.y_offset == 0
+        assert abstract_container.event_handler == None
+        assert abstract_container.visible == True
+        
+        args = {'x_offset': 100, 'y_offset': 50, 'visible': False}
+        abstract_container2 = AbstractContainer(args)
+        
+        assert abstract_container2.x_offset == 100
+        assert abstract_container2.y_offset == 50
+        assert abstract_container2.visible == False
     
     def test_add_child_structure(self):
         abstract_container = AbstractContainer()

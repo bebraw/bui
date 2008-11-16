@@ -6,19 +6,11 @@ class TestAbstractObject():
         abstract_object = AbstractObject()
         
         assert abstract_object.name == ''
-        assert abstract_object.visible == True
         
-        def foo():
-            print 'foo'
-        
-        args = {'event_handler': foo, 'height': 20, 'name': 'some name',
-                'visible': False, 'width': 100, 'foobar': 25}
+        args = {'height': 20, 'name': 'some name', 'width': 100, 'foobar': 25}
         abstract_object2 = AbstractObject(args)
         
-        assert abstract_object2.event_handler == foo
         assert abstract_object2.height == 20
-        assert abstract_object2.name == 'some name'
-        assert abstract_object2.visible == False
         assert abstract_object2.width == 100
         assert hasattr(abstract_object2, 'foobar') == False
 
@@ -27,3 +19,9 @@ class TestAbstractElement():
         abstract_element = AbstractElement()
         
         assert len(abstract_element.children) == 0
+        assert abstract_element.event_handler == None
+        assert abstract_element.height == None
+        assert abstract_element.width == None
+        assert abstract_element.name == ''
+        assert abstract_element.visible == True
+        assert abstract_element.variable == None
