@@ -48,7 +48,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractAttributes, AbstractObjec
         
         # TODO: doesn't handle predef-free-predef-free case yet? (should it?)
         for i, child in enumerate(children):
-            children_widths[i] = child.width if hasattr(child, 'width') else None
+            children_widths[i] = child.width
             
             if child.width:
                 width_left -= child.width
