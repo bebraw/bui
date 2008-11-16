@@ -10,14 +10,22 @@ from structure import minimal_structure, structure_for_event_tests, structure_ke
 
 bui.event.PRINT_BUTTON_EVENT_NAMES = True
 
+PRESS = 1
+RELEASE = 0
+
 def add_monkey(elem):
-    pass # could assert elem here!
+    pass
 
 def delete_all(elem):
-    pass # could assert elem here!
+    pass
+
+def press_s(elem):
+    pass
+
+def release_s(elem):
+    pass
 
 def add_to_ui_structure(elem):
-    # could assert elem here!
     root_elem = elem.find_root_element()
     root_elem.add_child_structure(minimal_structure, globals())
 
@@ -61,9 +69,13 @@ class TestEventManager():
         assert self.root_container.children[4].width == 200 # root container width restricts this!
     
     def test_manager_has_right_key_events(self):
-        assert self.event_manager.key_events['a'] == add_monkey
-        assert self.event_manager.key_events['d'] == delete_all
+        assert self.event_manager.key_events['a'].press == add_monkey
+        assert self.event_manager.key_events['d'].press == delete_all
+        assert self.event_manager.key_events['s'].press == press_s
+        assert self.event_manager.key_events['s'].release == release_s
     
     def test_trigger_key_events(self):
-        self.event_manager.key_event('a', 1)
-        self.event_manager.key_event('d', 1)
+        self.event_manager.key_event('a', PRESS)
+        self.event_manager.key_event('d', PRESS)
+        self.event_manager.key_event('s', PRESS)
+        self.event_manager.key_event('s', RELEASE)
