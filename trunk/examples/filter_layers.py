@@ -7,26 +7,12 @@ from object_filter import ObjectFilter
 
 '''
 TODO:
--use find_elem to simplify code (no need to care about parent/child relationship!)
 -improve data filter (give another menu with data types if data is selected. remember OR toggle too!)
--figure out how to find constraint and events! (pass info to Application? check py namespaces)
 -add control logic and hook up filters with the system
--add scrollsbar(s) and panel(s)?
--image/icon element? (better than S etc.)
--add more UI elements?
--separate menu options from name and make option numbers implicit?
 -drag and drop (ie. move layers/filters around)
--fade (animate container bgs (active highlighted) based on time delta since active)
--where element default height should be defined? (separate conf yaml?)
--add auto width/height? (+ min and max)
--add relative width/height?
 -filter by group/name + possibility to filter multiple data types at once (mesh, lamp, etc. -> convert to list that is passed onto func)
 -improve mapping between filtering type option menu and filter backend!
--make it possible to restore old layers/filters (Registry module?)
--figure out how to handle regular events
--rename button events to more descriptive element events?
--create simple window manager based on container concept
--implement node element (-> node editor :) )
+-make it possible to restore old layers/filters (Registry module? implement serialize and @persistent)
 '''
 
 # ------------------- UTILS ---------------------------
