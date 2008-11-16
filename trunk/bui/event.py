@@ -39,10 +39,10 @@ class EventManager(object):
             for child in elem.children:
                 event_handler = None
                 
-                if hasattr(child, 'event_handler') and child.event_handler is not None:
+                if child.event_handler is not None:
                     event_handler = self.namespace[child.event_handler]
                 else:
-                    if hasattr(child, 'name'):
+                    if child.name is not None:
                         handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
                         
                         if self.namespace.has_key(handler_name):
