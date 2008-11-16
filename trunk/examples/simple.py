@@ -34,6 +34,9 @@ VerticalContainer:
             children:
                 - Number:
                     name: Some number
+                    value: 0.5
+                - Number:
+                    name: Another number
                 - IntNumber:
                     name: Some int number
                     max: 100
