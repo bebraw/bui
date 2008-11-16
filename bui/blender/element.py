@@ -11,7 +11,7 @@ class AbstractBlenderElement(AbstractElement):
     def __init__(self, args=None):
         self.event = 0
         self.tooltip = ''
-        self.value = 0.0
+        self.value = 0
         self.max_input_length = 0
         self.min = 0.0
         self.max = 1.0
@@ -53,7 +53,8 @@ class Number(AbstractBlenderElement):
     def __init__(self, args=None):
         self.range = 0 # no clickstep
         self.precision = 0.0 # 4 decimals
-        super(AbstractBlenderElement, self).__init__(args)
+        super(Number, self).__init__(args)
+        self.value = float(self.value)
     
     def render(self, coord):
         try:

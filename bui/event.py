@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.container import AbstractContainer
+from bui.initializer import initialize_element_heights, initialize_element_widths
 from bui.parser import read_yaml
 from bui.tree import TreeParent
 
@@ -96,8 +97,8 @@ class EventManager(object):
             
             func(elem)
             
-            self.root_container.initialize_element_heights(self.element_height)
-            self.root_container.initialize_element_widths()
+            initialize_element_heights(self.root_container, self.element_height)
+            initialize_element_widths(self.root_container)
     
     def key_event(self, evt, pressed):
         if self.key_events.has_key(evt):
