@@ -2,15 +2,15 @@
 from tree import TreeChild
 
 class AbstractObject(object):
-    suitable_values = ('event_handler', 'height', 'name', 'visible', 'width', )
-    
-    def __init__(self, args=None):
+    def __init__(self, args=None): # TODO: convert to **kvargs?
         self.name = ''
+        self.height = None
+        self.width = None
         self.visible = True
         super(AbstractObject, self).__init__(args)
         
         if type(args) is dict:
-            for suitable_value in self.suitable_values:
+            for suitable_value in self.__dict__:
                 arg_value = self._check_arg(args, suitable_value)
                 
                 if arg_value is not None:
@@ -20,7 +20,14 @@ class AbstractObject(object):
         if dict.has_key(arg):
             return dict[arg]
 
-class AbstractElement(TreeChild, AbstractObject):
+class AbstractAttributes(object):
+    def __init__(self, args=None):
+        self.event_handler = None
+        self.visible = True
+        super(AbstractAttributes, self).__init__(args)
+
+class AbstractElement(TreeChild, AbstractAttributes, AbstractObject):
     def __init__(self, args=None):
         self.children = []
+        self.variable = None
         super(AbstractElement, self).__init__(args)

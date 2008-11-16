@@ -39,7 +39,7 @@ class EventManager(object):
             for child in elem.children:
                 event_handler = None
                 
-                if hasattr(child, 'event_handler'):
+                if hasattr(child, 'event_handler') and child.event_handler is not None:
                     event_handler = self.namespace[child.event_handler]
                 else:
                     if hasattr(child, 'name'):

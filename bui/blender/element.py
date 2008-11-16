@@ -8,20 +8,13 @@ except ImportError:
 from bui.element import AbstractElement
 
 class AbstractBlenderElement(AbstractElement):
-    suitable_values = ('name', 'width', 'height', 'tooltip', 'value', 'max_input_length', 'event_handler', 'variable', 'min', 'max', 'range', 'precision') # TODO: refactor
-    
     def __init__(self, args=None):
-        self.name = ''
         self.event = 0
         self.tooltip = ''
         self.value = 0.0
         self.max_input_length = 0
         self.min = 0.0
         self.max = 1.0
-        #self.width = 0
-        #self.height = 0
-        self.range = 0 # no clickstep
-        self.precision = 0.0 # 4 decimals
         super(AbstractBlenderElement, self).__init__(args)
     
     def update_value(self, evt, val):
@@ -57,6 +50,11 @@ class Slider(AbstractBlenderElement):
                                   self.value, self.min, self.max, False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
+    def __init__(self, args=None):
+        self.range = 0 # no clickstep
+        self.precision = 0.0 # 4 decimals
+        super(AbstractBlenderElement, self).__init__(args)
+    
     def render(self, coord):
         try:
             self.number = Draw.Number(self.name, self.event, coord.x, coord.y, self.width, self.height,

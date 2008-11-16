@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.2.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-11-15, 23:29:49 -->
+<!-- Saved: 2008-11-16, 18:15:16 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.2">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -9,12 +9,6 @@
   <Author></Author>
   <Email></Email>
   <Sources>
-    <Source>
-      <Name>filter_layers.py</Name>
-    </Source>
-    <Source>
-      <Name>object_filter.py</Name>
-    </Source>
     <Source>
       <Dir>bui</Dir>
       <Name>event.py</Name>
@@ -152,9 +146,6 @@
       <Name>serializer_test.py</Name>
     </Source>
     <Source>
-      <Name>simple.py</Name>
-    </Source>
-    <Source>
       <Dir>yaml</Dir>
       <Name>serializer.py</Name>
     </Source>
@@ -223,9 +214,6 @@
       <Name>loader.py</Name>
     </Source>
     <Source>
-      <Name>bones.py</Name>
-    </Source>
-    <Source>
       <Dir>bui</Dir>
       <Dir>tests</Dir>
       <Name>container_test.py</Name>
@@ -240,6 +228,22 @@
       <Dir>blender</Dir>
       <Name>keys.py</Name>
     </Source>
+    <Source>
+      <Dir>examples</Dir>
+      <Name>filter_layers.py</Name>
+    </Source>
+    <Source>
+      <Dir>examples</Dir>
+      <Name>simple.py</Name>
+    </Source>
+    <Source>
+      <Dir>examples</Dir>
+      <Name>bones.py</Name>
+    </Source>
+    <Source>
+      <Dir>examples</Dir>
+      <Name>object_filter.py</Name>
+    </Source>
   </Sources>
   <Forms>
   </Forms>
@@ -250,9 +254,6 @@
   <Interfaces>
   </Interfaces>
   <Others>
-    <Other>
-      <Name>filter_layers.py</Name>
-    </Other>
     <Other>
       <Dir>bui</Dir>
       <Name>event.py</Name>
@@ -345,9 +346,6 @@
       <Dir>bui</Dir>
       <Dir>pyglet</Dir>
       <Name>__init__.py</Name>
-    </Other>
-    <Other>
-      <Name>object_filter.py</Name>
     </Other>
   </Others>
   <Vcs>

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractObject
+from abstract import AbstractAttributes, AbstractObject
 from serializer import unserialize
 from tree import TreeChild, TreeParent
 
 # IMPORTANT! This class needs to be here due to its dependency on HorizontalContainer!
-class AbstractContainer(TreeChild, TreeParent, AbstractObject):
+# TODO: move this class to abstract and separate width/height inits to own file
+class AbstractContainer(TreeChild, TreeParent, AbstractAttributes, AbstractObject):
     def __init__(self, args=None):
-        super(AbstractContainer, self).__init__(args)
-        
         self.x_offset = 0
         self.y_offset = 0
+        super(AbstractContainer, self).__init__(args)
     
     def add_child_structure(self, structure, namespace):
         structure_root = unserialize(structure, namespace)
@@ -30,7 +30,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
     
     def initialize_element_heights(self, element_height): # test this!
         def initialize_element_heights_recursion(element_height, elem):
-            if not hasattr(elem, 'height'):
+            if not elem.height:
                 elem.height = element_height
             
             if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
@@ -50,7 +50,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         for i, child in enumerate(children):
             children_widths[i] = child.width if hasattr(child, 'width') else None
             
-            if hasattr(child, 'width'):
+            if child.width:
                 width_left -= child.width
             else:
                 free_indices.append(i)
@@ -67,7 +67,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
     
     def initialize_element_widths(self): # test this!
         if self.parent:
-            if not hasattr(self, 'width'):
+            if not self.width:
                 self.width = self.parent.width
             
             self.width = min(self.width, self.parent.width)
