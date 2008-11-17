@@ -13,7 +13,7 @@ def unserialize(document, namespace):
                     structure = namespace[structure_name]
                     class_instance = unserialize(structure, namespace)
                 else:
-                    class_instance = namespace[class_name](class_args)
+                    class_instance = namespace[class_name](**class_args)
                 
                 class_instance.parent = current_object
                 current_object.children.append(class_instance)
@@ -22,7 +22,7 @@ def unserialize(document, namespace):
     structure = read_yaml(document)
     root_class_name = structure.keys()[0]
     root_class_args = structure.values()[0]
-    root_object = namespace[root_class_name](root_class_args)
+    root_object = namespace[root_class_name](**root_class_args)
     unserialize_structure(root_object, root_class_args, namespace)
     
     return root_object

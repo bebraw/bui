@@ -8,14 +8,14 @@ except ImportError:
 from bui.element import AbstractElement
 
 class AbstractBlenderElement(AbstractElement):
-    def __init__(self, args=None):
+    def __init__(self, **kvargs):
         self.event = 0
         self.tooltip = ''
         self.value = 0
         self.max_input_length = 0
         self.min = 0.0
         self.max = 1.0
-        super(AbstractBlenderElement, self).__init__(args)
+        super(AbstractBlenderElement, self).__init__(**kvargs)
     
     def update_value(self, evt, val):
         self.value = val
@@ -50,10 +50,10 @@ class Slider(AbstractBlenderElement):
                                   self.value, self.min, self.max, False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
-    def __init__(self, args=None):
+    def __init__(self, **kvargs):
         self.range = 0 # no clickstep
         self.precision = 0.0 # 4 decimals
-        super(Number, self).__init__(args)
+        super(Number, self).__init__(**kvargs)
         self.value = float(self.value)
     
     def render(self, coord):
