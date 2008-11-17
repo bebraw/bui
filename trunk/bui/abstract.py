@@ -3,41 +3,40 @@ from tree import TreeChild, TreeParent
 from serializer import unserialize
 
 class AbstractObject(object):
-    def __init__(self, args=None): # TODO: convert to **kvargs?
+    def __init__(self, **kvargs):
         self.name = ''
         self.height = None
         self.width = None
         self.visible = True
-        super(AbstractObject, self).__init__(args)
+        super(AbstractObject, self).__init__(**kvargs)
         
-        if type(args) is dict:
-            for suitable_value in self.__dict__:
-                arg_value = self._check_arg(args, suitable_value)
-                
-                if arg_value is not None:
-                    self.__dict__[suitable_value] = arg_value
+        for suitable_value in self.__dict__:
+            arg_value = self._check_arg(kvargs, suitable_value)
+            
+            if arg_value is not None:
+                self.__dict__[suitable_value] = arg_value
     
     def _check_arg(self, dict, arg):
         if dict.has_key(arg):
             return dict[arg]
 
 class AbstractAttributes(object):
-    def __init__(self, args=None):
+    def __init__(self, **kvargs):
         self.event_handler = None
         self.visible = True
-        super(AbstractAttributes, self).__init__(args)
+        super(AbstractAttributes, self).__init__(**kvargs)
 
 class AbstractElement(TreeChild, AbstractAttributes, AbstractObject):
-    def __init__(self, args=None):
+    def __init__(self, **kvargs):
         self.children = []
         self.variable = None
-        super(AbstractElement, self).__init__(args)
+        super(AbstractElement, self).__init__(**kvargs)
 
 class AbstractContainer(TreeChild, TreeParent, AbstractAttributes, AbstractObject):
-    def __init__(self, args=None):
+    def __init__(self, **kvargs):
         self.x_offset = 0
         self.y_offset = 0
-        super(AbstractContainer, self).__init__(args)
+        super(AbstractContainer, self).__init__(**kvargs)
     
     def add_child_structure(self, structure, namespace):
         structure_root = unserialize(structure, namespace)

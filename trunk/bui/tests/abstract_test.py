@@ -11,8 +11,7 @@ class TestAbstractObject():
         
         assert abstract_object.name == ''
         
-        args = {'height': 20, 'name': 'some name', 'width': 100, 'foobar': 25}
-        abstract_object2 = AbstractObject(args)
+        abstract_object2 = AbstractObject(height=20, name='some name', width=100, foobar=25)
         
         assert abstract_object2.height == 20
         assert abstract_object2.width == 100
@@ -39,8 +38,7 @@ class TestAbstractContainer():
         assert abstract_container.event_handler == None
         assert abstract_container.visible == True
         
-        args = {'x_offset': 100, 'y_offset': 50, 'visible': False}
-        abstract_container2 = AbstractContainer(args)
+        abstract_container2 = AbstractContainer(x_offset=100, y_offset=50, visible=False)
         
         assert abstract_container2.x_offset == 100
         assert abstract_container2.y_offset == 50
