@@ -3,4 +3,4 @@ from abstract import AbstractElement
 
 class EmptyElement(AbstractElement): 
     def render(self, coord):
-        pass
+        pass # TODO: deprecate this!

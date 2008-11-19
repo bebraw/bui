@@ -3,6 +3,10 @@ from abstract import AbstractContainer
 
 class EmptyContainer(AbstractContainer):
     def render(self, coord):
+        pass # TODO: Deprecate this!
+
+class Fill(AbstractContainer):
+    def render(self, coord):
         pass
 
 class HorizontalContainer(AbstractContainer):
