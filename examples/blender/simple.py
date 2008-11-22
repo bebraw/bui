@@ -46,11 +46,12 @@ class UIStructure():
                     - Fill:
                         width: 20
                     - Image:
-                        image: Mandril.png
+                        file: Mandril.png
                     - Label:
                         name: Foobar
-                    - Label:
-                        name: Barfoo
+                    - Image:
+                       file: Mandril.png
+                       height: 100
             - Fill:
                 height: 15
             - HorizontalContainer:
@@ -61,6 +62,13 @@ class UIStructure():
                         name: Some number
                     - Fill:
                         width: 50
+            - Fill:
+                height: 15
+            - HorizontalContainer:
+                children:
+                    - Image:
+                       file: Mandril.png
+                       width: 500
     '''
 
 hotkeys = '''
