@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import bui.event
 
-from bui.container import VerticalContainer
-from bui.element import EmptyElement
+from bui.container import *
 from bui.event import EventManager
 from bui.serializer import unserialize
 

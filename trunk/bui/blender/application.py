@@ -2,11 +2,11 @@
 from Blender import Draw
 
 from bui.application import Application
+from bui.container import *
+
 from bui.blender.element import *
 from bui.blender.event import BlenderEventManager
 from bui.blender.window import BlenderWindowManager
-from bui.container import *
-from bui.element import *
 
 class BlenderApplication(Application):
     def __init__(self, structure, keys, namespace, element_height=20):

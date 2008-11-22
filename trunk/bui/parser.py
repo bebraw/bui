@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from yaml import load
+from yaml import safe_load
 
 def read_yaml(document):
     try:
-        file_stream = file(document, 'r')
+        stream = file(document, 'r')
     except IOError:
-        file_stream = document
+        stream = document
     
-    structure = load(file_stream)
+    structure = safe_load(stream)
     
     return structure if structure != document else None

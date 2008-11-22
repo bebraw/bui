@@ -18,8 +18,7 @@ VerticalContainer:
                     tooltip: Quit script
                     event_handler: quit_script
                     width: 20
-        - EmptyContainer:
-            name: empty_cont
+        - Fill:
             height: 10
         - HorizontalContainer:
             name: last_hori

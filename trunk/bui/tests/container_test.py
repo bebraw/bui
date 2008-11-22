@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from bui.container import *
 
-class TestEmptyContainer():
+class TestFill():
     def test_render(self):
-        container = EmptyContainer()
+        container = Fill()
         #container.render(None) # need to pass real coord here
         # assert that coord has not changed
 
