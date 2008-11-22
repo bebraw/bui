@@ -9,7 +9,7 @@ except ImportError:
 
 from bui.abstract import AbstractElement
 
-# move to utils at some point!
+# TODO: move to utils at some point!
 def find_file_path(root_dir, file_name):
     """ Returns path to given file_name with file_name appended. """
     for root, dirs, files in os.walk(root_dir):
@@ -31,31 +31,31 @@ class AbstractBlenderElement(AbstractElement):
 
 class Label(AbstractBlenderElement):
     def render(self, coord):
-        self.label = Draw.Label(self.name, coord.x, coord.y, self.width, self.height)
+        self.label = Draw.Label(self.name, coord.x, coord.y - self.height, self.width, self.height)
 
 class TextBox(AbstractBlenderElement):
     def render(self, coord):
-        self.textbox = Draw.String(self.name + ': ', self.event, coord.x, coord.y, self.width, self.height,
+        self.textbox = Draw.String(self.name + ': ', self.event, coord.x, coord.y - self.height, self.width, self.height,
                               self.value, self.max_input_length, self.tooltip, self.update_value)
 
 class ToggleButton(AbstractBlenderElement):
     def render(self, coord):
-        self.togglebutton = Draw.Toggle(self.name, self.event, coord.x, coord.y, self.width, self.height,
+        self.togglebutton = Draw.Toggle(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                    self.value, self.tooltip, self.update_value)
 
 class PushButton(AbstractBlenderElement):
     def render(self, coord):
-        self.pushbutton = Draw.PushButton(self.name, self.event, coord.x, coord.y, self.width,
+        self.pushbutton = Draw.PushButton(self.name, self.event, coord.x, coord.y - self.height, self.width,
                                           self.height, self.tooltip)
 
 class Menu(AbstractBlenderElement):
     def render(self, coord):
-        self.menu = Draw.Menu(self.name, self.event, coord.x, coord.y, self.width, self.height,
+        self.menu = Draw.Menu(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                          self.value, self.tooltip, self.update_value)
 
 class Slider(AbstractBlenderElement):
     def render(self, coord):
-        self.slider = Draw.Slider(self.name, self.event, coord.x, coord.y, self.width, self.height,
+        self.slider = Draw.Slider(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   self.value, self.min, self.max, False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
@@ -67,15 +67,15 @@ class Number(AbstractBlenderElement):
     
     def render(self, coord):
         try:
-            self.number = Draw.Number(self.name, self.event, coord.x, coord.y, self.width, self.height,
+            self.number = Draw.Number(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   self.value, self.min, self.max, self.tooltip, self.update_value, self.range, self.precision)
         except: # needed for backwards compatibility (no range and precision in 2.48a)
-            self.number = Draw.Number(self.name, self.event, coord.x, coord.y, self.width, self.height,
+            self.number = Draw.Number(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   self.value, self.min, self.max, self.tooltip, self.update_value)
 
 class IntNumber(AbstractBlenderElement):
     def render(self, coord):
-        self.number = Draw.Number(self.name, self.event, coord.x, coord.y, self.width, self.height,
+        self.number = Draw.Number(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   int(self.value), int(self.min), int(self.max), self.tooltip, self.update_value)
 
 class Image(AbstractBlenderElement):
@@ -108,8 +108,8 @@ class Image(AbstractBlenderElement):
             BGL.glEnable(BGL.GL_BLEND)
             BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA) 
             
-            Draw.Image(self.image_block, coord.x, coord.y, self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
+            Draw.Image(self.image_block, coord.x, coord.y - self.height,
+                       self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
                        self.clip_width, self.clip_height)
             
             BGL.glDisable(BGL.GL_BLEND)
-

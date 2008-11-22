@@ -15,6 +15,14 @@ class HorizontalContainer(AbstractContainer):
                 coord.x += child.width
         
         coord.x = tmp_x
+    
+    def find_child_max_height(self): # TODO: test!
+        record_height = 0
+        
+        for child in self.children:
+            record_height = max(record_height, child.height)
+        
+        return record_height
 
 class VerticalContainer(AbstractContainer):
     def render(self, coord):
@@ -23,5 +31,5 @@ class VerticalContainer(AbstractContainer):
         
         for child in self.children:
             if child.visible:
-                coord.y -= child.height
                 child.render(coord)
+                coord.y -= child.height

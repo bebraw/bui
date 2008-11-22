@@ -1,5 +1,5 @@
 from abstract import AbstractContainer
-from container import HorizontalContainer
+from container import HorizontalContainer, VerticalContainer
 
 def initialize_element_heights(elem, element_height): # test this!
     if not elem.height:
@@ -7,6 +7,11 @@ def initialize_element_heights(elem, element_height): # test this!
     
     if isinstance(elem, AbstractContainer) and elem.has_only_container_children():
         elem.height = 0
+    
+    if isinstance(elem, VerticalContainer):
+        for child in elem.children:
+            if isinstance(child, HorizontalContainer):
+                child.height = child.find_child_max_height()
     
     for child in elem.children:
         initialize_element_heights(child, element_height)
