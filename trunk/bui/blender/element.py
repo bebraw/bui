@@ -80,7 +80,7 @@ class IntNumber(AbstractBlenderElement):
 
 class Image(AbstractBlenderElement):
     def __init__(self, **kvargs):
-        self.image = ''
+        self.file = ''
         self.x_zoom = 1.0
         self.y_zoom = 1.0
         self.x_clip = 0
@@ -91,16 +91,20 @@ class Image(AbstractBlenderElement):
         super(Image, self).__init__(**kvargs)
         
         uscriptsdir = Blender.Get('uscriptsdir')
-        file_path = find_file_path(uscriptsdir, self.image)
+        file_path = find_file_path(uscriptsdir, self.file)
         
         if file_path:
             self.image_block = Blender.Image.Load(file_path)
             width, height = self.image_block.getSize()
             
-            if not self.height:
+            if self.height:
+                self.y_zoom = float(self.height) / height # FIXME: does not take parent height in count!!!
+            else:
                 self.height = height
             
-            if not self.width:
+            if self.width:
+                self.x_zoom = float(self.width) / width # FIXME: does not take parent width in count!!!
+            else:
                 self.width = width
     
     def render(self, coord):
