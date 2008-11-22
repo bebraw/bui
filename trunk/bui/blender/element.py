@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
+import os
 
 try:
-    from Blender import Draw
+    import Blender
+    from Blender import BGL, Draw
 except ImportError:
     pass
 
 from bui.abstract import AbstractElement
+
+# move to utils at some point!
+def find_file_path(root_dir, file_name):
+    """ Returns path to given file_name with file_name appended. """
+    for root, dirs, files in os.walk(root_dir):
+        if file_name in files:
+            return os.path.join(root, file_name)
 
 class AbstractBlenderElement(AbstractElement):
     def __init__(self, **kvargs):
@@ -68,3 +77,39 @@ class IntNumber(AbstractBlenderElement):
     def render(self, coord):
         self.number = Draw.Number(self.name, self.event, coord.x, coord.y, self.width, self.height,
                                   int(self.value), int(self.min), int(self.max), self.tooltip, self.update_value)
+
+class Image(AbstractBlenderElement):
+    def __init__(self, **kvargs):
+        self.image = ''
+        self.x_zoom = 1.0
+        self.y_zoom = 1.0
+        self.x_clip = 0
+        self.y_clip = 0
+        self.clip_width = -1
+        self.clip_height = -1
+        self.image_block = None
+        super(Image, self).__init__(**kvargs)
+        
+        uscriptsdir = Blender.Get('uscriptsdir')
+        file_path = find_file_path(uscriptsdir, self.image)
+        
+        if file_path:
+            self.image_block = Blender.Image.Load(file_path)
+            width, height = self.image_block.getSize()
+            
+            if not self.height:
+                self.height = height
+            
+            if not self.width:
+                self.width = width
+    
+    def render(self, coord):
+        if self.image_block:
+            BGL.glEnable(BGL.GL_BLEND)
+            BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA) 
+            
+            Draw.Image(self.image_block, coord.x, coord.y, self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
+                       self.clip_width, self.clip_height)
+            
+            BGL.glDisable(BGL.GL_BLEND)
+
