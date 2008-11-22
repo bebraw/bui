@@ -41,7 +41,6 @@ class UIStructure():
                         max: 100
     '''
 
-# ------------------------ HOTKEYS ---------------------
 hotkeys = '''
 d:
     press: d_was_pressed
@@ -50,21 +49,24 @@ s: foobar
 q: quit_script
 '''
 
-# ------------------------ EVENT HANDLERS --------------
-
-def d_was_pressed(elem):
-    print 'you pressed d!'
-
-def d_was_released(elem):
-    print 'you released d!'
-
-def foobar(elem):
-    print 'foobar'
-
-def quit_script(elem):
-    Draw.Exit()
+class Events():
+    @staticmethod
+    def d_was_pressed(elem):
+        print 'you pressed d!'
+    
+    @staticmethod
+    def d_was_released(elem):
+        print 'you released d!'
+    
+    @staticmethod
+    def foobar(elem):
+        print 'foobar'
+    
+    @staticmethod
+    def quit_script(elem):
+        Draw.Exit()
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, globals())
+    app = BlenderApplication(UIStructure, hotkeys, Events, globals())
     app.run()

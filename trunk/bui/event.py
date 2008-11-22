@@ -17,14 +17,13 @@ class KeyEvent(object):
         self.release = None
 
 class EventManager(object):
-    def __init__(self, root_container, keys, namespace, element_height):
+    def __init__(self, root_container, keys, events, element_height):
         assert isinstance(root_container, AbstractContainer)
         assert isinstance(keys, str)
-        assert isinstance(namespace, dict)
         assert isinstance(element_height, int)
         
         self.root_container = root_container
-        self.namespace = namespace
+        self.events = events
         self.element_height = element_height
         
         self.element_events = {}
@@ -40,14 +39,14 @@ class EventManager(object):
             for child in elem.children:
                 event_handler = None
                 
-                if child.event_handler is not None:
-                    event_handler = self.namespace[child.event_handler]
+                if child.event_handler is not None and hasattr(self.events, child.event_handler):
+                    event_handler = getattr(self.events, child.event_handler)
                 else:
                     if child.name is not None:
-                        handler_name = str(child.name).replace(' ', '_').lower() #+ '_event'
+                        handler_name = str(child.name).replace(' ', '_').lower()
                         
-                        if self.namespace.has_key(handler_name):
-                            event_handler = self.namespace[handler_name]
+                        if hasattr(self.events, handler_name):
+                            event_handler = getattr(self.events, handler_name)
                 
                 if event_handler:
                     self._add_element_event(child, event_handler)
@@ -76,16 +75,14 @@ class EventManager(object):
                 
                 if isinstance(value, dict):
                     for event, func_name in value.items():
-                        if self.namespace.has_key(func_name):
-                            if event == 'press':
-                                self.key_events[key].press = self.namespace[func_name]
-                            elif event == 'release':
-                                self.key_events[key].release = self.namespace[func_name]
+                        if hasattr(self.events, func_name):
+                            event_func = getattr(self.events, func_name)
+                            setattr(self.key_events[key], event, event_func)
                 else:
                     func_name = value
                     
-                    if self.namespace.has_key(func_name):
-                        self.key_events[key].press = self.namespace[func_name]
+                    if hasattr(self.events, func_name):
+                        self.key_events[key].press = getattr(self.events, func_name)
     
     def element_event(self, evt):
         if self.element_events.has_key(evt):

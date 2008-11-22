@@ -145,60 +145,69 @@ class UIStructure():
                 height: 10
     '''
 
-# ------------------------ HOTKEYS ---------------------
 hotkeys = '''
 q: quit_script
 '''
 
-# ------------------------ EVENT HANDLERS --------------
-def toggle_layer_number(elem):
-    layer_number = int(elem.name)
-    visible_layers = Window.ViewLayers()
+class Events():
+    @staticmethod
+    def toggle_layer_number(elem):
+        layer_number = int(elem.name)
+        visible_layers = Window.ViewLayers()
+        
+        if layer_number in visible_layers:
+            if len(visible_layers) > 1:
+                visible_layers.remove(layer_number)
+        else:
+            visible_layers.append(layer_number)
+        
+        Window.ViewLayers(visible_layers)
     
-    if layer_number in visible_layers:
-        if len(visible_layers) > 1:
-            visible_layers.remove(layer_number)
-    else:
-        visible_layers.append(layer_number)
+    @staticmethod
+    def add_layer(elem):
+        root = elem.find_root_element()
+        layers = root.find_child(name='layers')
+        root_structure = unserialize(UIStructure, UIStructure.layer_structure)
+        layers.add_child_structure(root_structure)
     
-    Window.ViewLayers(visible_layers)
-
-def add_layer(elem):
-    root = elem.find_root_element()
-    layers = root.find_child(name='layers')
-    root_structure = unserialize(UIStructure, UIStructure.layer_structure)
-    layers.add_child_structure(root_structure)
-
-def delete_layer(elem):
-    layers = elem.find_parent(name='layers')
-    layer = elem.find_parent(name='layer')
-    layers.children.remove(layer)
-
-def add_filter(elem):
-    filters_container = elem.find_parent(name='filters_container')
-    filters = filters_container.find_child(name='filters')
-    root_structure = unserialize(UIStructure, UIStructure.filter_structure)
-    filters.add_child_structure(root_structure)
-
-def delete_filter(elem):
-    filters = elem.find_parent(name='filters')
-    filter = elem.find_parent(name='filter')
-    filters.children.remove(filter)
-
-def root_container_up(root_elem):
-    elem.x_offset += 20
-
-def root_container_down(root_elem):
-    elem.x_offset -= 20
-
-def root_container_left(root_elem):
-    elem.y_offset -= 20
-
-def root_container_right(root_elem):
-    elem.y_offset += 20
-
-def quit_script(elem):
-    Draw.Exit()
+    @staticmethod
+    def delete_layer(elem):
+        layers = elem.find_parent(name='layers')
+        layer = elem.find_parent(name='layer')
+        layers.children.remove(layer)
+    
+    @staticmethod
+    def add_filter(elem):
+        filters_container = elem.find_parent(name='filters_container')
+        filters = filters_container.find_child(name='filters')
+        root_structure = unserialize(UIStructure, UIStructure.filter_structure)
+        filters.add_child_structure(root_structure)
+    
+    @staticmethod
+    def delete_filter(elem):
+        filters = elem.find_parent(name='filters')
+        filter = elem.find_parent(name='filter')
+        filters.children.remove(filter)
+    
+    @staticmethod
+    def root_container_up(root_elem):
+        elem.x_offset += 20
+    
+    @staticmethod
+    def root_container_down(root_elem):
+        elem.x_offset -= 20
+    
+    @staticmethod
+    def root_container_left(root_elem):
+        elem.y_offset -= 20
+    
+    @staticmethod
+    def root_container_right(root_elem):
+        elem.y_offset += 20
+    
+    @staticmethod
+    def quit_script(elem):
+        Draw.Exit()
 
 # ----------------------- UI CONSTRAINTS --------------
 def layer_number_constraint(root_elem):
@@ -287,5 +296,5 @@ def layer_objects_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, globals())
+    app = BlenderApplication(UIStructure, hotkeys, Events, globals())
     app.run()
