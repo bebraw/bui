@@ -2,21 +2,10 @@
 from bui.container import *
 from bui.serializer import unserialize
 
-from bui.blender.element import * # TODO: get rid of this
-
 from structure import *
 
-def test_unserialize():
-    root_container = unserialize(structure_with_uistructure, globals())
-    assert isinstance(root_container, VerticalContainer)
-
-def test_unserialize_valid_minimal_structure():
-    root_container = unserialize(minimal_structure, globals())
-    assert isinstance(root_container, VerticalContainer)
-    assert root_container.width == 400
-
 def test_unserialize_valid_structure_with_vertical_child_container():
-    root_container = unserialize(structure_vertical_container_child, globals())
+    root_container = unserialize(StructureWithVerticalContainerChild())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -31,7 +20,7 @@ def test_unserialize_valid_structure_with_vertical_child_container():
     assert child_container.visible == False
 
 def test_unserialize_valid_structure_with_horizontal_child_container():
-    root_container = unserialize(structure_horizontal_container_child, globals())
+    root_container = unserialize(StructureWithHorizontalContainerChild())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -44,7 +33,7 @@ def test_unserialize_valid_structure_with_horizontal_child_container():
     assert child_container.width == 100
 
 def test_unserialize_valid_structure_with_child_container():
-    root_container = unserialize(structure_with_multiple_containers, globals())
+    root_container = unserialize(StructureWithMultipleContainers())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -60,8 +49,8 @@ def test_unserialize_valid_structure_with_child_container():
     assert isinstance(child_container, VerticalContainer)
     assert child_container.width == 150
 
-def test_unserialize_valid_structure_with_child_container():
-    root_container = unserialize(structure_with_fill_elements, globals())
+def test_unserialize_valid_structure_with_fill_elements():
+    root_container = unserialize(StructureWithFillElements())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -78,7 +67,7 @@ def test_unserialize_valid_structure_with_child_container():
     assert child_element.width == 50
 
 def test_unserialize_valid_structure_with_uistructure():
-    root_container = unserialize(structure_with_uistructure, globals())
+    root_container = unserialize(StructureWithUIStructure())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 300
@@ -95,7 +84,7 @@ def test_unserialize_valid_structure_with_uistructure():
     assert child_element.width == 80
 
 def test_unserialize_valid_structure_with_many_vertical_containers():
-    root_container = unserialize(structure_vertical_container_children, globals())
+    root_container = unserialize(StructureWithVerticalContainerChildren())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -121,7 +110,7 @@ def test_unserialize_valid_structure_with_many_vertical_containers():
     assert child_container.name == 'barbar'
 
 def test_unserialize_valid_structure_for_simple_script():
-    root_container = unserialize(structure_for_simple_script, globals())
+    root_container = unserialize(StructureForSimpleScript())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 400

@@ -2,8 +2,8 @@
 from bui.application import Application
 from bui.container import VerticalContainer
 
-from structure import minimal_structure
+from structure import StructureWithVerticalContainerChild
 
 def test_create_application():
-    app = Application(minimal_structure, '', globals())
+    app = Application(StructureWithVerticalContainerChild(), '', globals())
     #assert file_content is None

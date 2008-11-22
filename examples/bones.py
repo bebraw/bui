@@ -1,32 +1,34 @@
 from Blender import Draw, Scene, Types, Window
 
+from bui.serializer import unserialize
+
 from bui.blender.application import BlenderApplication
 
-# -------------------- UI STRUCTURE ----------------
-ui_structure = '''
-VerticalContainer:
-    width: 400
-    children:
-        - HorizontalContainer:
-            name: test_hori
-            children:
-                - Label:
-                    name: Great bone script v0.1
-                - PushButton:
-                    name: X
-                    tooltip: Quit script
-                    event_handler: quit_script
-                    width: 20
-        - VerticalContainer:
-            name: armature_bones
-'''
+class UIStructure():
+    root_structure = '''
+    VerticalContainer:
+        width: 400
+        children:
+            - HorizontalContainer:
+                name: test_hori
+                children:
+                    - Label:
+                        name: Great bone script v0.1
+                    - PushButton:
+                        name: X
+                        tooltip: Quit script
+                        event_handler: quit_script
+                        width: 20
+            - VerticalContainer:
+                name: armature_bones
+    '''
 
-slider_structure = '''
-Slider:
-    min: 0.0
-    max: 1.0
-    value: 0.5
-'''
+    slider_structure = '''
+    Slider:
+        min: 0.0
+        max: 1.0
+        value: 0.5
+    '''
 
 # ------------------------ HOTKEYS ---------------------
 # TODO: hotkey mapping does not work yet!
@@ -57,7 +59,8 @@ def check_bones_constraint(root_elem):
                     
                     if not bone_elem:
                         armature_bones_elem = root_elem.find_child(name='armature_bones')
-                        new_bone = armature_bones_elem.add_child_structure(slider_structure, globals())
+                        new_bone = unserialize(UIStructure, UIStructure.slider_structure)
+                        armature_bones_elem.add_child_structure(new_bone)
                         new_bone.name = bone_name
                         new_bone.width = 200
                         new_bone.height = 20
@@ -82,5 +85,5 @@ def check_bones_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(ui_structure, hotkeys, globals())
+    app = BlenderApplication(UIStructure, hotkeys, globals())
     app.run()
