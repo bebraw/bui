@@ -30,15 +30,14 @@ class UIStructure():
         value: 0.5
     '''
 
-# ------------------------ HOTKEYS ---------------------
-# TODO: hotkey mapping does not work yet!
 hotkeys = '''
 q: quit_script
 '''
 
-# ------------------------ EVENT HANDLERS --------------
-def quit_script(elem):
-    Draw.Exit()
+class Events():
+    @staticmethod
+    def quit_script(elem):
+        Draw.Exit()
 
 # ----------------- CONSTRAINTS ----------------------
 def check_bones_constraint(root_elem):
@@ -85,5 +84,5 @@ def check_bones_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, globals())
+    app = BlenderApplication(UIStructure, hotkeys, Events, globals())
     app.run()

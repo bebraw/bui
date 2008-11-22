@@ -6,13 +6,13 @@ from serializer import unserialize
 from window import WindowManager
 
 class Application(object):
-    def __init__(self, structure, keys, namespace, element_height=20):
+    def __init__(self, structure, keys, events, namespace, element_height=20):
         self.root_container = unserialize(structure)
         initialize_element_heights(self.root_container, element_height)
         initialize_element_widths(self.root_container)
         
         self.constraint_manager = ConstraintManager(self.root_container, namespace)
-        self.event_manager = EventManager(self.root_container, keys, namespace, element_height)
+        self.event_manager = EventManager(self.root_container, keys, events, element_height)
         self.window_manager = WindowManager()
     
     def run(self):
