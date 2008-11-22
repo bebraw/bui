@@ -2,9 +2,7 @@
 from Blender import Draw
 
 from bui.application import Application
-#from bui.container import *
 
-#from bui.blender.element import *
 from bui.blender.event import BlenderEventManager
 from bui.blender.window import BlenderWindowManager
 
