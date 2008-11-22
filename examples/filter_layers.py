@@ -39,7 +39,7 @@ VerticalContainer:
                     tooltip: Quit script
                     event_handler: quit_script
                     width: 20
-        - EmptyContainer:
+        - Fill:
             height: 10
         - VerticalContainer:
             name: layers
@@ -103,13 +103,13 @@ VerticalContainer:
                         name: filter_structure
                 - HorizontalContainer:
                     children:
-                        - EmptyElement:
+                        - Fill:
                             width: 20
                         - PushButton:
                             name: Add filter
                             tooltip: Add new filter
                             width: 100
-        - EmptyContainer:
+        - Fill:
             height: 10
 '''
 
@@ -119,7 +119,7 @@ VerticalContainer:
     children:
         - HorizontalContainer:
             children:
-                - EmptyElement:
+                - Fill:
                     width: 20
                 - Menu:
                     name: 'Filter type %t|Data %x1|Name %x2|Group %x3' # TODO: refactor numbers out. define menu in different way???
@@ -138,9 +138,9 @@ VerticalContainer:
                     tooltip: Delete filter
                     event_handler: delete_filter
                     width: 20
-                - EmptyElement:
+                - Fill:
                     width: 20
-        - EmptyContainer:
+        - Fill:
             height: 10
 '''
 

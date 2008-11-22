@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from bui.container import *
-from bui.element import EmptyElement
 from bui.serializer import unserialize
 
-from bui.blender.element import *
+from bui.blender.element import * # TODO: get rid of this
 
 from structure import *
 
@@ -62,7 +61,7 @@ def test_unserialize_valid_structure_with_child_container():
     assert child_container.width == 150
 
 def test_unserialize_valid_structure_with_child_container():
-    root_container = unserialize(structure_with_empty_elements, globals())
+    root_container = unserialize(structure_with_fill_elements, globals())
     
     assert isinstance(root_container, VerticalContainer)
     assert root_container.width == 200
@@ -70,12 +69,12 @@ def test_unserialize_valid_structure_with_child_container():
     
     child_element = root_container.children[0]
     
-    assert isinstance(child_element, EmptyElement)
+    assert isinstance(child_element, Fill)
     assert child_element.width == 100
     
     child_element = root_container.children[1]
     
-    assert isinstance(child_element, EmptyElement)
+    assert isinstance(child_element, Fill)
     assert child_element.width == 50
 
 def test_unserialize_valid_structure_with_uistructure():
@@ -92,7 +91,7 @@ def test_unserialize_valid_structure_with_uistructure():
     
     child_element = root_container.children[1]
     
-    assert isinstance(child_element, EmptyElement)
+    assert isinstance(child_element, Fill)
     assert child_element.width == 80
 
 def test_unserialize_valid_structure_with_many_vertical_containers():
@@ -121,32 +120,6 @@ def test_unserialize_valid_structure_with_many_vertical_containers():
     
     assert child_container.name == 'barbar'
 
-'''
-VerticalContainer:
-    name: root_vertical
-    width: 400
-    children:
-        - HorizontalContainer:
-            name: test_hori
-            children:
-                - Label:
-                    name: Test script
-                - PushButton:
-                    name: X
-                    tooltip: Quit script
-                    event_handler: quit_script
-                    width: 20
-        - EmptyContainer:
-            name: empty_cont
-            height: 10
-        - HorizontalContainer:
-            name: last_hori
-            children:
-                - PushButton:
-                    name: Do something
-                    tooltip: Add some tool here
-                    width: 100
-'''
 def test_unserialize_valid_structure_for_simple_script():
     root_container = unserialize(structure_for_simple_script, globals())
     

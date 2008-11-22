@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from bui.abstract import *
 from bui.container import *
-from bui.element import EmptyElement
 
-from structure import minimal_structure, empty_element
+from structure import minimal_structure, fill_element
 
 class TestAbstractObject():
     def test_create_abstract_object(self):
@@ -61,5 +60,5 @@ class TestAbstractContainer():
         assert abstract_container.has_only_container_children() == True
         
         abstract_container2 = AbstractContainer()
-        abstract_container2.add_child_structure(empty_element, globals())
-        assert abstract_container2.has_only_container_children() == False
+        abstract_container2.add_child_structure(fill_element, globals())
+        assert abstract_container2.has_only_container_children() == True

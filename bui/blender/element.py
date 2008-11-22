@@ -5,7 +5,7 @@ try:
 except ImportError:
     pass
 
-from bui.element import AbstractElement
+from bui.abstract import AbstractElement
 
 class AbstractBlenderElement(AbstractElement):
     def __init__(self, **kvargs):

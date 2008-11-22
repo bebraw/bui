@@ -10,7 +10,7 @@ VerticalContainer:
     children:
         - UIStructure:
             name: minimal_structure
-        - EmptyElement:
+        - Fill:
             width: 80
 '''
 
@@ -64,13 +64,13 @@ VerticalContainer:
             width: 150
 '''
 
-structure_with_empty_elements = '''
+structure_with_fill_elements = '''
 VerticalContainer:
     width: 200
     children:
-        - EmptyElement:
+        - Fill:
             width: 100
-        - EmptyElement:
+        - Fill:
             width: 50
 '''
 
@@ -78,16 +78,16 @@ structure_for_event_tests = '''
 VerticalContainer:
     width: 200
     children:
-        - EmptyElement:
+        - Fill:
             name: Add monkey
             width: 40
-        - EmptyElement:
+        - Fill:
             name: Add giraffe
             width: 20
-        - EmptyElement:
+        - Fill:
             name: Delete animals
             event_handler: delete_all
-        - EmptyElement:
+        - Fill:
             event_handler: add_to_ui_structure
 '''
 
@@ -106,8 +106,7 @@ VerticalContainer:
                     tooltip: Quit script
                     event_handler: quit_script
                     width: 20
-        - EmptyContainer:
-            name: empty_cont
+        - Fill:
             height: 10
         - HorizontalContainer:
             name: last_hori
@@ -118,8 +117,8 @@ VerticalContainer:
                     width: 100
 '''
 
-empty_element = '''
-EmptyElement:
+fill_element = '''
+Fill:
     width: 100
 '''
 
