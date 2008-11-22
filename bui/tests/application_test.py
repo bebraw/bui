@@ -5,5 +5,5 @@ from bui.container import VerticalContainer
 from structure import StructureWithVerticalContainerChild
 
 def test_create_application():
-    app = Application(StructureWithVerticalContainerChild(), '', None, globals())
+    app = Application(StructureWithVerticalContainerChild, '')
     #assert file_content is None

@@ -2,17 +2,18 @@
 import sys
 
 class ConstraintManager(object):
-    def __init__(self, root_container, namespace):
+    def __init__(self, root_container, constraints):
         self.root_container = root_container
         
-        self.initialize_constraint_list(namespace)
+        self.initialize_constraint_list(constraints)
     
-    def initialize_constraint_list(self, namespace):
+    def initialize_constraint_list(self, constraints):
         self.constraints = ConstraintContainer()
         
-        for func_name in namespace.keys():
+        for func_name in dir(constraints):
             if func_name.endswith('_constraint'):
-                self.constraints.append(namespace[func_name])
+                constraint = getattr(constraints, func_name)
+                self.constraints.append(constraint)
     
     def check_constraints(self):
         for constraint in self.constraints:
