@@ -40,13 +40,27 @@ class UIStructure():
                         name: Some int number
                         max: 100
             - Fill:
-                height: 200
+                height: 30
             - HorizontalContainer:
                 children:
+                    - Fill:
+                        width: 20
                     - Image:
                         image: Mandril.png
                     - Label:
                         name: Foobar
+                    - Label:
+                        name: Barfoo
+            - Fill:
+                height: 15
+            - HorizontalContainer:
+                children:
+                    - Label:
+                        name: Foofoo
+                    - Number:
+                        name: Some number
+                    - Fill:
+                        width: 50
     '''
 
 hotkeys = '''
