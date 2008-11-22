@@ -68,5 +68,5 @@ class Events():
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, Events, globals())
+    app = BlenderApplication(UIStructure, hotkeys, Events)
     app.run()

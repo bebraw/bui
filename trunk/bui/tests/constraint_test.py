@@ -5,36 +5,44 @@ from bui.constraint import ConstraintContainer, ConstraintManager
 
 root_container_name = 'test_container'
 
-def priority_is_zero_constraint(root_elem):
-    '''priority=0'''
-    assert root_elem == root_container_name
-
-def priority_is_one_constraint(root_elem):
-    '''priority=1'''
-    assert root_elem == root_container_name
-
-def priority_is_two_constraint(root_elem):
-    '''priority=2'''
-    assert root_elem == root_container_name
-
-def priority_is_two_too_constraint(root_elem):
-    '''priority=2'''
-    assert root_elem == root_container_name
-
-def priority_is_negative_constraint(root_elem):
-    '''priority=-3'''
-    assert root_elem == root_container_name
-
-def priority_is_not_int_constraint(root_elem):
-    '''priority=cat'''
-    assert root_elem == root_container_name
-
-def some_constraint(root_elem):
-    assert root_elem == root_container_name
+class Constraints():
+    @staticmethod
+    def priority_is_zero_constraint(root_elem):
+        '''priority=0'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def priority_is_one_constraint(root_elem):
+        '''priority=1'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def priority_is_two_constraint(root_elem):
+        '''priority=2'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def priority_is_two_too_constraint(root_elem):
+        '''priority=2'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def priority_is_negative_constraint(root_elem):
+        '''priority=-3'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def priority_is_not_int_constraint(root_elem):
+        '''priority=cat'''
+        assert root_elem == root_container_name
+    
+    @staticmethod
+    def some_constraint(root_elem):
+        assert root_elem == root_container_name
 
 class TestConstraintManager():
     def setup_method(self, method):
-        self.constraint_manager = ConstraintManager(root_container=root_container_name, namespace=globals())
+        self.constraint_manager = ConstraintManager(root_container_name, Constraints)
         assert len(self.constraint_manager.constraints) == 7
     
     def test_check_constraints(self):
@@ -47,18 +55,18 @@ class TestConstraintContainer():
     def test_get_function_priority(self):
         get_priority = self.constraint_container._get_priority
         
-        assert get_priority(some_constraint) == sys.maxint
-        assert get_priority(priority_is_one_constraint) == 1
-        assert get_priority(priority_is_two_constraint) == 2
-        assert get_priority(priority_is_zero_constraint) == sys.maxint
-        assert get_priority(priority_is_negative_constraint) == sys.maxint
-        assert get_priority(priority_is_not_int_constraint) == sys.maxint
+        assert get_priority(Constraints.some_constraint) == sys.maxint
+        assert get_priority(Constraints.priority_is_one_constraint) == 1
+        assert get_priority(Constraints.priority_is_two_constraint) == 2
+        assert get_priority(Constraints.priority_is_zero_constraint) == sys.maxint
+        assert get_priority(Constraints.priority_is_negative_constraint) == sys.maxint
+        assert get_priority(Constraints.priority_is_not_int_constraint) == sys.maxint
     
     def test_append(self):
-        self.constraint_container.append(some_constraint)
+        self.constraint_container.append(Constraints.some_constraint)
         
         assert len(self.constraint_container) == 1
-        assert self.constraint_container[0] == some_constraint
+        assert self.constraint_container[0] == Constraints.some_constraint
     
     def test_append_invalid(self):
         def not_valid():
@@ -70,34 +78,38 @@ class TestConstraintContainer():
         assert self.constraint_container[0] == not_valid
     
     def test_append_with_priority(self):
-        self.constraint_container.append(priority_is_two_constraint)
-        self.constraint_container.append(some_constraint)
-        self.constraint_container.append(priority_is_one_constraint)
+        self.constraint_container.append(Constraints.priority_is_two_constraint)
+        self.constraint_container.append(Constraints.some_constraint)
+        self.constraint_container.append(Constraints.priority_is_one_constraint)
         
         assert len(self.constraint_container) == 3
-        assert self.constraint_container[0] == priority_is_one_constraint
-        assert self.constraint_container[1] == priority_is_two_constraint
-        assert self.constraint_container[2] == some_constraint
+        assert self.constraint_container[0] == Constraints.priority_is_one_constraint
+        assert self.constraint_container[1] == Constraints.priority_is_two_constraint
+        assert self.constraint_container[2] == Constraints.some_constraint
     
     def test_append_with_same_priority(self):
-        self.constraint_container.append(priority_is_two_constraint)
-        self.constraint_container.append(priority_is_two_too_constraint)
+        self.constraint_container.append(Constraints.priority_is_two_constraint)
+        self.constraint_container.append(Constraints.priority_is_two_too_constraint)
         
         assert len(self.constraint_container) == 2
-        assert self.constraint_container[0] == priority_is_two_constraint
-        assert self.constraint_container[1] == priority_is_two_too_constraint
+        assert self.constraint_container[0] == Constraints.priority_is_two_constraint
+        assert self.constraint_container[1] == Constraints.priority_is_two_too_constraint
     
     def test_append_with_negative_priority(self):
-        self.constraint_container.append(priority_is_two_constraint)
-        self.constraint_container.append(priority_is_negative_constraint)
+        self.constraint_container.append(Constraints.priority_is_two_constraint)
+        self.constraint_container.append(Constraints.priority_is_negative_constraint)
         
         assert len(self.constraint_container) == 2
-        assert self.constraint_container[0] == priority_is_two_constraint
-        assert self.constraint_container[1] == priority_is_negative_constraint
+        assert self.constraint_container[0] == Constraints.priority_is_two_constraint
+        assert self.constraint_container[1] == Constraints.priority_is_negative_constraint
     
     def test_container_iter(self):
-        test_funcs = (priority_is_two_constraint, priority_is_not_int_constraint, priority_is_one_constraint, )
-        expected_funcs = (priority_is_one_constraint, priority_is_two_constraint, priority_is_not_int_constraint)
+        test_funcs = (Constraints.priority_is_two_constraint,
+                      Constraints.priority_is_not_int_constraint,
+                      Constraints.priority_is_one_constraint, )
+        expected_funcs = (Constraints.priority_is_one_constraint,
+                          Constraints.priority_is_two_constraint,
+                          Constraints.priority_is_not_int_constraint)
         self.constraint_container.append(test_funcs[0])
         self.constraint_container.append(test_funcs[1])
         self.constraint_container.append(test_funcs[2])
