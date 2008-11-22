@@ -7,7 +7,7 @@ from window import WindowManager
 
 class Application(object):
     def __init__(self, structure, keys, namespace, element_height=20):
-        self.root_container = unserialize(structure, namespace)
+        self.root_container = unserialize(structure)
         initialize_element_heights(self.root_container, element_height)
         initialize_element_widths(self.root_container)
         

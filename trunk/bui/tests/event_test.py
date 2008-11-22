@@ -5,7 +5,7 @@ from bui.container import *
 from bui.event import EventManager
 from bui.serializer import unserialize
 
-from structure import minimal_structure, structure_for_event_tests, structure_keys
+from structure import MinimalStructure, StructureForEventTests, structure_keys
 
 bui.event.PRINT_BUTTON_EVENT_NAMES = True
 
@@ -26,11 +26,12 @@ def release_s(elem):
 
 def add_to_ui_structure(elem):
     root_elem = elem.find_root_element()
-    root_elem.add_child_structure(minimal_structure, globals())
+    structure_root = unserialize(MinimalStructure())
+    root_elem.add_child_structure(structure_root)
 
 class TestEventManager():
     def setup_method(self, method):
-        self.root_container = unserialize(structure_for_event_tests, globals())
+        self.root_container = unserialize(StructureForEventTests())
         self.add_monkey_elem = self.root_container.children[0]
         self.delete_all_elem = self.root_container.children[2]
         self.add_to_ui_structure = self.root_container.children[3]

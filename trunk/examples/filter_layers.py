@@ -2,6 +2,7 @@
 from Blender import Draw, Scene, Window
 
 from bui.blender.application import BlenderApplication
+from bui.serializer import unserialize
 
 from object_filter import ObjectFilter
 
@@ -25,124 +26,124 @@ def assign_all_objects_to_layer(layer):
     for ob in scn.objects:
         ob.layers = [layer, ]
 
-# -------------------- UI STRUCTURE ----------------
-ui_structure = '''
-VerticalContainer:
-    width: 400
-    children:
-        - HorizontalContainer:
-            children:
-                - Label:
-                    name: Filter layers v0.9
-                - PushButton:
-                    name: X
-                    tooltip: Quit script
-                    event_handler: quit_script
-                    width: 20
-        - Fill:
-            height: 10
-        - VerticalContainer:
-            name: layers
-            children:
-                - UIStructure:
-                    name: layer_structure
-        - HorizontalContainer:
-            children:
-                - PushButton:
-                    name: Add layer
-                    tooltip: Add new layer
-                    width: 100
-'''
-
-layer_structure = '''
-VerticalContainer:
-    name: layer
-    children:
-        - HorizontalContainer:
-            children:
-                - ToggleButton:
-                    variable: layer_number
-                    event_handler: toggle_layer_number
-                    width: 20
-                - TextBox:
-                    name: Name
-                    value: Layer
-                    tooltip: Please enter layer name here
-                    max_input_length: 40
-                - ToggleButton:
-                    name: V
-                    value: True
-                    tooltip: Visibility
-                    width: 20
-                - ToggleButton:
-                    name: S
-                    value: True
-                    tooltip: Selectability
-                    width: 20
-                - ToggleButton:
-                    name: R
-                    value: True
-                    tooltip: Renderability
-                    width: 20
-                - ToggleButton:
-                    variable: show_filter
-                    tooltip: Show/hide filter
-                    width: 80
-                - PushButton:
-                    name: X
-                    tooltip: Delete layer
-                    event_handler: delete_layer
-                    width: 20
-        - VerticalContainer:
-            name: filters_container
-            children:
-                - VerticalContainer:
-                    name: filters
-                    children:
+class UIStructure():
+    root_structure = '''
+    VerticalContainer:
+        width: 400
+        children:
+            - HorizontalContainer:
+                children:
+                    - Label:
+                        name: Filter layers v0.9
+                    - PushButton:
+                        name: X
+                        tooltip: Quit script
+                        event_handler: quit_script
+                        width: 20
+            - Fill:
+                height: 10
+            - VerticalContainer:
+                name: layers
+                children:
                     - UIStructure:
-                        name: filter_structure
-                - HorizontalContainer:
-                    children:
-                        - Fill:
-                            width: 20
-                        - PushButton:
-                            name: Add filter
-                            tooltip: Add new filter
-                            width: 100
-        - Fill:
-            height: 10
-'''
-
-filter_structure = '''
-VerticalContainer:
-    name: filter
-    children:
-        - HorizontalContainer:
-            children:
-                - Fill:
-                    width: 20
-                - Menu:
-                    name: 'Filter type %t|Data %x1|Name %x2|Group %x3' # TODO: refactor numbers out. define menu in different way???
-                    value: 1
-                    variable: filter_type
-                    tooltip: Select filter type
-                    width: 80
-                - TextBox:
-                    name: "Filter"
-                    value: ""
-                    variable: filter_name
-                    tooltip: Enter filter clause
-                    max_input_length: 40
-                - PushButton:
-                    name: X
-                    tooltip: Delete filter
-                    event_handler: delete_filter
-                    width: 20
-                - Fill:
-                    width: 20
-        - Fill:
-            height: 10
-'''
+                        name: layer_structure
+            - HorizontalContainer:
+                children:
+                    - PushButton:
+                        name: Add layer
+                        tooltip: Add new layer
+                        width: 100
+    '''
+    
+    layer_structure = '''
+    VerticalContainer:
+        name: layer
+        children:
+            - HorizontalContainer:
+                children:
+                    - ToggleButton:
+                        variable: layer_number
+                        event_handler: toggle_layer_number
+                        width: 20
+                    - TextBox:
+                        name: Name
+                        value: Layer
+                        tooltip: Please enter layer name here
+                        max_input_length: 40
+                    - ToggleButton:
+                        name: V
+                        value: True
+                        tooltip: Visibility
+                        width: 20
+                    - ToggleButton:
+                        name: S
+                        value: True
+                        tooltip: Selectability
+                        width: 20
+                    - ToggleButton:
+                        name: R
+                        value: True
+                        tooltip: Renderability
+                        width: 20
+                    - ToggleButton:
+                        variable: show_filter
+                        tooltip: Show/hide filter
+                        width: 80
+                    - PushButton:
+                        name: X
+                        tooltip: Delete layer
+                        event_handler: delete_layer
+                        width: 20
+            - VerticalContainer:
+                name: filters_container
+                children:
+                    - VerticalContainer:
+                        name: filters
+                        children:
+                        - UIStructure:
+                            name: filter_structure
+                    - HorizontalContainer:
+                        children:
+                            - Fill:
+                                width: 20
+                            - PushButton:
+                                name: Add filter
+                                tooltip: Add new filter
+                                width: 100
+            - Fill:
+                height: 10
+    '''
+    
+    filter_structure = '''
+    VerticalContainer:
+        name: filter
+        children:
+            - HorizontalContainer:
+                children:
+                    - Fill:
+                        width: 20
+                    - Menu:
+                        name: 'Filter type %t|Data %x1|Name %x2|Group %x3' # TODO: refactor numbers out. define menu in different way???
+                        value: 1
+                        variable: filter_type
+                        tooltip: Select filter type
+                        width: 80
+                    - TextBox:
+                        name: "Filter"
+                        value: ""
+                        variable: filter_name
+                        tooltip: Enter filter clause
+                        max_input_length: 40
+                    - PushButton:
+                        name: X
+                        tooltip: Delete filter
+                        event_handler: delete_filter
+                        width: 20
+                    - Fill:
+                        width: 20
+            - Fill:
+                height: 10
+    '''
 
 # ------------------------ HOTKEYS ---------------------
 hotkeys = '''
@@ -165,7 +166,8 @@ def toggle_layer_number(elem):
 def add_layer(elem):
     root = elem.find_root_element()
     layers = root.find_child(name='layers')
-    layers.add_child_structure(layer_structure, globals())
+    root_structure = unserialize(UIStructure, UIStructure.layer_structure)
+    layers.add_child_structure(root_structure)
 
 def delete_layer(elem):
     layers = elem.find_parent(name='layers')
@@ -175,7 +177,8 @@ def delete_layer(elem):
 def add_filter(elem):
     filters_container = elem.find_parent(name='filters_container')
     filters = filters_container.find_child(name='filters')
-    filters.add_child_structure(filter_structure, globals())
+    root_structure = unserialize(UIStructure, UIStructure.filter_structure)
+    filters.add_child_structure(root_structure)
 
 def delete_filter(elem):
     filters = elem.find_parent(name='filters')
@@ -284,5 +287,5 @@ def layer_objects_constraint(root_elem):
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(ui_structure, hotkeys, globals())
+    app = BlenderApplication(UIStructure, hotkeys, globals())
     app.run()

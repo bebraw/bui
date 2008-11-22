@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from bui.abstract import *
 from bui.container import *
+from bui.serializer import unserialize
 
-from structure import minimal_structure, fill_element
+from structure import FillElement, MinimalStructure
 
 class TestAbstractObject():
     def test_create_abstract_object(self):
@@ -46,7 +47,8 @@ class TestAbstractContainer():
     def test_add_child_structure(self):
         abstract_container = AbstractContainer()
         
-        abstract_container.add_child_structure(minimal_structure, globals())
+        structure_root = unserialize(MinimalStructure())
+        abstract_container.add_child_structure(structure_root)
         
         assert len(abstract_container.children) == 1
         assert abstract_container.children[0].width == 400
@@ -56,9 +58,11 @@ class TestAbstractContainer():
         abstract_container = AbstractContainer()
         assert abstract_container.has_only_container_children() == False
         
-        abstract_container.add_child_structure(minimal_structure, globals())
+        structure_root = unserialize(MinimalStructure())
+        abstract_container.add_child_structure(structure_root)
         assert abstract_container.has_only_container_children() == True
         
         abstract_container2 = AbstractContainer()
-        abstract_container2.add_child_structure(fill_element, globals())
+        structure_root = unserialize(FillElement())
+        abstract_container2.add_child_structure(structure_root)
         assert abstract_container2.has_only_container_children() == True

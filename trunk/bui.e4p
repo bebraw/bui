@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.2.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-11-16, 20:24:36 -->
+<!-- Saved: 2008-11-22, 14:09:15 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.2">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -24,10 +24,6 @@
     <Source>
       <Dir>bui</Dir>
       <Name>abstract.py</Name>
-    </Source>
-    <Source>
-      <Dir>bui</Dir>
-      <Name>element.py</Name>
     </Source>
     <Source>
       <Dir>bui</Dir>
@@ -121,11 +117,6 @@
       <Dir>bui</Dir>
       <Dir>tests</Dir>
       <Name>valid.yaml</Name>
-    </Source>
-    <Source>
-      <Dir>bui</Dir>
-      <Dir>tests</Dir>
-      <Name>element_test.py</Name>
     </Source>
     <Source>
       <Dir>bui</Dir>
@@ -308,10 +299,6 @@
     <Other>
       <Dir>bui</Dir>
       <Name>abstract.py</Name>
-    </Other>
-    <Other>
-      <Dir>bui</Dir>
-      <Name>element.py</Name>
     </Other>
     <Other>
       <Dir>bui</Dir>

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from tree import TreeChild, TreeParent
-from serializer import unserialize
 
 class AbstractObject(object):
     def __init__(self, **kvargs):
@@ -38,12 +37,9 @@ class AbstractContainer(TreeChild, TreeParent, AbstractAttributes, AbstractObjec
         self.y_offset = 0
         super(AbstractContainer, self).__init__(**kvargs)
     
-    def add_child_structure(self, structure, namespace):
-        structure_root = unserialize(structure, namespace)
+    def add_child_structure(self, structure_root):
         structure_root.parent = self
         self.children.append(structure_root)
-        
-        return structure_root
     
     def has_only_container_children(self):
         if self.children:
