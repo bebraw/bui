@@ -39,6 +39,14 @@ class UIStructure():
                     - IntNumber:
                         name: Some int number
                         max: 100
+            - Fill:
+                height: 200
+            - HorizontalContainer:
+                children:
+                    - Image:
+                        image: Mandril.png
+                    - Label:
+                        name: Foobar
     '''
 
 hotkeys = '''
