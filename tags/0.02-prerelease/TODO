@@ -1,0 +1,15 @@
+-add scrollsbar(s) and panel(s)?
+-image/icon element? (better than S etc.)
+-add more UI elements? (implement rest of Blender's elements and add a couple of new ones?)
+-separate menu options from name and make option numbers implicit?
+-improve mapping between filtering type option menu and filter backend!
+-drag and drop arch
+-fade (animate container bgs (active highlighted) based on time delta since active)
+-add auto width/height? (+ min and max)
+-add relative width/height?
+-figure out how to handle regular events (add mapping!)
+-create simple window manager based on container concept
+-implement node element (-> node editor :) )
+-serialize (for ui persistency)
+-worlds (needed for nodes)
+-put examples to /examples (/blender etc.)
