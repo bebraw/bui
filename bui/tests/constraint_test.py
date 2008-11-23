@@ -53,7 +53,7 @@ class TestConstraintContainer():
         self.constraint_container = ConstraintContainer()
     
     def test_get_function_priority(self):
-        get_priority = self.constraint_container._get_priority
+        get_priority = self.constraint_container.get_priority
         
         assert get_priority(Constraints.some_constraint) == sys.maxint
         assert get_priority(Constraints.priority_is_one_constraint) == 1

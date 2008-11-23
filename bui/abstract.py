@@ -11,12 +11,12 @@ class AbstractObject(object):
         super(AbstractObject, self).__init__(**kvargs)
         
         for suitable_value in self.__dict__:
-            arg_value = self._check_arg(kvargs, suitable_value)
+            arg_value = self.__check_arg(kvargs, suitable_value)
             
             if arg_value is not None:
                 self.__dict__[suitable_value] = arg_value
     
-    def _check_arg(self, dict, arg):
+    def __check_arg(self, dict, arg):
         if dict.has_key(arg):
             return dict[arg]
 
