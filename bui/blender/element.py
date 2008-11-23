@@ -97,18 +97,15 @@ class Image(AbstractBlenderElement):
             self.image_block = Blender.Image.Load(file_path)
             width, height = self.image_block.getSize()
             
-            if self.height:
-                self.y_zoom = float(self.height) / height # FIXME: does not take parent height in count!!!
-            else:
-                self.height = height
-            
-            if self.width:
-                self.x_zoom = float(self.width) / width # FIXME: does not take parent width in count!!!
-            else:
-                self.width = width
+            self.height = self.height if self.height else height
+            self.width = self.width if self.width else width
     
     def render(self, coord):
         if self.image_block:
+            width, height = self.image_block.getSize()
+            self.x_zoom = float(self.width) / width
+            self.y_zoom = float(self.height) / height
+            
             BGL.glEnable(BGL.GL_BLEND)
             BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA) 
             

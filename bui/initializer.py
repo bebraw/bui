@@ -27,8 +27,7 @@ def initialize_element_widths(elem): # test this!
             calculate_children_widths(elem, elem.children, elem.width)
     
     for child in elem.children:
-        if isinstance(child, AbstractContainer):
-            initialize_element_widths(child)
+        initialize_element_widths(child)
 
 def calculate_children_widths(elem, children, width):
     children_widths = len(children)*[None]
