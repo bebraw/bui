@@ -4,7 +4,7 @@ from parser import read_yaml
 
 from blender.element import * # FIXME: nasty dependency to have
 
-def unserialize(document_container, document=None): # need to make this work with substructures too!!!
+def unserialize(document_container, document=None):
     def unserialize_structure(document_container, current_object, args):
         if args.has_key('children'):
             for child in args['children']:
