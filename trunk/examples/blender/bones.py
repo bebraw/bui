@@ -28,6 +28,9 @@ class UIStructure():
         min: 0.0
         max: 1.0
         value: 0.5
+        height: 20
+        width: 200
+        event_handler: test_handler
     '''
 
 hotkeys = '''
@@ -38,6 +41,12 @@ class Events():
     @staticmethod
     def quit_script(elem):
         Draw.Exit()
+    
+    @staticmethod
+    def test_handler(elem):
+        print 'now in test handler'
+        print elem.value
+
 
 class Constraints():
     @staticmethod
@@ -62,8 +71,6 @@ class Constraints():
                             new_bone = unserialize(UIStructure, UIStructure.slider_structure)
                             armature_bones_elem.add_child_structure(new_bone)
                             new_bone.name = bone_name
-                            new_bone.width = 200
-                            new_bone.height = 20
                 
                 # check if a bone has been removed
                 armature_bones = root_elem.find_child(name='armature_bones')
