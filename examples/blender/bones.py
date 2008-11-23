@@ -39,50 +39,51 @@ class Events():
     def quit_script(elem):
         Draw.Exit()
 
-# ----------------- CONSTRAINTS ----------------------
-def check_bones_constraint(root_elem):
-    scene = Scene.GetCurrent() 
-    active = scene.objects.active     
-    active_data = active.getData() 
-    
-    if type(active_data) == Types.ArmatureType: 
-        if Window.PoseMode() == True: 
-            armature_object = active 
-            armature_data = armature_object.getData() 
-            p = armature_object.getPose() 
-            
-            # check if a bone has to be added
-            for bone_name in p.bones.keys(): 
-                if bone_name[:3] == "SLI":
-                    bone_elem = root_elem.find_child(name=bone_name)
+class Constraints():
+    @staticmethod
+    def check_bones_constraint(root_elem):
+        scene = Scene.GetCurrent() 
+        active = scene.objects.active     
+        active_data = active.getData() 
+        
+        if type(active_data) == Types.ArmatureType: 
+            if Window.PoseMode() == True: 
+                armature_object = active 
+                armature_data = armature_object.getData() 
+                p = armature_object.getPose() 
+                
+                # check if a bone has to be added
+                for bone_name in p.bones.keys(): 
+                    if bone_name[:3] == "SLI":
+                        bone_elem = root_elem.find_child(name=bone_name)
+                        
+                        if not bone_elem:
+                            armature_bones_elem = root_elem.find_child(name='armature_bones')
+                            new_bone = unserialize(UIStructure, UIStructure.slider_structure)
+                            armature_bones_elem.add_child_structure(new_bone)
+                            new_bone.name = bone_name
+                            new_bone.width = 200
+                            new_bone.height = 20
+                
+                # check if a bone has been removed
+                armature_bones = root_elem.find_child(name='armature_bones')
+                elems_to_remove = []
+                
+                for armature_bone in armature_bones.children:
+                    found_bone = False
                     
-                    if not bone_elem:
-                        armature_bones_elem = root_elem.find_child(name='armature_bones')
-                        new_bone = unserialize(UIStructure, UIStructure.slider_structure)
-                        armature_bones_elem.add_child_structure(new_bone)
-                        new_bone.name = bone_name
-                        new_bone.width = 200
-                        new_bone.height = 20
-            
-            # check if a bone has been removed
-            armature_bones = root_elem.find_child(name='armature_bones')
-            elems_to_remove = []
-            
-            for armature_bone in armature_bones.children:
-                found_bone = False
+                    for bone_name in p.bones.keys():
+                        if armature_bone.name == bone_name:
+                            found_bone = True
+                            break
+                    
+                    if not found_bone:
+                        elems_to_remove.append(armature_bone)
                 
-                for bone_name in p.bones.keys():
-                    if armature_bone.name == bone_name:
-                        found_bone = True
-                        break
-                
-                if not found_bone:
-                    elems_to_remove.append(armature_bone)
-            
-            for elem in elems_to_remove:
-                armature_bones.children.remove(elem)
+                for elem in elems_to_remove:
+                    armature_bones.children.remove(elem)
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, Events)
+    app = BlenderApplication(UIStructure, hotkeys, Events, Constraints)
     app.run()
