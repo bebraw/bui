@@ -78,6 +78,12 @@ class IntNumber(AbstractBlenderElement):
         self.number = Draw.Number(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   int(self.value), int(self.min), int(self.max), self.tooltip, self.update_value)
 
+def load_image(root_dir, file_name):
+    file_path = find_file_path(root_dir, file_name)
+    
+    if file_path:
+        return Blender.Image.Load(file_path)
+
 class Image(AbstractBlenderElement):
     def __init__(self, **kvargs):
         self.file = ''
@@ -91,10 +97,11 @@ class Image(AbstractBlenderElement):
         super(Image, self).__init__(**kvargs)
         
         uscriptsdir = Blender.Get('uscriptsdir')
-        file_path = find_file_path(uscriptsdir, self.file)
-        
-        if file_path:
-            self.image_block = Blender.Image.Load(file_path)
+        self.image_block = load_image(uscriptsdir, self.file)
+        self.__set_element_dimensions()
+    
+    def __set_element_dimensions(self):
+        if self.image_block:
             width, height = self.image_block.getSize()
             
             self.height = self.height if self.height else height
@@ -114,3 +121,22 @@ class Image(AbstractBlenderElement):
                        self.clip_width, self.clip_height)
             
             BGL.glDisable(BGL.GL_BLEND)
+
+class Icon():
+    def __init__(self):
+        self.file = 'blenderbuttons.png'
+        super(Icon, self).__init__(**kvargs)
+        
+        uscriptsdir = Blender.Get('uscriptsdir')
+        self.image_block = load_image(uscriptsdir, self.file)
+        # should load icons file to Image
+        # user should be able to reference to icon (3dviewport, left_triangle, solid, smooth, potato, ...)
+        # these should be defined in icons.py (just a list. map name to real icon based on location -> offsets)
+        # so i need to generate icons.py
+        # and add icon param
+        # should Icon be derived from Image??? or should it contain Image???
+    
+    def render(self, coord):
+        pass
+        # should calc offset here
+        # and render the icon of course

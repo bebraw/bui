@@ -32,7 +32,7 @@ class EventManager(object):
         self.max_event_id = 1
         
         self.construct_element_event_ids(self.root_container)
-        self._construct_key_event_ids(keys)
+        self.construct_key_event_ids(keys)
     
     def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
@@ -49,11 +49,11 @@ class EventManager(object):
                             event_handler = getattr(self.events, handler_name)
                 
                 if event_handler:
-                    self._add_element_event(child, event_handler)
+                    self.__add_element_event(child, event_handler)
                 
                 self.construct_element_event_ids(child)
     
-    def _add_element_event(self, elem, handler):
+    def __add_element_event(self, elem, handler):
         for element_event in self.element_events.values():
             if element_event.element is elem and element_event.handler is handler:
                 return
@@ -62,7 +62,7 @@ class EventManager(object):
         self.element_events[self.max_event_id] = ElementEvent(elem, handler)
         self.max_event_id += 1
     
-    def _construct_key_event_ids(self, keys, key_mapping=None):
+    def construct_key_event_ids(self, keys, key_mapping=None):
         keys_structure = read_yaml(keys)
         
         if isinstance(keys_structure, dict):

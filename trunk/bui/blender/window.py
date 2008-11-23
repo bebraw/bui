@@ -4,7 +4,7 @@ from Blender import Window
 from bui.window import WindowManager
 
 class BlenderWindowManager(WindowManager):
-    def _get_window_coords(self):
+    def get_window_coords(self):
         win_id = Window.GetAreaID()
         win_data = Window.GetScreenInfo()
         

@@ -16,5 +16,5 @@ class BlenderEventManager(EventManager):
         Window.Redraw(Types.VIEW3D) # TODO: too specific?
         Window.Redraw(Types.SCRIPT)
     
-    def _construct_key_event_ids(self, keys, key_mapping=None):
-        super(BlenderEventManager, self)._construct_key_event_ids(keys, BLENDER_KEYS)
+    def construct_key_event_ids(self, keys, key_mapping=None):
+        super(BlenderEventManager, self).construct_key_event_ids(keys, BLENDER_KEYS)

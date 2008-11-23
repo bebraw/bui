@@ -41,7 +41,15 @@ class ConstraintContainer(object):
             for func in funcs:
                 yield func
     
-    def _get_priority(self, func):
+    def append(self, func):
+        priority = self.get_priority(func)
+        
+        if self.constraints.has_key(priority):
+            self.constraints[priority].append(func)
+        else:
+            self.constraints[priority] = [func, ]
+    
+    def get_priority(self, func):
         doc_str = func.__doc__
         
         if doc_str:
@@ -54,11 +62,3 @@ class ConstraintContainer(object):
                 pass
         
         return sys.maxint
-    
-    def append(self, func):
-        priority = self._get_priority(func)
-        
-        if self.constraints.has_key(priority):
-            self.constraints[priority].append(func)
-        else:
-            self.constraints[priority] = [func, ]
