@@ -11,6 +11,18 @@ class UIStructure():
             - HorizontalContainer:
                 name: test_hori
                 children:
+                    - Icon:
+                        name: blender
+                    - Icon:
+                        name: sequence
+                        height: 40
+                    - Icon:
+                        name: action
+                        width: 30
+                    - Icon:
+                        name: node
+                        height: 40
+                        width: 40
                     - Label:
                         name: Test script
                     - PushButton:
