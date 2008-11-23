@@ -1,3 +1,4 @@
+import bpy
 from Blender import Draw, Scene, Types, Window
 
 from bui.serializer import unserialize
@@ -46,7 +47,11 @@ class Events():
     def test_handler(elem):
         print 'now in test handler'
         print elem.value
-
+        try:
+            ob = bpy.data.objects[elem.name]
+            ob.LocZ = elem.value
+        except:
+            pass
 
 class Constraints():
     @staticmethod
