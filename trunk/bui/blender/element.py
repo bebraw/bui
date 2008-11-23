@@ -9,6 +9,8 @@ except ImportError:
 
 from bui.abstract import AbstractElement
 
+from icons import BLENDER_ICONS
+
 # TODO: move to utils at some point!
 def find_file_path(root_dir, file_name):
     """ Returns path to given file_name with file_name appended. """
@@ -84,6 +86,21 @@ def load_image(root_dir, file_name):
     if file_path:
         return Blender.Image.Load(file_path)
 
+# TODO: move to utils
+def enable_alpha(func):
+    def wrapper(self,*args,**kvargs):
+        BGL.glEnable(BGL.GL_BLEND)
+        BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA)
+        try:
+            return func(self,*args,**kvargs)
+        finally:
+            BGL.glDisable(BGL.GL_BLEND)
+    
+    wrapper.__name__ = func.__name__
+    wrapper.__dict__ = func.__dict__
+    wrapper.__doc__ = func.__doc__
+    return wrapper
+
 class Image(AbstractBlenderElement):
     def __init__(self, **kvargs):
         self.file = ''
@@ -107,36 +124,38 @@ class Image(AbstractBlenderElement):
             self.height = self.height if self.height else height
             self.width = self.width if self.width else width
     
+    @enable_alpha
     def render(self, coord):
         if self.image_block:
             width, height = self.image_block.getSize()
             self.x_zoom = float(self.width) / width
             self.y_zoom = float(self.height) / height
             
-            BGL.glEnable(BGL.GL_BLEND)
-            BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA) 
-            
             Draw.Image(self.image_block, coord.x, coord.y - self.height,
                        self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
                        self.clip_width, self.clip_height)
-            
-            BGL.glDisable(BGL.GL_BLEND)
 
-class Icon():
-    def __init__(self):
+class Icon(AbstractBlenderElement):
+    def __init__(self, **kvargs):
         self.file = 'blenderbuttons.png'
         super(Icon, self).__init__(**kvargs)
         
         uscriptsdir = Blender.Get('uscriptsdir')
         self.image_block = load_image(uscriptsdir, self.file)
-        # should load icons file to Image
-        # user should be able to reference to icon (3dviewport, left_triangle, solid, smooth, potato, ...)
-        # these should be defined in icons.py (just a list. map name to real icon based on location -> offsets)
-        # so i need to generate icons.py
-        # and add icon param
-        # should Icon be derived from Image??? or should it contain Image???
     
+    @enable_alpha
     def render(self, coord):
-        pass
-        # should calc offset here
-        # and render the icon of course
+        """ Adapted from txtPyBrowser114j.py by Remigiusz Fiedler """
+        def get_icon_position(index):
+            row = index / 25
+            col = index - (row * 25)
+            return row, col
+        
+        index = BLENDER_ICONS.index(self.name)
+        row, col = get_icon_position(index)
+        dx, dy, = 20, 21
+        clipx = col * dx + 3
+        clipy = row * dy + 3
+        clipw, cliph = 15,15
+        
+        Draw.Image(self.image_block, coord.x, coord.y - dy, 1.0, 1.0, clipx, clipy, clipw, cliph)
