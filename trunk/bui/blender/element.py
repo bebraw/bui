@@ -79,7 +79,7 @@ class Slider(AbstractBlenderElement):
         super(Slider, self).__init__(**kvargs)
     
     def render(self, coord):
-        self.slider = Draw.Slider(self.name, self.event, coord.x, coord.y - self.height, self.width, self.height,
+        self.slider = Draw.Slider(self.name + ': ', self.event, coord.x, coord.y - self.height, self.width, self.height,
                                   self.value, self.min, self.max, False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
