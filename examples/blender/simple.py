@@ -74,6 +74,10 @@ class UIStructure():
                         name: Some number
                     - Fill:
                         width: 50
+                    #- Normal:
+                    #    width: 50
+                    - ColorPicker:
+                        width: 50
             - Fill:
                 height: 15
             - HorizontalContainer:
