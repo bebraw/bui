@@ -64,6 +64,14 @@ class UIStructure():
                     - Image:
                        file: Mandril.png
                        height: 100
+            - HorizontalContainer:
+                children:
+                    - Label:
+                       name: 'SVG image:'
+                    - Image:
+                       file: home.svg
+                       height: 100
+                       width: 200
             - Fill:
                 height: 15
             - HorizontalContainer:

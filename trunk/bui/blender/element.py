@@ -2,6 +2,12 @@
 import os
 
 try:
+    import cairo
+    import rsvg
+except ImportError:
+    print "Missing cairo or rsvg. Image with svg extension won't work!"
+
+try:
     import Blender
     from Blender import BGL, Draw
 except ImportError:
@@ -145,8 +151,47 @@ def enable_alpha(func):
     wrapper.__doc__ = func.__doc__
     return wrapper
 
+# TODO: move to utils
+def get_icons_dir():
+    return Blender.Get('tempdir')
+    #return os.path.join(tempdir, 'tmp_icons')
+
+# TODO: move to utils
+def change_extension(file_name, new_extension):
+    extension_index = file_name.rfind('.')
+    base_name = file_name[:extension_index]
+    return base_name + '.' + new_extension
+
+# TODO: move to utils
+def convert_svg_to_png(source_file, target_file, width, height):
+    """ Adapted from http://guillaume.segu.in/blog/code/43/svg-to-png/ """
+    svg = rsvg.Handle(file=source_file)
+    
+    if width:
+        ratio = float(width) / svg.props.width
+        height = int(ratio * svg.props.height)
+    else:
+        width = svg.props.width
+    
+    if height:
+        ratio = float(height) / svg.props.height
+        width = int(ratio * svg.props.width)
+    else:
+        height = svg.props.height
+    
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    cr = cairo.Context(surface)
+    
+    wscale = float(width) / svg.props.width
+    hscale = float(height) / svg.props.height
+    cr.scale(wscale, hscale)
+    
+    svg.render_cairo(cr)
+    surface.write_to_png(target_file)
+
 class Image(AbstractBlenderElement):
     def __init__(self, **kvargs):
+        self.dir = Blender.Get('uscriptsdir')
         self.file = ''
         self.x_zoom = 1.0
         self.y_zoom = 1.0
@@ -157,11 +202,24 @@ class Image(AbstractBlenderElement):
         self.image_block = None
         super(Image, self).__init__(**kvargs)
         
-        uscriptsdir = Blender.Get('uscriptsdir')
-        self.image_block = load_image(uscriptsdir, self.file)
-        self.__set_element_dimensions()
+        # TODO: it would be safer to check the file header
+        if self.file.endswith('svg'):
+            self.dir = get_icons_dir()
+            
+            source_dir = Blender.Get('uscriptsdir')
+            svg_path = find_file_path(source_dir, self.file)
+            
+            png_name = change_extension(self.file, 'png')
+            png_path = os.path.join(self.dir, png_name)
+            
+            convert_svg_to_png(svg_path, png_path, self.width, self.height)
+            
+            self.file = png_name # use png version from now on
+        
+        self.image_block = load_image(self.dir, self.file)
+        self.set_element_dimensions()
     
-    def __set_element_dimensions(self):
+    def set_element_dimensions(self):
         if self.image_block:
             width, height = self.image_block.getSize()
             
