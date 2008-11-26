@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.2.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-11-23, 11:26:18 -->
+<!-- Saved: 2008-11-25, 19:59:16 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.2">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -255,6 +255,11 @@
       <Dir>bui</Dir>
       <Dir>blender</Dir>
       <Name>icons.py</Name>
+    </Source>
+    <Source>
+      <Dir>bui</Dir>
+      <Dir>blender</Dir>
+      <Name>utils.py</Name>
     </Source>
   </Sources>
   <Forms>

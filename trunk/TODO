@@ -1,15 +1,15 @@
+-implement state events (on_mouse_over etc.). this means that elements should know their x, y coords!
+-widgets (needed for nodes, panels, ...)
 -add scrollsbar(s) and panel(s)?
--image/icon element? (better than S etc.)
--add more UI elements? (implement rest of Blender's elements and add a couple of new ones?)
--separate menu options from name and make option numbers implicit?
--improve mapping between filtering type option menu and filter backend!
+-serialize (for ui persistency). this might be clean to implement as @persistent decorator
+-separate menu options from name and make option numbers implicit? check out rest of Blender's menus!
 -drag and drop arch
--fade (animate container bgs (active highlighted) based on time delta since active)
+-implement node element (-> node editor :) )
+-implement 2D "slider" element for Blender
+-implement vertical slider element for Blender
 -add auto width/height? (+ min and max)
 -add relative width/height?
--figure out how to handle regular events (add mapping!)
--create simple window manager based on container concept
--implement node element (-> node editor :) )
--serialize (for ui persistency)
--worlds (needed for nodes)
--put examples to /examples (/blender etc.)
+-improve mapping between filtering type option menu and filter backend!
+-improve tests!!!
+-separate style from UI definition (CSS style selectors (take a look at jQuery))
+-fade (animate container bgs (active highlighted) based on time delta since active)
