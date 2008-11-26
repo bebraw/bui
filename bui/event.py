@@ -94,6 +94,7 @@ class EventManager(object):
             
             func(elem)
             
+            # TODO: are these in the right place??? note that now these don't get executed for key event!
             initialize_element_heights(self.root_container, self.element_height)
             initialize_element_widths(self.root_container)
     
