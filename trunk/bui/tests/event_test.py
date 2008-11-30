@@ -2,7 +2,7 @@
 import bui.event
 
 from bui.container import *
-from bui.event import EventManager
+from bui.event import BaseEventManager
 from bui.serializer import unserialize
 
 from structure import MinimalStructure, StructureForEventTests, structure_keys
@@ -35,14 +35,14 @@ class Events():
         structure_root = unserialize(MinimalStructure())
         root_elem.add_child_structure(structure_root)
 
-class TestEventManager():
+class TestBaseEventManager():
     def setup_method(self, method):
         self.root_container = unserialize(StructureForEventTests())
         self.add_monkey_elem = self.root_container.children[0]
         self.delete_all_elem = self.root_container.children[2]
         self.add_to_ui_structure = self.root_container.children[3]
         
-        self.event_manager = EventManager(self.root_container, structure_keys, Events, 20)
+        self.event_manager = BaseEventManager(self.root_container, structure_keys, Events, 20)
     
     def test_manager_has_right_element_events(self):
         assert self.event_manager.element_events[1].element == self.add_monkey_elem

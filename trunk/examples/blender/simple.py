@@ -1,6 +1,6 @@
 from Blender import Draw
 
-from bui.blender.application import BlenderApplication
+from bui.blender.application import Application
 
 class UIStructure():
     root_structure = '''
@@ -122,5 +122,5 @@ class Events():
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, Events)
+    app = Application(UIStructure, hotkeys, Events)
     app.run()

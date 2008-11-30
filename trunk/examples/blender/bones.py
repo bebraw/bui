@@ -3,7 +3,7 @@ from Blender import Draw, Scene, Types, Window
 
 from bui.serializer import unserialize
 
-from bui.blender.application import BlenderApplication
+from bui.blender.application import Application
 
 class UIStructure():
     root_structure = '''
@@ -97,5 +97,5 @@ class Constraints():
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, Events, Constraints)
+    app = Application(UIStructure, hotkeys, Events, Constraints)
     app.run()
