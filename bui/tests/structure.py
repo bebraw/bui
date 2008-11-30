@@ -104,6 +104,18 @@ class StructureForEventTests():
                 event_handler: add_to_ui_structure
     '''
 
+class StructureForStateEventTests():
+    root_structure = '''
+    VerticalContainer:
+        width: 200
+        children:
+            - Fill:
+                name: Print foo elem
+                width: 40
+                events:
+                    on_mouse_over: print_foo
+    '''
+
 class StructureForSimpleScript():
     root_structure = '''
     VerticalContainer:

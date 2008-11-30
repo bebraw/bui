@@ -14,15 +14,15 @@ class BaseEventManager(object):
         
         self.root_container = root_container
         self.events = events
-        self.element_height = element_height
+        self.element_height = element_height # FIXME: does this belong here?
         
-        self.element_events = {}
-        self.key_events = {}
-        
-        self.max_event_id = 1
+        self.element_events = ElementEventContainer()
+        self.key_events = EventContainer()
+        self.state_events = EventContainer()
         
         self.construct_element_event_ids(self.root_container)
         self.construct_key_event_ids(keys)
+        self.construct_state_event_ids(self.root_container)
     
     def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
@@ -38,21 +38,16 @@ class BaseEventManager(object):
                         if hasattr(self.events, handler_name):
                             event_handler = getattr(self.events, handler_name)
                 
-                if event_handler:
-                    self.__add_element_event(child, event_handler)
+                self.element_events.append(child, event_handler)
                 
                 self.construct_element_event_ids(child)
     
-    def __add_element_event(self, elem, handler):
-        for element_event in self.element_events.values():
-            if element_event.element is elem and element_event.handler is handler:
-                return
-        
-        elem.event = self.max_event_id
-        self.element_events[self.max_event_id] = ElementEvent(elem, handler)
-        self.max_event_id += 1
-    
     def construct_key_event_ids(self, keys, key_mapping=None):
+        def append_key_event(key, func_name, event):
+            if hasattr(self.events, func_name):
+                event_func = getattr(self.events, func_name)
+                self.key_events.append(key, event_func, event)
+        
         keys_structure = read_yaml(keys)
         
         if isinstance(keys_structure, dict):
@@ -60,19 +55,25 @@ class BaseEventManager(object):
                 if key_mapping:
                     key = key_mapping[key]
                 
-                if not self.key_events.has_key(key):
-                    self.key_events[key] = KeyEvent()
-                
                 if isinstance(value, dict):
                     for event, func_name in value.items():
-                        if hasattr(self.events, func_name):
-                            event_func = getattr(self.events, func_name)
-                            setattr(self.key_events[key], event, event_func)
+                        append_key_event(key, func_name, event)
                 else:
-                    func_name = value
-                    
-                    if hasattr(self.events, func_name):
-                        self.key_events[key].press = getattr(self.events, func_name)
+                    append_key_event(key, value, 'press')
+    
+    def construct_state_event_ids(self, elem):
+        if isinstance(elem, TreeParent):
+            for child in elem.children:
+                if type(child.events) == dict:
+                    for event, func_name in child.events.items():
+                        event_handler = None
+                        
+                        if hasattr(self.events, func_name):
+                            event_handler = getattr(self.events, func_name)
+                        
+                        self.state_events.append(child, event_handler, event)
+                
+                self.construct_state_event_ids(child)
     
     def element_event(self, evt):
         if self.element_events.has_key(evt):
@@ -96,13 +97,46 @@ class BaseEventManager(object):
                 key_event.press(self.root_container)
             elif key_event.release:
                 key_event.release(self.root_container)
+    
+    def check_state_events(self, coordinate):
+        # this should check if coords hit any elem of state event (mouse over in this case)
+        for element, state_event in self.state_events.items():
+            if hasattr(state_event, 'on_mouse_over'):
+                if coordinate.inside(element):
+                    print 'coord inside'
+                    func = getattr(state_event, 'on_mouse_over')
+                    
+                    func(self.root_container)
+
+class EventContainer(dict):
+    def append(self, element, handler, event):
+        if handler:
+            if not self.has_key(element):
+                self[element] = Event()
+            
+            setattr(self[element], event, handler)
+
+class Event():
+    pass
+
+# TODO: combine with EventContainer (allows to get rid of max_event_id)?
+# in default case event could be press (merge with state events?)
+class ElementEventContainer(EventContainer):
+    def __init__(self):
+        super(ElementEventContainer, self).__init__()
+        self.max_event_id = 1
+    
+    def append(self, element, handler, event=None):
+        if handler:
+            for element_event in self.values():
+                if element_event.element is element and element_event.handler is handler:
+                    return
+            
+            element.event = self.max_event_id
+            self[self.max_event_id] = ElementEvent(element, handler)
+            self.max_event_id += 1
 
 class ElementEvent(object):
     def __init__(self, element, handler):
         self.element = element
         self.handler = handler
-
-class KeyEvent(object):
-    def __init__(self):
-        self.press = None
-        self.release = None

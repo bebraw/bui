@@ -8,6 +8,7 @@ class AbstractObject(object):
         self.width = None
         self.event_handler = None
         self.visible = True
+        self.events = []
         super(AbstractObject, self).__init__(**kvargs)
         
         for suitable_value in self.__dict__:
