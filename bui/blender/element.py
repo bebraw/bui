@@ -12,9 +12,6 @@ from bui.abstract import AbstractElement
 from icons import BLENDER_ICONS
 from utils import *
 
-# TODO: convert self.y - self.height into a function
-# (should handle this in render of AbstractBlenderElement even?)
-
 class AbstractBlenderElement(AbstractElement):
     def __init__(self, **kvargs):
         self.event = 0
@@ -24,14 +21,16 @@ class AbstractBlenderElement(AbstractElement):
         self.max = 1.0
         super(AbstractBlenderElement, self).__init__(**kvargs)
     
+    def get_render_y(self):
+        return self.y - self.height
+    
     def update_value(self, evt, val):
         self.value = val
 
 class Label(AbstractBlenderElement):
     def render(self, coord):
         super(Label, self).render(coord)
-        
-        self.label = Draw.Label(self.name, self.x, self.y - self.height, self.width, self.height)
+        self.label = Draw.Label(self.name, self.x, self.get_render_y(), self.width, self.height)
 
 class TextBox(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -40,8 +39,7 @@ class TextBox(AbstractBlenderElement):
     
     def render(self, coord):
         super(TextBox, self).render(coord)
-        
-        self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.y - self.height,
+        self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.get_render_y(),
                                    self.width, self.height, self.value, self.max_input_length,
                                    self.tooltip, self.update_value)
 
@@ -52,16 +50,15 @@ class ToggleButton(AbstractBlenderElement):
     
     def render(self, coord):
         super(ToggleButton, self).render(coord)
-        
-        self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.y - self.height, self.width,
-                                        self.height, self.value, self.tooltip, self.update_value)
+        self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.get_render_y(),
+                                        self.width, self.height, self.value, self.tooltip,
+                                        self.update_value)
 
 class PushButton(AbstractBlenderElement):
     def render(self, coord):
         super(PushButton, self).render(coord)
-        
-        self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.y - self.height, self.width,
-                                          self.height, self.tooltip)
+        self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.get_render_y(),
+                                          self.width, self.height, self.tooltip)
 
 class Menu(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -70,9 +67,9 @@ class Menu(AbstractBlenderElement):
     
     def render(self, coord):
         super(Menu, self).render(coord)
-        
-        self.menu = Draw.Menu(self.name, self.event, self.x, self.y - self.height, self.width, self.height,
-                         self.value, self.tooltip, self.update_value)
+        self.menu = Draw.Menu(self.name, self.event, self.x, self.get_render_y(),
+                              self.width, self.height, self.value, self.tooltip,
+                              self.update_value)
 
 class Slider(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -81,10 +78,9 @@ class Slider(AbstractBlenderElement):
     
     def render(self, coord):
         super(Slider, self).render(coord)
-        
-        self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.y - self.height, self.width,
-                                  self.height, self.value, self.min, self.max, False, self.tooltip,
-                                  self.update_value)
+        self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.get_render_y(),
+                                  self.width, self.height, self.value, self.min, self.max,
+                                  False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -98,13 +94,14 @@ class Number(AbstractBlenderElement):
         super(Number, self).render(coord)
         
         try:
-            self.number = Draw.Number(self.name, self.event, self.x, self.y - self.height, self.width,
-                                      self.height, self.value, self.min, self.max, self.tooltip,
-                                      self.update_value, self.range, self.precision)
+            self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+                                      self.width, self.height, self.value, self.min, self.max,
+                                      self.tooltip, self.update_value, self.range,
+                                      self.precision)
         except: # needed for backwards compatibility (no range and precision in 2.48a)
-            self.number = Draw.Number(self.name, self.event, self.x, self.y - self.height, self.width,
-                                      self.height, self.value, self.min, self.max, self.tooltip,
-                                      self.update_value)
+            self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+                                      self.width, self.height, self.value, self.min, self.max,
+                                      self.tooltip, self.update_value)
 
 class IntNumber(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -113,9 +110,9 @@ class IntNumber(AbstractBlenderElement):
     
     def render(self, coord):
         super(IntNumber, self).render(coord)
-        
-        self.number = Draw.Number(self.name, self.event, self.x, self.y - self.height, self.width, self.height,
-                                  int(self.value), int(self.min), int(self.max), self.tooltip, self.update_value)
+        self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+                                  self.width, self.height, int(self.value), int(self.min),
+                                  int(self.max), self.tooltip, self.update_value)
 
 class ColorPicker(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -124,9 +121,9 @@ class ColorPicker(AbstractBlenderElement):
     
     def render(self, coord):
         super(ColorPicker, self).render(coord)
-        
-        self.colorpicker = Draw.ColorPicker(self.event, self.x, self.y - self.height, self.width, self.height,
-                                            self.value, self.tooltip, self.update_value)
+        self.colorpicker = Draw.ColorPicker(self.event, self.x, self.get_render_y(),
+                                            self.width, self.height, self.value,
+                                            self.tooltip, self.update_value)
 
 '''
 FIXME: self.update_value callback doesn't get called for some reason -> value does not get updated
@@ -137,9 +134,8 @@ class Normal(AbstractBlenderElement):
     
     def render(self, coord):
         super(Normal, self).render(coord)
-        
-        self.normal = Draw.Normal(self.event, self.x, self.y - self.height, self.width, self.height,
-                                  self.value, self.tooltip, self.update_value)
+        self.normal = Draw.Normal(self.event, self.x, self.get_render_y(), self.width,
+                                  self.height, self.value, self.tooltip, self.update_value)
 '''
 
 class Image(AbstractBlenderElement):
@@ -188,33 +184,35 @@ class Image(AbstractBlenderElement):
             self.x_zoom = float(self.width) / width
             self.y_zoom = float(self.height) / height
             
-            Draw.Image(self.image_block, self.x, self.y - self.height,
+            Draw.Image(self.image_block, self.x, self.get_render_y(),
                        self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
                        self.clip_width, self.clip_height)
 
 class Icon(AbstractBlenderElement):
     def __init__(self, **kvargs):
-        self.file = 'blenderbuttons.png'
-        super(Icon, self).__init__(**kvargs)
-        
-        uscriptsdir = Blender.Get('uscriptsdir')
-        self.image_block = load_image(uscriptsdir, self.file)
-    
-    @enable_alpha
-    def render(self, coord):
         """ Adapted from txtPyBrowser114j.py by Remigiusz Fiedler """
         def get_icon_position(index):
             row = index / 25
             col = index - (row * 25)
             return row, col
         
-        super(Icon, self).render(coord)
+        self.file = 'blenderbuttons.png'
+        super(Icon, self).__init__(**kvargs)
         
         index = BLENDER_ICONS.index(self.name)
         row, col = get_icon_position(index)
-        dx, dy, = 20, 21
-        clipx = col * dx + 3
-        clipy = row * dy + 3
-        clipw, cliph = 15,15
+        self.width = 20
+        self.height = 21
+        self.clip_x = col * self.width + 3
+        self.clip_y = row * self.height + 3
+        self.clip_width = 15
+        self.clip_height = 15
         
-        Draw.Image(self.image_block, self.x, self.y - dy, 1.0, 1.0, clipx, clipy, clipw, cliph)
+        uscriptsdir = Blender.Get('uscriptsdir')
+        self.image_block = load_image(uscriptsdir, self.file)
+    
+    @enable_alpha
+    def render(self, coord):
+        super(Icon, self).render(coord)
+        Draw.Image(self.image_block, self.x, self.get_render_y(), 1.0, 1.0, self.clip_x,
+                   self.clip_y, self.clip_width, self.clip_height)
