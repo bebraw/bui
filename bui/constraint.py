@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-class ConstraintManager(object):
+class BaseConstraintManager(object):
     def __init__(self, root_container, constraints):
         self.root_container = root_container
         

@@ -6,17 +6,7 @@ from bui.tree import TreeParent
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
-class ElementEvent(object):
-    def __init__(self, element, handler):
-        self.element = element
-        self.handler = handler
-
-class KeyEvent(object):
-    def __init__(self):
-        self.press = None
-        self.release = None
-
-class EventManager(object):
+class BaseEventManager(object):
     def __init__(self, root_container, keys, events, element_height):
         assert isinstance(root_container, AbstractContainer)
         assert isinstance(keys, str)
@@ -106,3 +96,13 @@ class EventManager(object):
                 key_event.press(self.root_container)
             elif key_event.release:
                 key_event.release(self.root_container)
+
+class ElementEvent(object):
+    def __init__(self, element, handler):
+        self.element = element
+        self.handler = handler
+
+class KeyEvent(object):
+    def __init__(self):
+        self.press = None
+        self.release = None

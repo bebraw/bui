@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from bui.constraint import ConstraintContainer, ConstraintManager
+from bui.constraint import ConstraintContainer, BaseConstraintManager
 
 root_container_name = 'test_container'
 
@@ -40,9 +40,9 @@ class Constraints():
     def some_constraint(root_elem):
         assert root_elem == root_container_name
 
-class TestConstraintManager():
+class TestBaseConstraintManager():
     def setup_method(self, method):
-        self.constraint_manager = ConstraintManager(root_container_name, Constraints)
+        self.constraint_manager = BaseConstraintManager(root_container_name, Constraints)
         assert len(self.constraint_manager.constraints) == 7
     
     def test_check_constraints(self):

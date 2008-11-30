@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class WindowManager(object):
+class BaseWindowManager(object):
     def __init__(self):
         self.x = 0
         self.y = self.get_window_height()

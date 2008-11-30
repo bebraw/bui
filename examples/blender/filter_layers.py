@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw, Scene, Window
 
-from bui.blender.application import BlenderApplication
+from bui.blender.application import Application
 from bui.serializer import unserialize
 
 from object_filter import ObjectFilter
@@ -301,5 +301,5 @@ class Constraints():
 
 # ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
-    app = BlenderApplication(UIStructure, hotkeys, Events, Constraints)
+    app = Application(UIStructure, hotkeys, Events, Constraints)
     app.run()
