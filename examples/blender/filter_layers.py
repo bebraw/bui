@@ -16,7 +16,6 @@ TODO:
 -make it possible to restore old layers/filters (Registry module? implement serialize and @persistent)
 '''
 
-# ------------------- UTILS ---------------------------
 def clamp(val, min_val, max_val):
     return min(max(val, min_val), max_val)
 
@@ -299,7 +298,6 @@ class Constraints():
             except TypeError:
                 pass
 
-# ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events, Constraints)
     app.run()

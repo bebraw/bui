@@ -99,13 +99,10 @@ class BaseEventManager(object):
                 key_event.release(self.root_container)
     
     def check_state_events(self, coordinate):
-        # this should check if coords hit any elem of state event (mouse over in this case)
         for element, state_event in self.state_events.items():
             if hasattr(state_event, 'on_mouse_over'):
                 if coordinate.inside(element):
-                    print 'coord inside'
                     func = getattr(state_event, 'on_mouse_over')
-                    
                     func(self.root_container)
 
 class EventContainer(dict):

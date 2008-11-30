@@ -2,11 +2,12 @@
 from abstract import AbstractContainer
 
 class Fill(AbstractContainer):
-    def render(self, coord):
-        pass
+    pass
 
 class HorizontalContainer(AbstractContainer):
     def render(self, coord):
+        super(HorizontalContainer, self).render(coord)
+        
         tmp_x = coord.x
         
         for child in self.children:
@@ -26,6 +27,8 @@ class HorizontalContainer(AbstractContainer):
 
 class VerticalContainer(AbstractContainer):
     def render(self, coord):
+        super(VerticalContainer, self).render(coord)
+        
         coord.x += self.x_offset
         coord.y += self.y_offset
         

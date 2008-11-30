@@ -120,7 +120,6 @@ class Events():
     def quit_script(elem):
         Draw.Exit()
 
-# ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events)
     app.run()

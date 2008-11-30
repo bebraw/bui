@@ -95,7 +95,6 @@ class Constraints():
                 for elem in elems_to_remove:
                     armature_bones.children.remove(elem)
 
-# ----------------- INITIALIZATION -------------------
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events, Constraints)
     app.run()
