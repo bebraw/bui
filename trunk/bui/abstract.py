@@ -20,6 +20,10 @@ class AbstractObject(object):
     def __check_arg(self, dict, arg):
         if dict.has_key(arg):
             return dict[arg]
+    
+    def render(self, coord):
+        self.x = coord.x
+        self.y = coord.y
 
 class AbstractElement(TreeChild, AbstractObject):
     def __init__(self, **kvargs):

@@ -2,7 +2,9 @@
 import bui.event
 
 from bui.container import *
+from bui.coordinate import Coordinate
 from bui.event import BaseEventManager
+from bui.initializer import *
 from bui.serializer import unserialize
 
 from structure import MinimalStructure, StructureForEventTests, \
@@ -92,25 +94,17 @@ class StateEvents():
     def print_foo(elem):
         print 'foo'
 
-# TODO: move to coordinate.py!
-class Coordinate():
-    def __init__(self, x, y):
-        assert type(x) == int
-        assert type(y) == int
-        self.x = x
-        self.y = y
-    
-    def inside(self, element):
-        #print element.x, element.y # TODO: note some object needs to set these? (check initializer funcs)
-        return True
-
 class TestStateEvents():
     def setup_method(self, method):
         self.root_container = unserialize(StructureForStateEventTests)
-        self.print_foo_elem = self.root_container.children[0]
         
-        # figure out how to attach state event to element (weak reference in case element is removed?)
-        # on redraw event manager should check state events and trigger those that match
+        # get width, height and x, y coordinates for objects!
+        element_height = 20
+        initialize_element_heights(self.root_container, element_height)
+        initialize_element_widths(self.root_container)
+        self.root_container.render(Coordinate(0, 0))
+        
+        self.print_foo_elem = self.root_container.children[0]
         
         self.event_manager = BaseEventManager(self.root_container, structure_keys, StateEvents, 20)
     
@@ -121,7 +115,7 @@ class TestStateEvents():
     
     def test_trigger_state_events(self):
         self.event_manager.check_state_events(Coordinate(10, 10)) # should print foo
-        self.event_manager.check_state_events(Coordinate(700, 10)) # FIXME: should NOT print foo
+        self.event_manager.check_state_events(Coordinate(700, 10)) # should NOT print foo
     
     def test_element_is_removed(self):
         pass # should make it sure event gets removed too! (add to upper test class too!)
