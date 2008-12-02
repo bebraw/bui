@@ -4,6 +4,13 @@ structure_with_one_item = '''
 - some_item:
 '''
 
+structure_with_tabs = '''
+some_item:
+	children:
+		- other_item
+		- third_item
+'''
+
 class StructureWithUIStructure():   
     root_structure = '''
     VerticalContainer:
