@@ -4,9 +4,6 @@ from bui.serializer import unserialize
 
 from bui.blender.application import Application
 
-import bui.blender.application
-bui.blender.application.USE_STATE_EVENTS = True
-
 class UIStructure():
     root_structure = '''
     VerticalContainer:

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-def coordinate_from_tuple(tuple):
-    return Coordinate(tuple[0], tuple[1])
-
 class Coordinate():
     def __init__(self, x, y):
         assert type(x) == int

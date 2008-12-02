@@ -1,4 +1,3 @@
--optimize state events for Blender (too slow at the moment)
 -widgets (needed for nodes, panels, ...)
 -add scrollsbar(s) and panel(s)?
 -serialize (for ui persistency). this might be clean to implement as @persistent decorator
