@@ -6,6 +6,7 @@ def read_yaml(document):
         stream = file(document, 'r')
     except IOError:
         stream = document
+        stream = stream.expandtabs(4)
     
     structure = safe_load(stream)
     

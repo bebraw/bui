@@ -1,4 +1,4 @@
--implement state events (on_mouse_over etc.). this means that elements should know their x, y coords!
+-optimize state events for Blender (too slow at the moment)
 -widgets (needed for nodes, panels, ...)
 -add scrollsbar(s) and panel(s)?
 -serialize (for ui persistency). this might be clean to implement as @persistent decorator
@@ -13,3 +13,4 @@
 -improve tests!!!
 -separate style from UI definition (CSS style selectors (take a look at jQuery))
 -fade (animate container bgs (active highlighted) based on time delta since active)
+-convert tabs of files passed to YAML parser into spaces (1 tab = 4 spaces)
