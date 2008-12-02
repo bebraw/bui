@@ -99,11 +99,16 @@ class BaseEventManager(object):
                 key_event.release(self.root_container)
     
     def check_state_events(self, coordinate):
+        triggered_event = False
+        
         for element, state_event in self.state_events.items():
             if hasattr(state_event, 'on_mouse_over'):
                 if coordinate.inside(element):
+                    triggered_event = True
                     func = getattr(state_event, 'on_mouse_over')
                     func(self.root_container)
+        
+        return triggered_event
 
 class EventContainer(dict):
     def append(self, element, handler, event):

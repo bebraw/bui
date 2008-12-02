@@ -3,17 +3,19 @@
 class BaseWindowManager(object):
     def __init__(self):
         self.x = 0
-        self.y = self.get_window_height()
+        self.y = self.height
 
-    def get_window_coords(self):
+    def get_coordinates(self):
         return (0, 0, 0, 0, )
     
-    def get_window_height(self):
-        xmin, ymin, xmax, ymax = self.get_window_coords()
+    def get_height(self):
+        xmin, ymin, xmax, ymax = self.get_coordinates()
         
         return ymax - ymin
+    height = property(get_height)
     
-    def get_window_width(self):
-        xmin, ymin, xmax, ymax, = self.get_window_coords()
+    def get_width(self):
+        xmin, ymin, xmax, ymax, = self.get_coordinates()
         
         return xmax - xmin
+    width = property(get_width)
