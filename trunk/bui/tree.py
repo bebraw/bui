@@ -49,3 +49,10 @@ class TreeParent(object):
             arg_key = kvargs.keys()[0]
             arg_value = kvargs.values()[0]
             return self._child_recursion(arg_key, arg_value)
+    
+    # TODO: override del instance.children instead? TEST!
+    def remove_children(self):
+        for child in self.children:
+            child.parent = None
+        
+        self.children = []

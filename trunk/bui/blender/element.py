@@ -168,12 +168,26 @@ class Image(AbstractBlenderElement):
         self.image_block = load_image(self.dir, self.file)
         self.set_element_dimensions()
     
+    def load_image(self, name):
+        self.image_block = load_image(self.dir, name)
+        self.set_element_dimensions()
+    
     def set_element_dimensions(self):
         if self.image_block:
             width, height = self.image_block.getSize()
             
-            self.height = self.height if self.height else height
-            self.width = self.width if self.width else width
+            if self.height and self.width:
+                self.height = self.height
+                self.width = self.width
+            elif self.height:
+                self.height = self.height
+                self.width = float(self.height) / height * width
+            elif self.width:
+                self.height = float(self.width) / width * height
+                self.width = self.width
+            else:
+                self.height = height
+                self.width = width
     
     @enable_alpha
     def render(self, coord):
