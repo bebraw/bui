@@ -24,6 +24,11 @@ def load_image(root_dir, file_name):
     
     if file_path:
         return Image.Load(file_path)
+    
+    try:
+        return Image.Get(file_name)
+    except:
+        pass
 
 def enable_alpha(func):
     def wrapper(self,*args,**kvargs):
