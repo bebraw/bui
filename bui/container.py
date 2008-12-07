@@ -12,8 +12,15 @@ class HorizontalContainer(AbstractContainer):
         
         for child in self.children:
             if child.visible:
+                tmp_y = None
+                
+                if isinstance(child, VerticalContainer):
+                    tmp_y = coord.y
+                
                 child.render(coord)
                 coord.x += child.width
+                
+                coord.y = tmp_y or coord.y
         
         coord.x = tmp_x
     
