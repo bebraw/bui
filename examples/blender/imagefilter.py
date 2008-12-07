@@ -12,11 +12,14 @@ from bui.blender.element import Image, Label
 class UIStructure():
     root_structure = '''
     VerticalContainer:
+        bg_color: [0.95, 0.95, 0.8]
         width: 600
         children:
             - HorizontalContainer:
+                bg_color: [1.0, 0.0, 0.0]
                 children:
                     - Label:
+                        bg_color: [0.5, 0.5, 0.5]
                         name: Image Filter v0.2
                     - PushButton:
                         name: X
@@ -26,6 +29,7 @@ class UIStructure():
             - HorizontalContainer:
                 children:
                     - TextBox:
+                        bg_color: [0.0, 1.0, 0.0]
                         name: Filter
                         tooltip: Please enter image filter here
                         max_input_length: 40
@@ -52,7 +56,7 @@ class Events(AllMethodsStatic):
         
         for image in bpy.data.images:
             if fnmatch.filter([image.name, ], filter_clause):
-                v_container = VerticalContainer()
+                v_container = VerticalContainer(bg_color=[0.7, 0.7, 0.7])
                 
                 new_image = Image(file=image.name, width=200)
                 v_container.add_child_structure(new_image)

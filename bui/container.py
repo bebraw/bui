@@ -42,4 +42,7 @@ class VerticalContainer(AbstractContainer):
         for child in self.children:
             if child.visible:
                 child.render(coord)
-                coord.y -= child.height
+                
+                if not (isinstance(child, AbstractContainer) and
+                        child.has_only_container_children()):
+                    coord.y -= child.height
