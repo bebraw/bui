@@ -8,6 +8,7 @@ class AbstractObject(object):
         self.width = None
         self.event_handler = None
         self.visible = True
+        self.bg_color = None
         self.events = []
         super(AbstractObject, self).__init__(**kvargs)
         
@@ -24,6 +25,11 @@ class AbstractObject(object):
     def render(self, coord):
         self.x = coord.x
         self.y = coord.y
+        
+        self.render_bg_color() # note that containers won't work this way yet!
+    
+    def render_bg_color(self):
+        pass
 
 class AbstractElement(TreeChild, AbstractObject):
     def __init__(self, **kvargs):

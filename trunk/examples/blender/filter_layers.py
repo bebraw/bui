@@ -58,6 +58,7 @@ class UIStructure():
     layer_structure = '''
     VerticalContainer:
         name: layer
+        bg_color: [0.3, 0.3, 0.3]
         children:
             - HorizontalContainer:
                 children:
@@ -96,6 +97,7 @@ class UIStructure():
                         width: 20
             - VerticalContainer:
                 name: filters_container
+                bg_color: [0.4, 0.4, 0.4]
                 children:
                     - VerticalContainer:
                         name: filters
@@ -117,6 +119,7 @@ class UIStructure():
     filter_structure = '''
     VerticalContainer:
         name: filter
+        bg_color: [0.5, 0.5, 0.5]
         children:
             - HorizontalContainer:
                 children:

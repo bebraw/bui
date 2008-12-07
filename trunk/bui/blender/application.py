@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from Blender import Draw, Window
+from Blender import BGL, Draw, Window
 from Blender.Window import Types
 
 from bui.application import BaseApplication
+from bui.abstract import AbstractObject
 
 from bui.blender.event import EventManager
 from bui.blender.window import WindowManager
@@ -10,6 +11,14 @@ from bui.blender.window import WindowManager
 from keys import BLENDER_KEYS
 
 global app # FIXME: get rid of this
+
+# override render_bg_color (in right place?)
+def render_bg_color(self):
+    if self.bg_color:
+        BGL.glColor3f(*self.bg_color)
+        BGL.glRectf(self.x, self.y, self.x + self.width, self.y - self.height)
+
+setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
 class Event():
     pass
