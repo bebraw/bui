@@ -3,10 +3,10 @@ import fnmatch
 import bpy
 from Blender import Draw
 
-from bui.container import Fill
+from bui.container import Fill, VerticalContainer
 
 from bui.blender.application import Application
-from bui.blender.element import Image
+from bui.blender.element import Image, Label
 
 class UIStructure():
     root_structure = '''
@@ -16,7 +16,7 @@ class UIStructure():
             - HorizontalContainer:
                 children:
                     - Label:
-                        name: Image Filter v0.1
+                        name: Image Filter v0.2
                     - PushButton:
                         name: X
                         tooltip: Quit script
@@ -28,8 +28,7 @@ class UIStructure():
                         name: Filter
                         tooltip: Please enter image filter here
                         max_input_length: 40
-                    - Fill:
-                        width: 400
+                        width: 200
             - Fill:
                 height: 10
             - HorizontalContainer:
@@ -54,8 +53,13 @@ class Events():
         
         for image in bpy.data.images:
             if fnmatch.filter([image.name, ], filter_clause):
+                v_container = VerticalContainer()
+                
                 new_image = Image(file=image.name, width=200)
-                results_elem.add_child_structure(new_image)
+                v_container.add_child_structure(new_image)
+                v_container.add_child_structure(Label(name=image.name))
+                
+                results_elem.add_child_structure(v_container)
                 results_elem.add_child_structure(Fill(width=10))
 
 if __name__ == '__main__':
