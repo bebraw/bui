@@ -3,6 +3,7 @@ from Blender import Draw, Scene, Window
 
 from bui.blender.application import Application
 from bui.serializer import unserialize
+from bui.utils import AllMethodsStatic
 
 from object_filter import ObjectFilter
 
@@ -148,8 +149,7 @@ hotkeys = '''
 q: quit_script
 '''
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def toggle_layer_number(elem):
         layer_number = int(elem.name)
         visible_layers = Window.ViewLayers()
@@ -162,54 +162,44 @@ class Events():
         
         Window.ViewLayers(visible_layers)
     
-    @staticmethod
     def add_layer(elem):
         root = elem.find_root_element()
         layers = root.find_child(name='layers')
         root_structure = unserialize(UIStructure, UIStructure.layer_structure)
         layers.add_child_structure(root_structure)
     
-    @staticmethod
     def delete_layer(elem):
         layers = elem.find_parent(name='layers')
         layer = elem.find_parent(name='layer')
         layers.children.remove(layer)
     
-    @staticmethod
     def add_filter(elem):
         filters_container = elem.find_parent(name='filters_container')
         filters = filters_container.find_child(name='filters')
         root_structure = unserialize(UIStructure, UIStructure.filter_structure)
         filters.add_child_structure(root_structure)
     
-    @staticmethod
     def delete_filter(elem):
         filters = elem.find_parent(name='filters')
         filter = elem.find_parent(name='filter')
         filters.children.remove(filter)
     
-    @staticmethod
     def root_container_up(root_elem):
         elem.x_offset += 20
     
-    @staticmethod
     def root_container_down(root_elem):
         elem.x_offset -= 20
     
-    @staticmethod
     def root_container_left(root_elem):
         elem.y_offset -= 20
     
-    @staticmethod
     def root_container_right(root_elem):
         elem.y_offset += 20
     
-    @staticmethod
     def quit_script(elem):
         Draw.Exit()
 
-class Constraints():
-    @staticmethod
+class Constraints(AllMethodsStatic):
     def layer_number_constraint(root_elem):
         '''priority=1'''
         layers = root_elem.find_child(name='layers')
@@ -228,7 +218,6 @@ class Constraints():
         
         # TODO: add check for upper limit (19 is max, if it goes to 20, get rid of that layer!)
     
-    @staticmethod
     def layer_number_selection_status_constraint(root_elem):
         layers = root_elem.find_child(name='layers')
         view_layers = Window.ViewLayers()
@@ -237,7 +226,6 @@ class Constraints():
             layer_number_elem = layer.find_child(variable='layer_number')
             layer_number_elem.value = i + 1 in view_layers 
     
-    @staticmethod
     def show_filter_name_constraint(root_elem):
         def set_show_filter_name(filters_parent, name):
             layer = filters_parent.find_parent(name='layer')
@@ -252,10 +240,9 @@ class Constraints():
             
             if len(filters.children) > 1:
                 name += 's'
-        
+            
             set_show_filter_name(filters, name)
     
-    @staticmethod
     def filter_visibility_constraint(root_elem):
         layers = root_elem.find_child(name='layers')
         
@@ -264,7 +251,6 @@ class Constraints():
             filters = layer.find_child(name='filters_container')
             filters.visible = show_filter.value
     
-    @staticmethod
     def layer_objects_constraint(root_elem):
         object_filter = ObjectFilter(scene=Scene.GetCurrent())
         layers = root_elem.find_child(name='layers')

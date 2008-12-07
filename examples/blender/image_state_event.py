@@ -1,6 +1,7 @@
 from Blender import Draw
 
 from bui.serializer import unserialize
+from bui.utils import AllMethodsStatic
 
 from bui.blender.application import Application
 
@@ -36,12 +37,10 @@ hotkeys = '''
 q: quit_script
 '''
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def quit_script(elem):
         Draw.Exit()
     
-    @staticmethod
     def show_big_image(root_elem):
         big_image_elem = root_elem.find_child(name='big_image')
         image_root = unserialize(UIStructure, UIStructure.image_structure)

@@ -1,5 +1,7 @@
 from Blender import Draw
 
+from bui.utils import AllMethodsStatic
+
 from bui.blender.application import Application
 
 class UIStructure():
@@ -103,20 +105,16 @@ s: foobar
 q: quit_script
 '''
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def d_was_pressed(elem):
         print 'you pressed d!'
     
-    @staticmethod
     def d_was_released(elem):
         print 'you released d!'
     
-    @staticmethod
     def foobar(elem):
         print 'foobar'
     
-    @staticmethod
     def quit_script(elem):
         Draw.Exit()
 
