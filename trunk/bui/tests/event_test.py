@@ -6,6 +6,7 @@ from bui.coordinate import Coordinate
 from bui.event import BaseEventManager
 from bui.initializer import *
 from bui.serializer import unserialize
+from bui.utils import AllMethodsStatic
 
 from structure import MinimalStructure, StructureForEventTests, \
                       StructureForStateEventTests, structure_keys
@@ -15,24 +16,19 @@ bui.event.PRINT_BUTTON_EVENT_NAMES = True
 PRESS = 1
 RELEASE = 0
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def add_monkey(elem):
         pass
     
-    @staticmethod
     def delete_all(elem):
         pass
     
-    @staticmethod
     def press_s(elem):
         pass
     
-    @staticmethod
     def release_s(elem):
         pass
     
-    @staticmethod
     def add_to_ui_structure(elem):
         root_elem = elem.find_root_element()
         structure_root = unserialize(MinimalStructure())

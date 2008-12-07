@@ -4,6 +4,7 @@ import bpy
 from Blender import Draw
 
 from bui.container import Fill, VerticalContainer
+from bui.utils import AllMethodsStatic
 
 from bui.blender.application import Application
 from bui.blender.element import Image, Label
@@ -39,12 +40,10 @@ hotkeys = '''
 q: quit_script
 '''
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def quit_script(elem):
         Draw.Exit()
     
-    @staticmethod
     def filter(elem):
         filter_clause = elem.value
         root_elem = elem.find_root_element()

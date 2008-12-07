@@ -1,7 +1,9 @@
 import bpy
 from Blender import Draw, Scene, Types, Window
 
+from bui.event import BaseEvents
 from bui.serializer import unserialize
+from bui.utils import AllMethodsStatic
 
 from bui.blender.application import Application
 
@@ -38,12 +40,10 @@ hotkeys = '''
 q: quit_script
 '''
 
-class Events():
-    @staticmethod
+class Events(AllMethodsStatic):
     def quit_script(elem):
         Draw.Exit()
     
-    @staticmethod
     def test_handler(elem):
         print 'now in test handler'
         print elem.value
@@ -53,8 +53,7 @@ class Events():
         except:
             pass
 
-class Constraints():
-    @staticmethod
+class Constraints(AllMethodsStatic):
     def check_bones_constraint(root_elem):
         scene = Scene.GetCurrent() 
         active = scene.objects.active     
