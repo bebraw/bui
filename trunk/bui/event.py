@@ -95,7 +95,7 @@ class BaseEventManager(object):
             
             if pressed and key_event.press:
                 key_event.press(self.root_container)
-            elif key_event.release:
+            elif hasattr(key_event, 'release'):
                 key_event.release(self.root_container)
     
     def check_state_events(self, coordinate):
