@@ -13,18 +13,6 @@ try:
 except ImportError:
     print "Missing cairo or rsvg. Image with svg extension won't work!"
 
-def draw_line(line_width, color, x1, y1, x2, y2):
-    BGL.glLineWidth(line_width)
-    BGL.glColor3f(*color)
-    BGL.glBegin(BGL.GL_LINES)
-    BGL.glVertex2f(x1, y1)
-    BGL.glVertex2f(x2, y2)
-    BGL.glEnd()
-
-def draw_rectangle(color, x1, y1, x2, y2):
-    BGL.glColor3f(*color)
-    BGL.glRectf(x1, y1, x2, y2)
-
 def draw_text(text, x, y):
     BGL.glRasterPos2f(x, y)
     return Draw.Text(text)
@@ -45,20 +33,6 @@ def load_image(root_dir, file_name):
         return Image.Get(file_name)
     except:
         pass
-
-def enable_alpha(func):
-    def wrapper(self,*args,**kvargs):
-        BGL.glEnable(BGL.GL_BLEND)
-        BGL.glBlendFunc(BGL.GL_SRC_ALPHA, BGL.GL_ONE_MINUS_SRC_ALPHA)
-        try:
-            return func(self,*args,**kvargs)
-        finally:
-            BGL.glDisable(BGL.GL_BLEND)
-    
-    wrapper.__name__ = func.__name__
-    wrapper.__dict__ = func.__dict__
-    wrapper.__doc__ = func.__doc__
-    return wrapper
 
 def get_icons_dir():
     return Blender.Get('tempdir')
