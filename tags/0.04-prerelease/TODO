@@ -1,0 +1,15 @@
+-widgets (needed for nodes, panels, ...)
+-add scrollsbar(s) and panel(s)?
+-serialize (for ui persistency). this might be clean to implement as @persistent decorator
+-separate menu options from name and make option numbers implicit? check out rest of Blender's menus!
+-drag and drop arch
+-implement node element (-> node editor :) )
+-implement 2D "slider" element for Blender
+-implement vertical slider element for Blender
+-add auto width/height? (+ min and max)
+-add relative width/height?
+-improve mapping between filtering type option menu and filter backend!
+-improve tests!!!
+-separate style from UI definition (CSS style selectors (take a look at jQuery))
+-fade (animate container bgs (active highlighted) based on time delta since active)
+-convert tabs of files passed to YAML parser into spaces (1 tab = 4 spaces)
