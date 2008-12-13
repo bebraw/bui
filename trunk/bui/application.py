@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from constraint import BaseConstraintManager
 from event import BaseEventManager
+from layout import BaseLayoutManager
 from serializer import unserialize
 from window import BaseWindowManager
 
@@ -10,15 +11,18 @@ class BaseApplication(object):
         
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
-        self.window_manager = BaseWindowManager(self.root_container, element_height)
+        self.layout_manager = BaseLayoutManager(self.root_container, element_height)
+        self.window_manager = BaseWindowManager()
     
     def run(self):
         pass
         # it would be nice to init layout just once and then alter on demand (ie. add/remove elements)
         # this needs to be detected somehow though
-        #self.window_manager.initialize_layout()
+        #coord = self.window_manager.get_initial_coordinates()
+        #self.layout_manager.initialize_layout()
     
     def gui(self):
-        self.window_manager.initialize_layout() # not the most efficient solution but works
+        coord = self.window_manager.get_initial_coordinates()
+        self.layout_manager.initialize_layout(coord) # not the most efficient solution but works
         self.constraint_manager.check_constraints()
         self.root_container.render()

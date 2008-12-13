@@ -6,6 +6,7 @@ from bui.application import BaseApplication
 from bui.abstract import AbstractObject
 
 from bui.blender.event import EventManager
+from bui.blender.layout import LayoutManager
 from bui.blender.window import WindowManager
 
 from keys import BLENDER_KEYS
@@ -16,7 +17,7 @@ global app # FIXME: get rid of this
 def render_bg_color(self):
     if self.bg_color:
         BGL.glColor3f(*self.bg_color)
-        BGL.glRectf(self.x, self.y, self.x + self.width, self.y - self.height)
+        BGL.glRectf(self.x, self.y, self.x + self.width, self.y + self.height)
 
 setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
@@ -44,7 +45,8 @@ class Application(BaseApplication):
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']] = Event()
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']].press = check_state_events
         
-        self.window_manager = WindowManager(self.root_container, element_height)
+        self.layout_manager = LayoutManager(self.root_container, element_height)
+        self.window_manager = WindowManager()
         
         global app
         app = self
