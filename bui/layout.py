@@ -46,6 +46,7 @@ class BaseLayoutManager(object):
                     if child.visible:
                         initialize_coordinates_recursion(child, coord)
                         
+                        # FIXME: validate this (does not seem right in BUI builder!)
                         if not (isinstance(child, AbstractContainer) and
                                 child.has_only_container_children()):
                             coord.y -= child.height

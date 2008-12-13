@@ -6,16 +6,22 @@ from serializer import unserialize
 from window import BaseWindowManager
 
 class BaseApplication(object):
-    def __init__(self, structure, keys, events=None, constraints=None, element_height=20):
+    def __init__(self, structure, keys, events=None, constraints=None,
+                 ui_initializer=None, element_height=20):
         self.root_container = unserialize(structure)
         
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
         self.layout_manager = BaseLayoutManager(self.root_container, element_height)
         self.window_manager = BaseWindowManager()
+        
+        self.ui_initializer = ui_initializer
+        if hasattr(ui_initializer, '__call__'):
+            self.ui_initializer = ui_initializer
     
     def run(self):
-        pass
+        if self.ui_initializer:
+            self.ui_initializer(self.root_container)
         # it would be nice to init layout just once and then alter on demand (ie. add/remove elements)
         # this needs to be detected somehow though
         #coord = self.window_manager.get_initial_coordinates()

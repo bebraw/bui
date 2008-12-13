@@ -44,11 +44,11 @@ class TestAbstractContainer():
         assert abstract_container2.y_offset == 50
         assert abstract_container2.visible == False
     
-    def test_add_child_structure(self):
+    def test_append(self):
         abstract_container = AbstractContainer()
         
         structure_root = unserialize(MinimalStructure())
-        abstract_container.add_child_structure(structure_root)
+        abstract_container.append(structure_root)
         
         assert len(abstract_container.children) == 1
         assert abstract_container.children[0].width == 400
@@ -59,10 +59,10 @@ class TestAbstractContainer():
         assert abstract_container.has_only_container_children() == False
         
         structure_root = unserialize(MinimalStructure())
-        abstract_container.add_child_structure(structure_root)
+        abstract_container.append(structure_root)
         assert abstract_container.has_only_container_children() == True
         
         abstract_container2 = AbstractContainer()
         structure_root = unserialize(FillElement())
-        abstract_container2.add_child_structure(structure_root)
+        abstract_container2.append(structure_root)
         assert abstract_container2.has_only_container_children() == True

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import bpy
 from Blender import Draw, Scene, Types, Window
 
@@ -73,7 +74,7 @@ class Constraints(AllMethodsStatic):
                         if not bone_elem:
                             armature_bones_elem = root_elem.find_child(name='armature_bones')
                             new_bone = unserialize(UIStructure, UIStructure.slider_structure)
-                            armature_bones_elem.add_child_structure(new_bone)
+                            armature_bones_elem.append(new_bone)
                             new_bone.name = bone_name
                 
                 # check if a bone has been removed

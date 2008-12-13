@@ -37,7 +37,7 @@ class AbstractElement(TreeChild, AbstractObject):
         super(AbstractElement, self).__init__(**kvargs)
 
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
-    def add_child_structure(self, structure_root):
+    def append(self, structure_root):
         structure_root.parent = self
         self.children.append(structure_root)
     

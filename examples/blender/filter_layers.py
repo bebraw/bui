@@ -169,7 +169,7 @@ class Events(AllMethodsStatic):
         root = elem.find_root_element()
         layers = root.find_child(name='layers')
         root_structure = unserialize(UIStructure, UIStructure.layer_structure)
-        layers.add_child_structure(root_structure)
+        layers.append(root_structure)
     
     def delete_layer(elem):
         layers = elem.find_parent(name='layers')
@@ -180,7 +180,7 @@ class Events(AllMethodsStatic):
         filters_container = elem.find_parent(name='filters_container')
         filters = filters_container.find_child(name='filters')
         root_structure = unserialize(UIStructure, UIStructure.filter_structure)
-        filters.add_child_structure(root_structure)
+        filters.append(root_structure)
     
     def delete_filter(elem):
         filters = elem.find_parent(name='filters')

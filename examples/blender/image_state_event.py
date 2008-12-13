@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from Blender import Draw
 
-from bui.serializer import unserialize
 from bui.utils import AllMethodsStatic
 
 from bui.blender.application import Application
+from bui.blender.element import Image
 
 class UIStructure():
     root_structure = '''
@@ -26,12 +27,6 @@ class UIStructure():
             - HorizontalContainer:
                 name: big_image
     '''
-    
-    image_structure = '''
-    Image:
-        file: Mandril.png
-        width: 10
-    '''
 
 hotkeys = '''
 q: quit_script
@@ -43,8 +38,7 @@ class Events(AllMethodsStatic):
     
     def show_big_image(root_elem):
         big_image_elem = root_elem.find_child(name='big_image')
-        image_root = unserialize(UIStructure, UIStructure.image_structure)
-        big_image_elem.add_child_structure(image_root)
+        big_image_elem.append(Image(file='Mandril.png', width=10))
 
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events)
