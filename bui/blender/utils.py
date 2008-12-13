@@ -3,7 +3,7 @@ import os
 
 try:
     import Blender
-    from Blender import BGL, Image
+    from Blender import BGL, Draw, Image
 except ImportError:
     pass
 
@@ -20,6 +20,14 @@ def draw_line(line_width, color, x1, y1, x2, y2):
     BGL.glVertex2f(x1, y1)
     BGL.glVertex2f(x2, y2)
     BGL.glEnd()
+
+def draw_rectangle(color, x1, y1, x2, y2):
+    BGL.glColor3f(*color)
+    BGL.glRectf(x1, y1, x2, y2)
+
+def draw_text(text, x, y):
+    BGL.glRasterPos2f(x, y)
+    return Draw.Text(text)
 
 def find_file_path(root_dir, file_name):
     """ Returns path to given file_name with file_name appended. """

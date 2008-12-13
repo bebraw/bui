@@ -16,8 +16,7 @@ from utils import *
 # NOTE: this needs to be set directly to AbstractObject so that it affects containers too!
 def render_bg_color(self):
     if self.bg_color:
-        BGL.glColor3f(*self.bg_color)
-        BGL.glRectf(self.x, self.y, self.x + self.width, self.y + self.height)
+        draw_rectangle(self.bg_color, self.x, self.y, self.x + self.width, self.y + self.height)
 
 setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
@@ -51,8 +50,7 @@ class Separator(AbstractBlenderElement):
             y_coord = self.y + self.height / 2.0
             
             # HACK! draw text in some not visible place to get its width (needed for centering)
-            BGL.glRasterPos2f(-10000.0, -10000.0)
-            text_width = Draw.Text(self.name)
+            text_width = draw_text(self.name, -10000.0, -10000.0)
             
             text_x = self.x + (self.width - text_width) / 2.0
             
@@ -60,9 +58,8 @@ class Separator(AbstractBlenderElement):
             sep_end_x = max(sep_begin_x, text_x - text_sep_dist)
             draw_line(0.5, self.color, sep_begin_x, y_coord, sep_end_x, y_coord)
             
-            text_y_coord = y_coord - 5 # 10 = half of text height
-            BGL.glRasterPos2f(text_x, text_y_coord)
-            Draw.Text(self.name)
+            text_y= y_coord - 5 # 10 = half of text height
+            draw_text(self.name, text_x, text_y)
             
             sep_end_x = self.x + self.width
             sep_begin_x = min(sep_end_x, text_x + text_width + text_sep_dist)
