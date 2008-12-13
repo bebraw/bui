@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-13, 20:26:43 -->
+<!-- Saved: 2008-12-13, 21:37:06 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -58,8 +58,6 @@
     <Source>bui/tests/abstract_test.py</Source>
     <Source>bui/blender/keys.py</Source>
     <Source>TODO</Source>
-    <Source>bui/initializer.py</Source>
-    <Source>bui/tests/initializer_test.py</Source>
     <Source>examples/blender/filter_layers.py</Source>
     <Source>examples/blender/simple.py</Source>
     <Source>examples/blender/bones.py</Source>
@@ -74,6 +72,7 @@
     <Source>bui/layout.py</Source>
     <Source>bui/blender/layout.py</Source>
     <Source>examples/blender/bui_builder.py</Source>
+    <Source>bui/tests/layout_test.py</Source>
   </Sources>
   <Forms>
   </Forms>

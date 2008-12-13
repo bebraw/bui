@@ -5,7 +5,7 @@ from bui.layout import BaseLayoutManager
 class LayoutManager(BaseLayoutManager):
     def initialize_coordinates(self, coord):
         def initialize_coordinates_recursion(elem):
-            elem.y = elem.y - elem.height
+            elem.y = 2 * self.window_manager.height - elem.y - elem.height
             
             elem.x = int(elem.x)
             elem.y = int(elem.y)

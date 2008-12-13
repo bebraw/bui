@@ -12,8 +12,8 @@ class BaseApplication(object):
         
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
-        self.layout_manager = BaseLayoutManager(self.root_container, element_height)
         self.window_manager = BaseWindowManager()
+        self.layout_manager = BaseLayoutManager(self.window_manager, self.root_container, element_height)
         
         self.ui_initializer = ui_initializer
         if hasattr(ui_initializer, '__call__'):

@@ -38,8 +38,8 @@ class Application(BaseApplication):
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']] = Event()
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']].press = check_state_events
         
-        self.layout_manager = LayoutManager(self.root_container, element_height)
         self.window_manager = WindowManager()
+        self.layout_manager = LayoutManager(self.window_manager, self.root_container, element_height)
         
         global app
         app = self
