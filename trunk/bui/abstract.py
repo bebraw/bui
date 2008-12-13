@@ -25,7 +25,7 @@ class AbstractObject(object):
             return dict[arg]
     
     def render(self):
-        self.render_bg_color() # how to implement this for containers???
+        pass
     
     def render_bg_color(self):
         pass
@@ -52,8 +52,9 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         return False
     
     def render(self):
-        super(AbstractContainer, self).render()
+        self.render_bg_color() # FIXME: figure out how to implement this for containers
         
         for child in self.children:
             if child.visible:
+                child.render_bg_color()
                 child.render()
