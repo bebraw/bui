@@ -41,16 +41,6 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         structure_root.parent = self
         self.children.append(structure_root)
     
-    def has_only_container_children(self):
-        if self.children:
-            for child in self.children:
-                if not isinstance(child, AbstractContainer):
-                    return False
-            
-            return True
-        
-        return False
-    
     def render(self):
         self.render_bg_color()
         

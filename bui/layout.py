@@ -2,12 +2,12 @@
 from abstract import AbstractContainer
 from container import HorizontalContainer, VerticalContainer
 
-# TODO: tests
 class BaseLayoutManager(object):
-    def __init__(self, root_container, element_height):
+    def __init__(self, window_manager, root_container, element_height):
         assert isinstance(root_container, AbstractContainer)
         assert isinstance(element_height, int)
         
+        self.window_manager = window_manager
         self.element_height = element_height
         self.root_container = root_container
     
@@ -46,14 +46,12 @@ class BaseLayoutManager(object):
                     if child.visible:
                         initialize_coordinates_recursion(child, coord)
                         
-                        # FIXME: validate this (does not seem right in BUI builder!)
-                        if not (isinstance(child, AbstractContainer) and
-                                child.has_only_container_children()):
-                            coord.y -= child.height
+                        if not isinstance(child, VerticalContainer):
+                            coord.y += child.height
         
         initialize_coordinates_recursion(self.root_container, coord)
     
-    def initialize_element_heights(self, elem):
+    def initialize_element_heights(self, elem, parent_is_visible=True):
         if isinstance(elem, VerticalContainer):
             elem.height = 0
             
@@ -63,12 +61,15 @@ class BaseLayoutManager(object):
         elif isinstance(elem, HorizontalContainer):
             elem.height = 0
         elif not elem.height:
-            elem.height = self.element_height
+            elem.height = 0
+            
+            if parent_is_visible and elem.visible:
+                elem.height = self.element_height
         
         if elem.children:
             heights = []
             for child in elem.children:
-                height = self.initialize_element_heights(child)
+                height = self.initialize_element_heights(child, elem.visible)
                 
                 heights.append(height)
             

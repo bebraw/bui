@@ -42,6 +42,9 @@ class StructureWithVerticalContainerChild():
                 name: foobar
                 visible: False
                 width: 300
+                children:
+                    - Label:
+                        name: barbar
     '''
 
 class StructureWithVerticalContainerChildren():
@@ -98,16 +101,16 @@ class StructureForEventTests():
     VerticalContainer:
         width: 200
         children:
-            - Fill:
+            - Label:
                 name: Add monkey
                 width: 40
-            - Fill:
+            - Label:
                 name: Add giraffe
                 width: 20
-            - Fill:
+            - Label:
                 name: Delete animals
                 event_handler: delete_all
-            - Fill:
+            - Label:
                 event_handler: add_to_ui_structure
     '''
 
@@ -148,6 +151,32 @@ class StructureForSimpleScript():
                         name: Do something
                         tooltip: Add some tool here
                         width: 100
+    '''
+
+class MultipleVerticalContainers():
+    root_structure = '''
+    VerticalContainer:
+        width: 200
+        children:
+            - VerticalContainer:
+                width: 50
+                children:
+                    - Label:
+                        name: foo
+                    - Label:
+                        name: bar
+                    - Label:
+                        name: foofoo
+            - VerticalContainer:
+                children:
+                    - Label:
+                        name: cat
+                    - Label:
+                        name: dog
+                    - Label:
+                        name: elephant
+                    - Label:
+                        name: snake
     '''
 
 class FillElement():
