@@ -7,11 +7,19 @@ try:
 except ImportError:
     pass
 
-from bui.abstract import AbstractElement
+from bui.abstract import AbstractElement, AbstractObject
 from bui.container import HorizontalContainer, VerticalContainer
 
 from icons import BLENDER_ICONS
 from utils import *
+
+# NOTE: this needs to be set directly to AbstractObject so that it affects containers too!
+def render_bg_color(self):
+    if self.bg_color:
+        BGL.glColor3f(*self.bg_color)
+        BGL.glRectf(self.x, self.y, self.x + self.width, self.y + self.height)
+
+setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
 class AbstractBlenderElement(AbstractElement):
     def __init__(self, **kvargs):
@@ -21,11 +29,6 @@ class AbstractBlenderElement(AbstractElement):
         self.min = 0.0
         self.max = 1.0
         super(AbstractBlenderElement, self).__init__(**kvargs)
-    
-    def render_bg_color(self):
-        if self.bg_color:
-            BGL.glColor3f(*self.bg_color)
-            BGL.glRectf(self.x, self.y, self.x + self.width, self.y + self.height)
     
     def update_value(self, evt, val):
         self.value = val

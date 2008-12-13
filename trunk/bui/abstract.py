@@ -52,7 +52,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
         return False
     
     def render(self):
-        self.render_bg_color() # FIXME: figure out how to implement this for containers
+        self.render_bg_color()
         
         for child in self.children:
             if child.visible:
