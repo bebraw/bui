@@ -36,7 +36,7 @@ class Application(BaseApplication):
     def __init__(self, structure, keys, events=None, constraints=None, element_height=20):
         super(Application, self).__init__(structure, keys, events, constraints, element_height)
         
-        self.event_manager = EventManager(self.root_container, keys, events, element_height)
+        self.event_manager = EventManager(self.root_container, keys, events)
         
         self.event_manager.key_events[BLENDER_KEYS['mouse_x']] = Event()
         self.event_manager.key_events[BLENDER_KEYS['mouse_x']].press = check_state_events
@@ -44,12 +44,13 @@ class Application(BaseApplication):
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']] = Event()
         self.event_manager.key_events[BLENDER_KEYS['mouse_y']].press = check_state_events
         
-        self.window_manager = WindowManager()
+        self.window_manager = WindowManager(self.root_container, element_height)
         
         global app
         app = self
     
     def run(self):
+        super(Application, self).run()
         Draw.Register(self.gui, self.event_manager.key_event, self.event_manager.element_event)
     
     def gui(self):

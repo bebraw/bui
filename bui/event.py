@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 from bui.container import AbstractContainer
-from bui.initializer import initialize_element_heights, initialize_element_widths
 from bui.parser import read_yaml
 from bui.tree import TreeParent
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class BaseEventManager(object):
-    def __init__(self, root_container, keys, events, element_height):
+    def __init__(self, root_container, keys, events):
         assert isinstance(root_container, AbstractContainer)
         assert isinstance(keys, str)
-        assert isinstance(element_height, int)
         
         self.root_container = root_container
         self.events = events
-        self.element_height = element_height # FIXME: does this belong here?
         
         self.element_events = ElementEventContainer()
         self.key_events = EventContainer()
@@ -84,10 +81,6 @@ class BaseEventManager(object):
                 print func.__name__
             
             func(elem)
-            
-            # TODO: are these in the right place??? note that now these don't get executed for key event!
-            initialize_element_heights(self.root_container, self.element_height)
-            initialize_element_widths(self.root_container)
     
     def key_event(self, evt, pressed):
         if self.key_events.has_key(evt):
