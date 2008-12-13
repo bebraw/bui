@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import bui.tree
-
 def draw_line(line_width, color, x1, y1, x2, y2):
     ogl.glLineWidth(line_width)
     ogl.glColor3f(*color)
