@@ -3,6 +3,8 @@ from tree import TreeChild, TreeParent
 
 class AbstractObject(object):
     def __init__(self, **kvargs):
+        self.x_offset = 0
+        self.y_offset = 0
         self.name = ''
         self.height = None
         self.width = None
@@ -22,11 +24,8 @@ class AbstractObject(object):
         if dict.has_key(arg):
             return dict[arg]
     
-    def render(self, coord):
-        self.x = coord.x
-        self.y = coord.y
-        
-        self.render_bg_color() # note that containers won't work this way yet!
+    def render(self):
+        self.render_bg_color() # how to implement this for containers???
     
     def render_bg_color(self):
         pass
@@ -38,11 +37,6 @@ class AbstractElement(TreeChild, AbstractObject):
         super(AbstractElement, self).__init__(**kvargs)
 
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
-    def __init__(self, **kvargs):
-        self.x_offset = 0
-        self.y_offset = 0
-        super(AbstractContainer, self).__init__(**kvargs)
-    
     def add_child_structure(self, structure_root):
         structure_root.parent = self
         self.children.append(structure_root)
@@ -56,3 +50,10 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
             return True
         
         return False
+    
+    def render(self):
+        super(AbstractContainer, self).render()
+        
+        for child in self.children:
+            if child.visible:
+                child.render()

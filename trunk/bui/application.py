@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from constraint import BaseConstraintManager
 from event import BaseEventManager
-from initializer import initialize_element_heights, initialize_element_widths
 from serializer import unserialize
 from window import BaseWindowManager
 
@@ -9,18 +8,17 @@ class BaseApplication(object):
     def __init__(self, structure, keys, events=None, constraints=None, element_height=20):
         self.root_container = unserialize(structure)
         
-        initialize_element_heights(self.root_container, element_height)
-        initialize_element_widths(self.root_container)
-        
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
-        self.event_manager = BaseEventManager(self.root_container, keys, events, element_height)
-        self.window_manager = BaseWindowManager()
+        self.event_manager = BaseEventManager(self.root_container, keys, events)
+        self.window_manager = BaseWindowManager(self.root_container, element_height)
     
     def run(self):
         pass
+        # it would be nice to init layout just once and then alter on demand (ie. add/remove elements)
+        # this needs to be detected somehow though
+        #self.window_manager.initialize_layout()
     
     def gui(self):
+        self.window_manager.initialize_layout() # not the most efficient solution but works
         self.constraint_manager.check_constraints()
-        self.event_manager.construct_element_event_ids(self.root_container) # TODO: in right place?
-        self.window_manager.__init__() # TODO: needed even? (if coords go to objects, this can be removed...)
-        self.root_container.render(self.window_manager)
+        self.root_container.render()

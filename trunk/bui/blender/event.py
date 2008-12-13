@@ -7,8 +7,8 @@ from bui.event import BaseEventManager
 from keys import BLENDER_KEYS
 
 class EventManager(BaseEventManager):
-    def __init__(self, root_container, keys, events, element_height):
-        super(EventManager, self).__init__(root_container, keys, events, element_height)
+    def __init__(self, root_container, keys, events):
+        super(EventManager, self).__init__(root_container, keys, events)
     
     def element_event(self, evt):
         super(EventManager, self).element_event(evt)
