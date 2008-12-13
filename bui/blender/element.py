@@ -58,7 +58,7 @@ class Separator(AbstractBlenderElement):
             sep_end_x = max(sep_begin_x, text_x - text_sep_dist)
             draw_line(0.5, self.color, sep_begin_x, y_coord, sep_end_x, y_coord)
             
-            text_y= y_coord - 5 # 10 = half of text height
+            text_y= y_coord - 5 # 5 = half of text height
             draw_text(self.name, text_x, text_y)
             
             sep_end_x = self.x + self.width
