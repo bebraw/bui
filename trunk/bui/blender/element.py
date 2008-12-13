@@ -26,7 +26,7 @@ class AbstractBlenderElement(AbstractElement):
 
 class Label(AbstractBlenderElement):
     def render(self):
-        self.label = Draw.Label(self.name, self.x, self.y, self.width, self.height)
+        Draw.Label(self.name, self.x, self.y, self.width, self.height)
 
 class TextBox(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -34,9 +34,9 @@ class TextBox(AbstractBlenderElement):
         super(TextBox, self).__init__(**kvargs)
     
     def render(self):
-        self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.y,
-                                   self.width, self.height, self.value, self.max_input_length,
-                                   self.tooltip, self.update_value)
+        Draw.String(self.name + ': ', self.event, self.x, self.y,
+                    self.width, self.height, self.value, self.max_input_length,
+                    self.tooltip, self.update_value)
 
 class ToggleButton(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -44,14 +44,14 @@ class ToggleButton(AbstractBlenderElement):
         super(ToggleButton, self).__init__(**kvargs)
     
     def render(self):
-        self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.y,
-                                        self.width, self.height, self.value, self.tooltip,
-                                        self.update_value)
+        Draw.Toggle(self.name, self.event, self.x, self.y,
+                    self.width, self.height, self.value, self.tooltip,
+                    self.update_value)
 
 class PushButton(AbstractBlenderElement):
     def render(self):
-        self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.y,
-                                          self.width, self.height, self.tooltip)
+        Draw.PushButton(self.name, self.event, self.x, self.y,
+                        self.width, self.height, self.tooltip)
 
 class Menu(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -59,9 +59,9 @@ class Menu(AbstractBlenderElement):
         super(Menu, self).__init__(**kvargs)
     
     def render(self):
-        self.menu = Draw.Menu(self.name, self.event, self.x, self.y,
-                              self.width, self.height, self.value, self.tooltip,
-                              self.update_value)
+        Draw.Menu(self.name, self.event, self.x, self.y,
+                  self.width, self.height, self.value, self.tooltip,
+                  self.update_value)
 
 class Slider(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -69,9 +69,9 @@ class Slider(AbstractBlenderElement):
         super(Slider, self).__init__(**kvargs)
     
     def render(self):
-        self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.y,
-                                  self.width, self.height, self.value, self.min, self.max,
-                                  False, self.tooltip, self.update_value)
+        Draw.Slider(self.name + ': ', self.event, self.x, self.y,
+                    self.width, self.height, self.value, self.min, self.max,
+                    False, self.tooltip, self.update_value)
 
 class Number(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -83,14 +83,13 @@ class Number(AbstractBlenderElement):
     
     def render(self):
         try:
-            self.number = Draw.Number(self.name, self.event, self.x, self.y,
-                                      self.width, self.height, self.value, self.min, self.max,
-                                      self.tooltip, self.update_value, self.range,
-                                      self.precision)
+            Draw.Number(self.name, self.event, self.x, self.y,
+                        self.width, self.height, self.value, self.min, self.max,
+                        self.tooltip, self.update_value, self.range, self.precision)
         except: # needed for backwards compatibility (no range and precision in 2.48a)
-            self.number = Draw.Number(self.name, self.event, self.x, self.y,
-                                      self.width, self.height, self.value, self.min, self.max,
-                                      self.tooltip, self.update_value)
+            Draw.Number(self.name, self.event, self.x, self.y,
+                        self.width, self.height, self.value, self.min, self.max,
+                        self.tooltip, self.update_value)
 
 class IntNumber(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -98,9 +97,9 @@ class IntNumber(AbstractBlenderElement):
         super(IntNumber, self).__init__(**kvargs)
     
     def render(self):
-        self.number = Draw.Number(self.name, self.event, self.x, self.y,
-                                  self.width, self.height, int(self.value), int(self.min),
-                                  int(self.max), self.tooltip, self.update_value)
+        Draw.Number(self.name, self.event, self.x, self.y,
+                    self.width, self.height, int(self.value), int(self.min),
+                    int(self.max), self.tooltip, self.update_value)
 
 class ColorPicker(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -108,9 +107,9 @@ class ColorPicker(AbstractBlenderElement):
         super(ColorPicker, self).__init__(**kvargs)
     
     def render(self):
-        self.colorpicker = Draw.ColorPicker(self.event, self.x, self.y,
-                                            self.width, self.height, self.value,
-                                            self.tooltip, self.update_value)
+        Draw.ColorPicker(self.event, self.x, self.y,
+                         self.width, self.height, self.value,
+                         self.tooltip, self.update_value)
 
 '''
 FIXME: self.update_value callback doesn't get called for some reason -> value does not get updated
@@ -120,8 +119,8 @@ class Normal(AbstractBlenderElement):
         super(Normal, self).__init__(**kvargs)
     
     def render(self):
-        self.normal = Draw.Normal(self.event, self.x, self.y, self.width,
-                                  self.height, self.value, self.tooltip, self.update_value)
+        Draw.Normal(self.event, self.x, self.y, self.width,
+                    self.height, self.value, self.tooltip, self.update_value)
 '''
 
 class Image(AbstractBlenderElement):
