@@ -21,8 +21,16 @@ class AbstractBlenderElement(AbstractElement):
         self.max = 1.0
         super(AbstractBlenderElement, self).__init__(**kvargs)
     
+    def render_bg_color(self):
+        if self.bg_color:
+            BGL.glColor3f(*self.bg_color)
+            BGL.glRectf(self.x, self.y, self.x + self.width, self.y + self.height)
+    
     def update_value(self, evt, val):
         self.value = val
+
+class Separator(AbstractBlenderElement):
+    pass
 
 class Label(AbstractBlenderElement):
     def render(self):
