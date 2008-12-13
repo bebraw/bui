@@ -34,8 +34,9 @@ class UIStructure():
                         tooltip: Please enter image filter here
                         max_input_length: 40
                         width: 200
-            - Fill:
-                height: 10
+            - Separator:
+                name: Results
+                height: 20
             - HorizontalContainer:
                 name: results
     '''
