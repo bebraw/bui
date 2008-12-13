@@ -23,16 +23,13 @@ class AbstractBlenderElement(AbstractElement):
         self.max = 1.0
         super(AbstractBlenderElement, self).__init__(**kvargs)
     
-    def get_render_y(self):
-        return self.y - self.height
-    
     def update_value(self, evt, val):
         self.value = val
 
 class Label(AbstractBlenderElement):
     def render(self):
         super(Label, self).render()
-        self.label = Draw.Label(self.name, self.x, self.get_render_y(), self.width, self.height)
+        self.label = Draw.Label(self.name, self.x, self.y, self.width, self.height)
 
 class TextBox(AbstractBlenderElement):
     def __init__(self, **kvargs):
@@ -41,7 +38,7 @@ class TextBox(AbstractBlenderElement):
     
     def render(self):
         super(TextBox, self).render()
-        self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.get_render_y(),
+        self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.y,
                                    self.width, self.height, self.value, self.max_input_length,
                                    self.tooltip, self.update_value)
 
@@ -52,14 +49,14 @@ class ToggleButton(AbstractBlenderElement):
     
     def render(self):
         super(ToggleButton, self).render()
-        self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.get_render_y(),
+        self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.y,
                                         self.width, self.height, self.value, self.tooltip,
                                         self.update_value)
 
 class PushButton(AbstractBlenderElement):
     def render(self):
         super(PushButton, self).render()
-        self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.get_render_y(),
+        self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.y,
                                           self.width, self.height, self.tooltip)
 
 class Menu(AbstractBlenderElement):
@@ -69,7 +66,7 @@ class Menu(AbstractBlenderElement):
     
     def render(self):
         super(Menu, self).render()
-        self.menu = Draw.Menu(self.name, self.event, self.x, self.get_render_y(),
+        self.menu = Draw.Menu(self.name, self.event, self.x, self.y,
                               self.width, self.height, self.value, self.tooltip,
                               self.update_value)
 
@@ -80,7 +77,7 @@ class Slider(AbstractBlenderElement):
     
     def render(self):
         super(Slider, self).render()
-        self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.get_render_y(),
+        self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.y,
                                   self.width, self.height, self.value, self.min, self.max,
                                   False, self.tooltip, self.update_value)
 
@@ -96,12 +93,12 @@ class Number(AbstractBlenderElement):
         super(Number, self).render()
         
         try:
-            self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+            self.number = Draw.Number(self.name, self.event, self.x, self.y,
                                       self.width, self.height, self.value, self.min, self.max,
                                       self.tooltip, self.update_value, self.range,
                                       self.precision)
         except: # needed for backwards compatibility (no range and precision in 2.48a)
-            self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+            self.number = Draw.Number(self.name, self.event, self.x, self.y,
                                       self.width, self.height, self.value, self.min, self.max,
                                       self.tooltip, self.update_value)
 
@@ -112,7 +109,7 @@ class IntNumber(AbstractBlenderElement):
     
     def render(self):
         super(IntNumber, self).render()
-        self.number = Draw.Number(self.name, self.event, self.x, self.get_render_y(),
+        self.number = Draw.Number(self.name, self.event, self.x, self.y,
                                   self.width, self.height, int(self.value), int(self.min),
                                   int(self.max), self.tooltip, self.update_value)
 
@@ -123,7 +120,7 @@ class ColorPicker(AbstractBlenderElement):
     
     def render(self):
         super(ColorPicker, self).render()
-        self.colorpicker = Draw.ColorPicker(self.event, self.x, self.get_render_y(),
+        self.colorpicker = Draw.ColorPicker(self.event, self.x, self.y,
                                             self.width, self.height, self.value,
                                             self.tooltip, self.update_value)
 
@@ -136,7 +133,7 @@ class Normal(AbstractBlenderElement):
     
     def render(self):
         super(Normal, self).render()
-        self.normal = Draw.Normal(self.event, self.x, self.get_render_y(), self.width,
+        self.normal = Draw.Normal(self.event, self.x, self.y, self.width,
                                   self.height, self.value, self.tooltip, self.update_value)
 '''
 
@@ -200,7 +197,7 @@ class Image(AbstractBlenderElement):
             self.x_zoom = float(self.width) / width
             self.y_zoom = float(self.height) / height
             
-            Draw.Image(self.image_block, self.x, self.get_render_y(),
+            Draw.Image(self.image_block, self.x, self.y,
                        self.x_zoom, self.y_zoom, self.x_clip, self.y_clip,
                        self.clip_width, self.clip_height)
 
@@ -230,5 +227,5 @@ class Icon(AbstractBlenderElement):
     @enable_alpha
     def render(self):
         super(Icon, self).render()
-        Draw.Image(self.image_block, self.x, self.get_render_y(), 1.0, 1.0, self.clip_x,
+        Draw.Image(self.image_block, self.x, self.y, 1.0, 1.0, self.clip_x,
                    self.clip_y, self.clip_width, self.clip_height)

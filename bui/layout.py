@@ -3,7 +3,7 @@ from abstract import AbstractContainer
 from container import HorizontalContainer, VerticalContainer
 
 # TODO: tests
-class BaseLayoutManager():
+class BaseLayoutManager(object):
     def __init__(self, root_container, element_height):
         assert isinstance(root_container, AbstractContainer)
         assert isinstance(element_height, int)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-13, 15:58:53 -->
+<!-- Saved: 2008-12-13, 16:29:03 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -72,6 +72,7 @@
     <Source>bui/utils.py</Source>
     <Source>examples/blender/imagefilter.py</Source>
     <Source>bui/layout.py</Source>
+    <Source>bui/blender/layout.py</Source>
   </Sources>
   <Forms>
   </Forms>
