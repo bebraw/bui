@@ -79,7 +79,7 @@ class BaseLayoutManager(object):
                 elem.height += max(heights)
         
         return elem.height
-
+    
     def initialize_element_widths(self, elem):
         if elem.parent:
             if not elem.width:
@@ -92,7 +92,7 @@ class BaseLayoutManager(object):
         
         for child in elem.children:
             self.initialize_element_widths(child)
-
+    
     def calculate_children_widths(self, elem, children, width):
         children_widths = len(children)*[None]
         width_left = width
