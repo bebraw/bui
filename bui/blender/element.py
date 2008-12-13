@@ -12,8 +12,6 @@ from bui.abstract import AbstractElement
 from icons import BLENDER_ICONS
 from utils import *
 
-# TODO: wrap def get_render_y(self): so that internal representation of y (property getter) gives this!
-
 class AbstractBlenderElement(AbstractElement):
     def __init__(self, **kvargs):
         self.event = 0
@@ -28,7 +26,6 @@ class AbstractBlenderElement(AbstractElement):
 
 class Label(AbstractBlenderElement):
     def render(self):
-        super(Label, self).render()
         self.label = Draw.Label(self.name, self.x, self.y, self.width, self.height)
 
 class TextBox(AbstractBlenderElement):
@@ -37,7 +34,6 @@ class TextBox(AbstractBlenderElement):
         super(TextBox, self).__init__(**kvargs)
     
     def render(self):
-        super(TextBox, self).render()
         self.textbox = Draw.String(self.name + ': ', self.event, self.x, self.y,
                                    self.width, self.height, self.value, self.max_input_length,
                                    self.tooltip, self.update_value)
@@ -48,14 +44,12 @@ class ToggleButton(AbstractBlenderElement):
         super(ToggleButton, self).__init__(**kvargs)
     
     def render(self):
-        super(ToggleButton, self).render()
         self.togglebutton = Draw.Toggle(self.name, self.event, self.x, self.y,
                                         self.width, self.height, self.value, self.tooltip,
                                         self.update_value)
 
 class PushButton(AbstractBlenderElement):
     def render(self):
-        super(PushButton, self).render()
         self.pushbutton = Draw.PushButton(self.name, self.event, self.x, self.y,
                                           self.width, self.height, self.tooltip)
 
@@ -65,7 +59,6 @@ class Menu(AbstractBlenderElement):
         super(Menu, self).__init__(**kvargs)
     
     def render(self):
-        super(Menu, self).render()
         self.menu = Draw.Menu(self.name, self.event, self.x, self.y,
                               self.width, self.height, self.value, self.tooltip,
                               self.update_value)
@@ -76,7 +69,6 @@ class Slider(AbstractBlenderElement):
         super(Slider, self).__init__(**kvargs)
     
     def render(self):
-        super(Slider, self).render()
         self.slider = Draw.Slider(self.name + ': ', self.event, self.x, self.y,
                                   self.width, self.height, self.value, self.min, self.max,
                                   False, self.tooltip, self.update_value)
@@ -90,8 +82,6 @@ class Number(AbstractBlenderElement):
         self.value = float(self.value)
     
     def render(self):
-        super(Number, self).render()
-        
         try:
             self.number = Draw.Number(self.name, self.event, self.x, self.y,
                                       self.width, self.height, self.value, self.min, self.max,
@@ -108,7 +98,6 @@ class IntNumber(AbstractBlenderElement):
         super(IntNumber, self).__init__(**kvargs)
     
     def render(self):
-        super(IntNumber, self).render()
         self.number = Draw.Number(self.name, self.event, self.x, self.y,
                                   self.width, self.height, int(self.value), int(self.min),
                                   int(self.max), self.tooltip, self.update_value)
@@ -119,7 +108,6 @@ class ColorPicker(AbstractBlenderElement):
         super(ColorPicker, self).__init__(**kvargs)
     
     def render(self):
-        super(ColorPicker, self).render()
         self.colorpicker = Draw.ColorPicker(self.event, self.x, self.y,
                                             self.width, self.height, self.value,
                                             self.tooltip, self.update_value)
@@ -132,7 +120,6 @@ class Normal(AbstractBlenderElement):
         super(Normal, self).__init__(**kvargs)
     
     def render(self):
-        super(Normal, self).render()
         self.normal = Draw.Normal(self.event, self.x, self.y, self.width,
                                   self.height, self.value, self.tooltip, self.update_value)
 '''
@@ -190,8 +177,6 @@ class Image(AbstractBlenderElement):
     
     @enable_alpha
     def render(self):
-        super(Image, self).render()
-        
         if self.image_block:
             width, height = self.image_block.getSize()
             self.x_zoom = float(self.width) / width
@@ -226,6 +211,5 @@ class Icon(AbstractBlenderElement):
     
     @enable_alpha
     def render(self):
-        super(Icon, self).render()
         Draw.Image(self.image_block, self.x, self.y, 1.0, 1.0, self.clip_x,
                    self.clip_y, self.clip_width, self.clip_height)
