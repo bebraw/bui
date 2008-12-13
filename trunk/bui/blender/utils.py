@@ -13,6 +13,14 @@ try:
 except ImportError:
     print "Missing cairo or rsvg. Image with svg extension won't work!"
 
+def draw_line(line_width, color, x1, y1, x2, y2):
+    BGL.glLineWidth(line_width)
+    BGL.glColor3f(*color)
+    BGL.glBegin(BGL.GL_LINES)
+    BGL.glVertex2f(x1, y1)
+    BGL.glVertex2f(x2, y2)
+    BGL.glEnd()
+
 def find_file_path(root_dir, file_name):
     """ Returns path to given file_name with file_name appended. """
     for root, dirs, files in os.walk(root_dir):
