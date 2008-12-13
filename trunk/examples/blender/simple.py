@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Blender import Draw
 
 from bui.utils import AllMethodsStatic

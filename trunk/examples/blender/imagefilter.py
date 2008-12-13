@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import fnmatch
 
 import bpy
@@ -60,11 +61,11 @@ class Events(AllMethodsStatic):
                 v_container = VerticalContainer(bg_color=[0.7, 0.7, 0.7])
                 
                 new_image = Image(file=image.name, width=200)
-                v_container.add_child_structure(new_image)
-                v_container.add_child_structure(Label(name=image.name))
+                v_container.append(new_image)
+                v_container.append(Label(name=image.name))
                 
-                results_elem.add_child_structure(v_container)
-                results_elem.add_child_structure(Fill(width=10))
+                results_elem.append(v_container)
+                results_elem.append(Fill(width=10))
 
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events)

@@ -25,8 +25,10 @@ def check_state_events(elem):
         Window.Redraw(Types.SCRIPT)
 
 class Application(BaseApplication):
-    def __init__(self, structure, keys, events=None, constraints=None, element_height=20):
-        super(Application, self).__init__(structure, keys, events, constraints, element_height)
+    def __init__(self, structure, keys, events=None, constraints=None,
+                 ui_initializer=None, element_height=20):
+        super(Application, self).__init__(structure, keys, events,
+                                          constraints, ui_initializer, element_height)
         
         self.event_manager = EventManager(self.root_container, keys, events)
         

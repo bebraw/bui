@@ -32,7 +32,7 @@ class Events(AllMethodsStatic):
     def add_to_ui_structure(elem):
         root_elem = elem.find_root_element()
         structure_root = unserialize(MinimalStructure())
-        root_elem.add_child_structure(structure_root)
+        root_elem.append(structure_root)
 
 class TestBaseEventManager():
     def setup_method(self, method):
