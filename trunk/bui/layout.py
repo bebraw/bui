@@ -62,12 +62,9 @@ class BaseLayoutManager(object):
         if not elem.visible:
             parent_is_visible = elem.visible
         
-        elem.height = 0
-            
-        if parent_is_visible:
-            elem.height = self.element_height
-        
         if isinstance(elem, VerticalContainer):
+            elem.height = 0
+            
             for child in elem.children:
                 if isinstance(child, HorizontalContainer):
                     child.height = child.find_child_max_height()
@@ -85,6 +82,12 @@ class BaseLayoutManager(object):
                 elem.height = sum(heights)
             else:
                 elem.height += max(heights)
+        
+        if parent_is_visible:
+            if not isinstance(elem, HorizontalContainer) and not isinstance(elem, VerticalContainer):
+                elem.height = elem.height or self.element_height
+        else:
+            elem.height = 0
         
         return elem.height
     
