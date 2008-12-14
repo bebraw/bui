@@ -3,14 +3,11 @@ from bui.layout import BaseLayoutManager
 from bui.serializer import unserialize
 from bui.window import BaseWindowManager
 
-from structure import StructureWithUIStructure, \
+from structure import HiddenRootContainer, \
+                      MultipleVerticalContainers, \
+                      StructureWithUIStructure, \
                       StructureWithVerticalContainerChild, \
-                      StructureForEventTests, \
-                      MultipleVerticalContainers
-
-# TODO: test VerticalContainer height in case part of its contents have been hidden
-# A good example of where this does not work correctly at the moment can be found
-# in the filter layers example script.
+                      StructureForEventTests \
 
 def test_initialize_layout_with_simple_structure():
     root_container = unserialize(StructureWithUIStructure)
@@ -101,3 +98,35 @@ def test_initialize_layout_with_structure_having_vertical_containers():
     assert root_second_child.y == 60
     assert root_second_child.height == 80
     assert root_second_child.width == 200
+
+def test_initialize_layout_with_hidden_structures():
+    root_container = unserialize(HiddenRootContainer)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager.initialize_layout()
+    
+    manager_root_container = layout_manager.root_container
+    
+    assert manager_root_container.x == None
+    assert manager_root_container.y == None
+    assert manager_root_container.height == 0
+    assert manager_root_container.width == 300
+    
+    root_child = manager_root_container.children[0]
+    
+    assert root_child.x == None
+    assert root_child.y == None
+    assert root_child.height == 0
+    assert root_child.width == 300
+    
+    root_child_child = root_child.children[0]
+    
+    assert root_child_child.x == None
+    assert root_child_child.y == None
+    assert root_child_child.height == 0
+    assert root_child_child.width == 300
+    
+    for child in root_child_child.children:
+        assert child.x == None
+        assert child.y == None
+        assert child.height == 0
+        assert child.width == 100
