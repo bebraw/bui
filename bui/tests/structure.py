@@ -179,6 +179,24 @@ class MultipleVerticalContainers():
                         name: snake
     '''
 
+class HiddenRootContainer():
+    root_structure = '''
+    VerticalContainer:
+        visible: False
+        width: 300
+        children:
+            - VerticalContainer:
+                children:
+                    - HorizontalContainer:
+                        children:
+                            - Fill:
+                                name: foobar
+                            - Fill:
+                                name: foo
+                            - Fill:
+                                name: barfoo
+    '''
+
 class FillElement():
     root_structure = '''
     Fill:

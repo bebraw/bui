@@ -17,12 +17,15 @@ class BaseLayoutManager(object):
         self.initialize_coordinates()
     
     def initialize_coordinates(self):
-        def initialize_coordinates_recursion(elem, coord):
+        def initialize_coordinates_recursion(elem, coord, parent_is_visible=True):
             elem.x = coord.x
             elem.y = coord.y
             
             coord.x += elem.x_offset
             coord.y += elem.y_offset
+            
+            if not elem.visible:
+                parent_is_visible = elem.visible
             
             if isinstance(elem, HorizontalContainer):
                 tmp_x = coord.x
@@ -34,7 +37,7 @@ class BaseLayoutManager(object):
                         if isinstance(child, VerticalContainer):
                             tmp_y = coord.y
                         
-                        initialize_coordinates_recursion(child, coord)
+                        initialize_coordinates_recursion(child, coord, parent_is_visible)
                         
                         coord.x += child.width
                         coord.y = tmp_y or coord.y
@@ -43,12 +46,12 @@ class BaseLayoutManager(object):
             
             if isinstance(elem, VerticalContainer):
                 for child in elem.children:
-                    initialize_coordinates_recursion(child, coord)
+                    initialize_coordinates_recursion(child, coord, parent_is_visible)
                     
                     if not isinstance(child, VerticalContainer):
                         coord.y += child.height
             
-            if not elem.visible:
+            if not parent_is_visible:
                 elem.x = None
                 elem.y = None
         
@@ -56,24 +59,25 @@ class BaseLayoutManager(object):
         initialize_coordinates_recursion(self.root_container, coord)
     
     def initialize_element_heights(self, elem, parent_is_visible=True):
-        if isinstance(elem, VerticalContainer):
-            elem.height = 0
+        if not elem.visible:
+            parent_is_visible = elem.visible
+        
+        elem.height = 0
             
+        if parent_is_visible:
+            elem.height = self.element_height
+        
+        if isinstance(elem, VerticalContainer):
             for child in elem.children:
                 if isinstance(child, HorizontalContainer):
                     child.height = child.find_child_max_height()
         elif isinstance(elem, HorizontalContainer):
             elem.height = 0
-        elif not elem.height:
-            elem.height = 0
-            
-            if parent_is_visible and elem.visible:
-                elem.height = self.element_height
         
         if elem.children:
             heights = []
             for child in elem.children:
-                height = self.initialize_element_heights(child, elem.visible)
+                height = self.initialize_element_heights(child, parent_is_visible)
                 
                 heights.append(height)
             
