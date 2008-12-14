@@ -9,6 +9,7 @@ class BaseApplication(object):
     def __init__(self, structure, keys, events=None, constraints=None,
                  ui_initializer=None, element_height=20):
         self.root_container = unserialize(structure)
+        self.root_container.application = self
         
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
@@ -19,14 +20,15 @@ class BaseApplication(object):
         if hasattr(ui_initializer, '__call__'):
             self.ui_initializer = ui_initializer
     
+    def gui(self):
+        # TODO: trigger constraint check only by events???
+        self.constraint_manager.check_constraints()
+        self.layout_manager.initialize_layout() # checking constraints may alter layout
+        self.root_container.render()
+    
     def run(self):
         if self.ui_initializer:
             self.ui_initializer(self.root_container)
-        # it would be nice to init layout just once and then alter on demand (ie. add/remove elements)
-        # this needs to be detected somehow though
-        #self.layout_manager.initialize_layout()
     
-    def gui(self):
-        self.constraint_manager.check_constraints()
-        self.layout_manager.initialize_layout() # not the most efficient solution but works
-        self.root_container.render()
+    def update_structure(self):
+        self.event_manager.construct_element_event_ids(self.root_container)

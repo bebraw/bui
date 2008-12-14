@@ -37,9 +37,16 @@ class AbstractElement(TreeChild, AbstractObject):
         super(AbstractElement, self).__init__(**kvargs)
 
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
-    def append(self, structure_root):
-        structure_root.parent = self
-        self.children.append(structure_root)
+    def append(self, element):
+        element.parent = self
+        self.children.append(element)
+        
+        self.update_structure()
+    
+    def remove(self, element):
+        self.children.remove(element)
+        
+        self.update_structure()
     
     def render(self):
         self.render_bg_color()
@@ -48,3 +55,7 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
             if child.visible:
                 child.render_bg_color()
                 child.render()
+    
+    def update_structure(self):
+        root_elem = self.find_root_element()
+        root_elem.application.update_structure()
