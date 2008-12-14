@@ -3,12 +3,15 @@ from bui.abstract import AbstractContainer
 from bui.layout import BaseLayoutManager
 
 class LayoutManager(BaseLayoutManager):
-    def initialize_coordinates(self, coord):
+    def initialize_coordinates(self):
         def initialize_coordinates_recursion(elem):
-            elem.y = 2 * self.window_manager.height - elem.y - elem.height
+            if elem.x is not None:
+                elem.x = int(elem.x)
             
-            elem.x = int(elem.x)
-            elem.y = int(elem.y)
+            if elem.y is not None:
+                elem.y = 2 * self.window_manager.height - elem.y - elem.height
+                elem.y = int(elem.y)
+            
             elem.height = int(elem.height)
             elem.width = int(elem.width)
             
@@ -16,6 +19,6 @@ class LayoutManager(BaseLayoutManager):
                 for child in elem.children:
                     initialize_coordinates_recursion(child)
         
-        super(LayoutManager, self).initialize_coordinates(coord)
+        super(LayoutManager, self).initialize_coordinates()
         
         initialize_coordinates_recursion(self.root_container)

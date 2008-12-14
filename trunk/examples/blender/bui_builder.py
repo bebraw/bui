@@ -68,9 +68,7 @@ def populate_container(root_elem, container_name, module):
         module_item = getattr(module, module_item_name)
         
         if type(module_item) == type:
-            module_name = module_item.__name__
-            print module_name
-            containers_elem.append(Label(name=module_name))
+            containers_elem.append(Label(name=module_item_name))
 
 def ui_initialize(root_elem):
     populate_container(root_elem, 'containers', bui.container)

@@ -11,12 +11,12 @@ class BaseLayoutManager(object):
         self.element_height = element_height
         self.root_container = root_container
     
-    def initialize_layout(self, coord):
+    def initialize_layout(self):
         self.initialize_element_heights(self.root_container)
         self.initialize_element_widths(self.root_container)
-        self.initialize_coordinates(coord)
+        self.initialize_coordinates()
     
-    def initialize_coordinates(self, coord):
+    def initialize_coordinates(self):
         def initialize_coordinates_recursion(elem, coord):
             elem.x = coord.x
             elem.y = coord.y
@@ -43,12 +43,16 @@ class BaseLayoutManager(object):
             
             if isinstance(elem, VerticalContainer):
                 for child in elem.children:
-                    if child.visible:
-                        initialize_coordinates_recursion(child, coord)
-                        
-                        if not isinstance(child, VerticalContainer):
-                            coord.y += child.height
+                    initialize_coordinates_recursion(child, coord)
+                    
+                    if not isinstance(child, VerticalContainer):
+                        coord.y += child.height
+            
+            if not elem.visible:
+                elem.x = None
+                elem.y = None
         
+        coord = self.window_manager.get_initial_coordinates()
         initialize_coordinates_recursion(self.root_container, coord)
     
     def initialize_element_heights(self, elem, parent_is_visible=True):

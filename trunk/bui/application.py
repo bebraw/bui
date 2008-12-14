@@ -24,11 +24,9 @@ class BaseApplication(object):
             self.ui_initializer(self.root_container)
         # it would be nice to init layout just once and then alter on demand (ie. add/remove elements)
         # this needs to be detected somehow though
-        #coord = self.window_manager.get_initial_coordinates()
         #self.layout_manager.initialize_layout()
     
     def gui(self):
-        coord = self.window_manager.get_initial_coordinates()
-        self.layout_manager.initialize_layout(coord) # not the most efficient solution but works
         self.constraint_manager.check_constraints()
+        self.layout_manager.initialize_layout() # not the most efficient solution but works
         self.root_container.render()
