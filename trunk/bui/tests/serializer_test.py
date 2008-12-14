@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.container import *
+from bui.element import *
 from bui.serializer import unserialize
 
 from structure import *
