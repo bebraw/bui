@@ -4,6 +4,16 @@ from Blender.Window import Types
 
 from bui.application import BaseApplication
 
+# add elements to backend serializer so it can find them (probably not the cleanest solution)
+import bui.serializer
+import bui.blender.element
+
+for module_item_name in dir(bui.blender.element):
+    module_item = getattr(bui.blender.element, module_item_name)
+    
+    if type(module_item) == type:
+        setattr(bui.serializer, module_item_name, module_item)
+
 from bui.blender.event import EventManager
 from bui.blender.layout import LayoutManager
 from bui.blender.window import WindowManager

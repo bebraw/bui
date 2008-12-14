@@ -43,7 +43,7 @@ class StructureWithVerticalContainerChild():
                 visible: False
                 width: 300
                 children:
-                    - Label:
+                    - Fill:
                         name: barbar
     '''
 
@@ -101,16 +101,16 @@ class StructureForEventTests():
     VerticalContainer:
         width: 200
         children:
-            - Label:
+            - Fill:
                 name: Add monkey
                 width: 40
-            - Label:
+            - Fill:
                 name: Add giraffe
                 width: 20
-            - Label:
+            - Fill:
                 name: Delete animals
                 event_handler: delete_all
-            - Label:
+            - Fill:
                 event_handler: add_to_ui_structure
     '''
 
@@ -135,9 +135,9 @@ class StructureForSimpleScript():
             - HorizontalContainer:
                 name: test_hori
                 children:
-                    - Label:
+                    - Fill:
                         name: Test script
-                    - PushButton:
+                    - Fill:
                         name: X
                         tooltip: Quit script
                         event_handler: quit_script
@@ -147,7 +147,7 @@ class StructureForSimpleScript():
             - HorizontalContainer:
                 name: last_hori
                 children:
-                    - PushButton:
+                    - Fill:
                         name: Do something
                         tooltip: Add some tool here
                         width: 100
@@ -161,21 +161,21 @@ class MultipleVerticalContainers():
             - VerticalContainer:
                 width: 50
                 children:
-                    - Label:
+                    - Fill:
                         name: foo
-                    - Label:
+                    - Fill:
                         name: bar
-                    - Label:
+                    - Fill:
                         name: foofoo
             - VerticalContainer:
                 children:
-                    - Label:
+                    - Fill:
                         name: cat
-                    - Label:
+                    - Fill:
                         name: dog
-                    - Label:
+                    - Fill:
                         name: elephant
-                    - Label:
+                    - Fill:
                         name: snake
     '''
 

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from bui.coordinate import Coordinate
 from bui.layout import BaseLayoutManager
 from bui.serializer import unserialize
 from bui.window import BaseWindowManager
@@ -16,7 +15,7 @@ from structure import StructureWithUIStructure, \
 def test_initialize_layout_with_simple_structure():
     root_container = unserialize(StructureWithUIStructure)
     layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
-    layout_manager.initialize_layout(Coordinate())
+    layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
     
@@ -28,7 +27,7 @@ def test_initialize_layout_with_simple_structure():
 def test_initialize_layout_with_structure_having_hidden_container():
     root_container = unserialize(StructureWithVerticalContainerChild)
     layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
-    layout_manager.initialize_layout(Coordinate())
+    layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
     
@@ -39,15 +38,15 @@ def test_initialize_layout_with_structure_having_hidden_container():
     
     root_child = manager_root_container.children[0]
     
-    assert hasattr(root_child, 'x') == False
-    assert hasattr(root_child, 'y') == False
-    assert hasattr(root_child, 'height') == True
-    assert hasattr(root_child, 'width') == True
+    assert root_child.x == None
+    assert root_child.y == None
+    assert root_child.height == 0
+    assert root_child.width == 200
 
 def test_initialize_layout_with_structure_having_multiple_children():
     root_container = unserialize(StructureForEventTests)
     layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
-    layout_manager.initialize_layout(Coordinate())
+    layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
     
@@ -80,7 +79,7 @@ def test_initialize_layout_with_structure_having_multiple_children():
 def test_initialize_layout_with_structure_having_vertical_containers():
     root_container = unserialize(MultipleVerticalContainers)
     layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
-    layout_manager.initialize_layout(Coordinate())
+    layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
     
