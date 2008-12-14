@@ -174,7 +174,7 @@ class Events(AllMethodsStatic):
     def delete_layer(elem):
         layers = elem.find_parent(name='layers')
         layer = elem.find_parent(name='layer')
-        layers.children.remove(layer)
+        layers.remove(layer)
     
     def add_filter(elem):
         filters_container = elem.find_parent(name='filters_container')
@@ -185,7 +185,7 @@ class Events(AllMethodsStatic):
     def delete_filter(elem):
         filters = elem.find_parent(name='filters')
         filter = elem.find_parent(name='filter')
-        filters.children.remove(filter)
+        filters.remove(filter)
     
     def root_container_up(root_elem):
         elem.x_offset += 20
