@@ -58,4 +58,6 @@ class AbstractContainer(TreeChild, TreeParent, AbstractObject):
     
     def update_structure(self):
         root_elem = self.find_root_element()
-        root_elem.application.update_structure()
+        
+        if hasattr(root_elem, 'application'):
+            root_elem.application.update_structure()
