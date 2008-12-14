@@ -17,4 +17,4 @@ class WindowManager(BaseWindowManager):
         xmin, ymin, xmax, ymax = self.get_coordinates()
         mouse_x, mouse_y = Window.GetMouseCoords()
         
-        return Coordinate(mouse_x-xmin, ymax-mouse_y+ymin)
+        return Coordinate(mouse_x-xmin, mouse_y-ymin)
