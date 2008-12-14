@@ -8,7 +8,6 @@
 -implement vertical slider element for Blender
 -add auto width/height? (+ min and max)
 -add relative width/height?
--improve mapping between filtering type option menu and filter backend!
 -improve tests!!!
 -separate style from UI definition (CSS style selectors (take a look at jQuery))
 -fade (animate container bgs (active highlighted) based on time delta since active)
