@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from container import *
+from element import *
 from parser import read_yaml
 
 def unserialize(document_container, document=None):

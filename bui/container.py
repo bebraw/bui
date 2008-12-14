@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractContainer
 
-class Fill(AbstractContainer):
-    pass
-
 class HorizontalContainer(AbstractContainer):
     def find_child_max_height(self): # TODO: test!
         record_height = 0

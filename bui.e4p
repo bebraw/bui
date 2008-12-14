@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-13, 22:10:23 -->
+<!-- Saved: 2008-12-14, 12:31:12 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -76,6 +76,7 @@
     <Source>bui/opengl/__init__.py</Source>
     <Source>bui/opengl/draw.py</Source>
     <Source>bui/opengl/decorators.py</Source>
+    <Source>bui/element.py</Source>
   </Sources>
   <Forms>
   </Forms>
