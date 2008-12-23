@@ -13,14 +13,14 @@ from bui.container import HorizontalContainer, VerticalContainer
 # set drawing functions to use Blender's OpenGL implementation
 # TODO: tidy up (get rid of ogl and just dump whole namespace into draw?)
 
-import bui.opengl.decorators
-import bui.opengl.draw
+import bui.graphics.opengl.decorators
+import bui.graphics.opengl.draw
 
-setattr(bui.opengl.decorators, 'ogl', Blender.BGL)
-setattr(bui.opengl.draw, 'ogl', Blender.BGL)
+setattr(bui.graphics.opengl.decorators, 'ogl', Blender.BGL)
+setattr(bui.graphics.opengl.draw, 'ogl', Blender.BGL)
 
-from bui.opengl.decorators import *
-from bui.opengl.draw import *
+from bui.graphics.opengl.decorators import *
+from bui.graphics.opengl.draw import *
 
 from icons import BLENDER_ICONS
 from utils import *
