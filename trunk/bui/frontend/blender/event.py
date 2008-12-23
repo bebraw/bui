@@ -2,7 +2,7 @@
 from Blender import Window
 from Blender.Window import Types
 
-from bui.event import BaseEventManager
+from bui.backend.event import BaseEventManager
 
 from keys import BLENDER_KEYS
 
