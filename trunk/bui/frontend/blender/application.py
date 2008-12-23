@@ -8,11 +8,9 @@ from bui.backend.application import BaseApplication
 import bui.utils.serializer
 import element
 
-for module_item_name in dir(element):
-    module_item = getattr(element, module_item_name)
-    
-    if type(module_item) == type:
-        setattr(bui.utils.serializer, module_item_name, module_item)
+for var_name, var_item in vars(element).items():
+    if type(var_item) == type:
+        setattr(bui.utils.serializer, var_name, var_item)
 
 from event import EventManager
 from layout import LayoutManager
@@ -55,6 +53,3 @@ class Application(BaseApplication):
     def run(self):
         super(Application, self).run()
         Draw.Register(self.gui, self.event_manager.key_event, self.event_manager.element_event)
-    
-    def gui(self):
-        super(Application, self).gui()
