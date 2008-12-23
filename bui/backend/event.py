@@ -50,8 +50,10 @@ class BaseEventManager(object):
         
         if isinstance(keys_structure, dict):
             for key, value in keys_structure.items():
-                if key_mapping:
+                if key_mapping and key_mapping.has_key(key):
                     key = key_mapping[key]
+                elif len(key) == 1:
+                    key = ord(key)
                 
                 if isinstance(value, dict):
                     for event, func_name in value.items():
