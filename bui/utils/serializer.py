@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from container import *
-from element import *
+from bui.backend.container import * # TODO: get rid of this dependency
+from bui.backend.element import * # TODO: get rid of this dependency
 from parser import read_yaml
 
 def unserialize(document_container, document=None):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.tree import TreeChild, TreeParent
+from bui.utils.tree import TreeChild, TreeParent
 
 # TODO: test nasty mixed cases (trees with instances from both classes)
 

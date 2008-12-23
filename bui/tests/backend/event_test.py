@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
-import bui.event
+import bui.backend.event
 
-from bui.container import *
-from bui.coordinate import Coordinate
-from bui.event import BaseEventManager
-from bui.initializer import *
-from bui.serializer import unserialize
-from bui.utils import AllMethodsStatic
+from bui.backend.container import *
+from bui.backend.event import BaseEventManager
+from bui.backend.layout import BaseLayoutManager
+from bui.backend.window import BaseWindowManager
 
-from structure import MinimalStructure, StructureForEventTests, \
+from bui.utils.coordinate import Coordinate
+from bui.utils.meta import AllMethodsStatic
+from bui.utils.serializer import unserialize
+
+from bui.tests.structure import MinimalStructure, StructureForEventTests, \
                       StructureForStateEventTests, structure_keys
 
-bui.event.PRINT_BUTTON_EVENT_NAMES = True
+bui.backend.event.PRINT_BUTTON_EVENT_NAMES = True
 
 PRESS = 1
 RELEASE = 0
@@ -96,10 +98,11 @@ class TestStateEvents():
     def setup_method(self, method):
         self.root_container = unserialize(StructureForStateEventTests)
         
-        # get width, height and x, y coordinates for objects!
-        element_height = 20
-        initialize_element_heights(self.root_container, element_height)
-        initialize_element_widths(self.root_container)
+        # TODO: use factory instead?
+        window_manager = BaseWindowManager()
+        layout_manager = BaseLayoutManager(window_manager, self.root_container, 20)
+        layout_manager.initialize_layout()
+        
         self.root_container.render()
         
         self.print_foo_elem = self.root_container.children[0]

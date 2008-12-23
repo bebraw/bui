@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from bui.container import AbstractContainer
-from bui.parser import read_yaml
-from bui.tree import TreeParent
+from bui.utils.parser import read_yaml
+from bui.utils.tree import TreeParent
+
+from container import AbstractContainer
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 

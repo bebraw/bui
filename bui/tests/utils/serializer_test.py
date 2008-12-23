@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from bui.container import *
-from bui.element import *
-from bui.serializer import unserialize
+from bui.backend.container import *
+from bui.backend.element import *
 
-from structure import *
+from bui.utils.serializer import unserialize
+
+from bui.tests.structure import *
 
 def test_unserialize_valid_structure_with_vertical_child_container():
     root_container = unserialize(StructureWithVerticalContainerChild())
