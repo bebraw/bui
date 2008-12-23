@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from bui.abstract import AbstractContainer
-from bui.layout import BaseLayoutManager
+from bui.backend.abstract import AbstractContainer
+from bui.backend.layout import BaseLayoutManager
 
 class LayoutManager(BaseLayoutManager):
     def initialize_coordinates(self):

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from Blender import Window
 
-from bui.coordinate import Coordinate
-from bui.window import BaseWindowManager
+from bui.backend.window import BaseWindowManager
+
+from bui.utils.coordinate import Coordinate
 
 class WindowManager(BaseWindowManager):
     def get_coordinates(self):

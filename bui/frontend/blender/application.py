@@ -2,21 +2,21 @@
 from Blender import BGL, Draw, Window
 from Blender.Window import Types
 
-from bui.application import BaseApplication
+from bui.backend.application import BaseApplication
 
 # add elements to backend serializer so it can find them (probably not the cleanest solution)
-import bui.serializer
-import bui.blender.element
+import bui.utils.serializer
+import element
 
-for module_item_name in dir(bui.blender.element):
-    module_item = getattr(bui.blender.element, module_item_name)
+for module_item_name in dir(element):
+    module_item = getattr(element, module_item_name)
     
     if type(module_item) == type:
-        setattr(bui.serializer, module_item_name, module_item)
+        setattr(bui.utils.serializer, module_item_name, module_item)
 
-from bui.blender.event import EventManager
-from bui.blender.layout import LayoutManager
-from bui.blender.window import WindowManager
+from event import EventManager
+from layout import LayoutManager
+from window import WindowManager
 
 from keys import BLENDER_KEYS
 

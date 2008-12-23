@@ -7,8 +7,8 @@ try:
 except ImportError:
     pass
 
-from bui.abstract import AbstractElement, AbstractObject
-from bui.container import HorizontalContainer, VerticalContainer
+from bui.backend.abstract import AbstractElement, AbstractObject
+from bui.backend.container import HorizontalContainer, VerticalContainer
 
 # set drawing functions to use Blender's OpenGL implementation
 # TODO: tidy up (get rid of ogl and just dump whole namespace into draw?)
