@@ -4,12 +4,13 @@ import fnmatch
 import bpy
 from Blender import Draw
 
-from bui.container import VerticalContainer
-from bui.element import Fill
-from bui.utils import AllMethodsStatic
+from bui.backend.container import VerticalContainer
+from bui.backend.element import Fill
 
-from bui.blender.application import Application
-from bui.blender.element import Image, Label
+from bui.frontend.blender.application import Application
+from bui.frontend.blender.element import Image, Label
+
+from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''

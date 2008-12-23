@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw
 
-from bui.utils import AllMethodsStatic
+from bui.frontend.blender.application import Application
+from bui.frontend.blender.element import Image
 
-from bui.blender.application import Application
-from bui.blender.element import Image
+from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
