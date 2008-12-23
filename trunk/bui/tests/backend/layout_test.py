@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from bui.layout import BaseLayoutManager
-from bui.serializer import unserialize
-from bui.window import BaseWindowManager
+from bui.backend.layout import BaseLayoutManager
+from bui.backend.window import BaseWindowManager
 
-from structure import HiddenRootContainer, \
+from bui.utils.serializer import unserialize
+
+from bui.tests.structure import HiddenRootContainer, \
                       MultipleVerticalContainers, \
                       StructureWithUIStructure, \
                       StructureWithVerticalContainerChild, \

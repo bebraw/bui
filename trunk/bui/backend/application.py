@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from bui.utils.serializer import unserialize
+
 from constraint import BaseConstraintManager
 from event import BaseEventManager
 from layout import BaseLayoutManager
-from serializer import unserialize
 from window import BaseWindowManager
 
 class BaseApplication(object):

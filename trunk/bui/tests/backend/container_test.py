@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.container import *
+from bui.backend.container import *
 
 class TestHorizontalContainer():
     pass

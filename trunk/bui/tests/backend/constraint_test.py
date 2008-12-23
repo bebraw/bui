@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from bui.constraint import ConstraintContainer, BaseConstraintManager
-from bui.utils import AllMethodsStatic
+from bui.backend.constraint import ConstraintContainer, BaseConstraintManager
+from bui.utils.meta import AllMethodsStatic
 
 root_container_name = 'test_container'
 

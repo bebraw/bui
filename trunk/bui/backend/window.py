@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from coordinate import Coordinate
+from bui.utils.coordinate import Coordinate
 
 class BaseWindowManager(object):
     def get_coordinates(self):

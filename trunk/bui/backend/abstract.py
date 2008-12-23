@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from tree import TreeChild, TreeParent
+from bui.utils.tree import TreeChild, TreeParent
 
 class AbstractObject(object):
     def __init__(self, **kvargs):

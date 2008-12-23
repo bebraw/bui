@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from bui.application import BaseApplication
-from bui.container import VerticalContainer
+from bui.backend.application import BaseApplication
+from bui.backend.container import VerticalContainer
 
-from structure import StructureWithVerticalContainerChild
+from bui.tests.structure import StructureWithVerticalContainerChild
 
 def test_create_application():
     app = BaseApplication(StructureWithVerticalContainerChild, '')
