@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw
 
-import bui.container
-from bui.utils import AllMethodsStatic
+import bui.backend.container
+from bui.utils.meta import AllMethodsStatic
 
-import bui.blender.element
-from bui.blender.application import Application
-from bui.blender.element import Label
+import bui.frontend.blender.element
+from bui.frontend.blender.application import Application
+from bui.frontend.blender.element import Label
 
 class UIStructure():
     root_structure = '''
