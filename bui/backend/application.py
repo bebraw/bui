@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.utils.serializer import unserialize
+from bui.backend.serializer import unserialize
 
 from constraint import BaseConstraintManager
 from event import BaseEventManager

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from bui.backend.container import *
 from bui.backend.element import *
-
-from bui.utils.serializer import unserialize
+from bui.backend.serializer import unserialize
 
 from ..structure import StructureWithVerticalContainerChild, \
                         StructureWithHorizontalContainerChild, \

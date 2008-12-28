@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from bui.backend.abstract import *
 from bui.backend.container import *
-from bui.utils.serializer import unserialize
+from bui.backend.serializer import unserialize
 
 from ..structure import FillElement, MinimalStructure
 

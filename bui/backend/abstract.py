@@ -37,14 +37,14 @@ class AbstractElement(TreeChild, AbstractObject):
         super(AbstractElement, self).__init__(**kvargs)
 
 class AbstractContainer(TreeChild, TreeParent, AbstractObject):
-    def append(self, element):
-        element.parent = self
-        self.children.append(element)
+    def append(self, abstract_object):
+        abstract_object.parent = self
+        self.children.append(abstract_object)
         
         self.update_structure()
     
-    def remove(self, element):
-        self.children.remove(element)
+    def remove(self, abstract_object):
+        self.children.remove(abstract_object)
         
         self.update_structure()
     
