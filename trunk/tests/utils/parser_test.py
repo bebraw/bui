@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
 
-from bui.tests.structure import structure_with_one_item, structure_with_tabs
+from ..structure import structure_with_one_item, structure_with_tabs
 
 def test_read_invalid_file():
     file_content = read_yaml('foo.yaml')

@@ -4,7 +4,7 @@ from bui.backend.window import BaseWindowManager
 
 from bui.utils.serializer import unserialize
 
-from bui.tests.structure import HiddenRootContainer, \
+from tests.structure import HiddenRootContainer, \
                       MultipleVerticalContainers, \
                       StructureWithUIStructure, \
                       StructureWithVerticalContainerChild, \
