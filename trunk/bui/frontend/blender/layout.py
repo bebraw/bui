@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from bui.utils.coordinate import Coordinate
+
 from bui.backend.abstract import AbstractContainer
 from bui.backend.layout import BaseLayoutManager
 
 class LayoutManager(BaseLayoutManager):
-    def initialize_coordinates(self):
+    def initialize_coordinates(self, coord=None):
         def initialize_coordinates_recursion(elem):
             if elem.x is not None:
                 elem.x = int(elem.x)
@@ -19,6 +21,8 @@ class LayoutManager(BaseLayoutManager):
                 for child in elem.children:
                     initialize_coordinates_recursion(child)
         
-        super(LayoutManager, self).initialize_coordinates()
+        coord = Coordinate(0, self.window_manager.height)
+        
+        super(LayoutManager, self).initialize_coordinates(coord)
         
         initialize_coordinates_recursion(self.root_container)

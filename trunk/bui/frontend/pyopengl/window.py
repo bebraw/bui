@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from OpenGL.GL import *
-from OpenGL.GLUT import *
 from OpenGL.GLU import *
+from OpenGL.GLUT import *
 
 from bui.backend.window import BaseWindowManager
-
-from bui.utils.coordinate import Coordinate
 
 # to graphics?
 # A general OpenGL initialization function.  Sets all of the initial parameters.
@@ -25,9 +23,7 @@ def InitGL(Width, Height):                # We call this right after our OpenGL 
 
 class WindowManager(BaseWindowManager):
     def __init__(self, name, width, height):
-        self.coordinates = [0, 0, width, height]
-        #self.width = width
-        #self.height = height
+        super(WindowManager, self).__init__(name, width, height)
         
         glutInit()
         glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
@@ -40,20 +36,15 @@ class WindowManager(BaseWindowManager):
         
         glutReshapeFunc(self.resize)
         
-        InitGL(width, height)
-    
-    def get_coordinates(self):
-        return self.coordinates # get rid of get_coordinates in base class???
+        InitGL(self.width, self.height)
     
     def get_mouse_coordinates(self):
-        xmin, ymin, xmax, ymax = self.get_coordinates()
-        mouse_x, mouse_y = Window.GetMouseCoords()
-        
-        return Coordinate(mouse_x-xmin, mouse_y-ymin)
+        return (0, 0) # TODO: implement
     
     # convert this to use 2d viewport code (see cassopi)
     def resize(self, width, height):
-        height = max(height, 1)
+        self.height = height
+        self.width = width
         
         glViewport(0, 0, width, height)
         glMatrixMode(GL_PROJECTION)
