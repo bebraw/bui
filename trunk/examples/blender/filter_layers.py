@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw, Scene, Window
 
+from bui.backend.serializer import unserialize
+
 from bui.frontend.blender.application import Application
 
 from bui.utils.meta import AllMethodsStatic
-from bui.utils.serializer import unserialize
 
 from object_filter import ObjectFilter
 
@@ -169,6 +170,7 @@ class Events(AllMethodsStatic):
     def add_layer(elem):
         root = elem.find_root_element()
         layers = root.find_child(name='layers')
+        
         root_structure = unserialize(UIStructure, UIStructure.layer_structure)
         layers.append(root_structure)
     

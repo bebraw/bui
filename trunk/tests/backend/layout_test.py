@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from bui.backend.layout import BaseLayoutManager
+from bui.backend.serializer import unserialize
 from bui.backend.window import BaseWindowManager
-
-from bui.utils.serializer import unserialize
 
 from tests.structure import HiddenRootContainer, \
                       MultipleVerticalContainers, \

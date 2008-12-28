@@ -2,11 +2,10 @@
 import bpy
 from Blender import Draw, Scene, Types, Window
 
-from bui.backend.event import BaseEvents
+from bui.backend.serializer import unserialize
 
 from bui.frontend.blender.application import Application
 
-from bui.utils.serializer import unserialize
 from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():

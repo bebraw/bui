@@ -4,11 +4,11 @@ import bui.backend.event
 from bui.backend.container import *
 from bui.backend.event import BaseEventManager
 from bui.backend.layout import BaseLayoutManager
+from bui.backend.serializer import unserialize
 from bui.backend.window import BaseWindowManager
 
 from bui.utils.coordinate import Coordinate
 from bui.utils.meta import AllMethodsStatic
-from bui.utils.serializer import unserialize
 
 from ..structure import MinimalStructure, StructureForEventTests, \
                       StructureForStateEventTests, structure_keys

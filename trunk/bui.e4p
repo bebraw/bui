@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-23, 14:43:41 -->
+<!-- Saved: 2008-12-28, 15:53:11 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -11,8 +11,6 @@
   <Email></Email>
   <Sources>
     <Source>bui/__init__.py</Source>
-    <Source>bui/tests/__init__.py</Source>
-    <Source>bui/tests/pyglet/__init__.py</Source>
     <Source>yaml/serializer.py</Source>
     <Source>yaml/tokens.py</Source>
     <Source>yaml/events.py</Source>
@@ -48,7 +46,6 @@
     <Source>bui/utils/__init__.py</Source>
     <Source>bui/utils/coordinate.py</Source>
     <Source>bui/utils/parser.py</Source>
-    <Source>bui/utils/serializer.py</Source>
     <Source>bui/utils/tree.py</Source>
     <Source>bui/backend/event.py</Source>
     <Source>bui/backend/__init__.py</Source>
@@ -71,21 +68,6 @@
     <Source>bui/frontend/pyglet/__init__.py</Source>
     <Source>bui/frontend/pyglet/application.py</Source>
     <Source>bui/utils/meta.py</Source>
-    <Source>bui/tests/frontend/__init__.py</Source>
-    <Source>bui/tests/utils/__init__.py</Source>
-    <Source>bui/tests/utils/tree_test.py</Source>
-    <Source>bui/tests/utils/serializer_test.py</Source>
-    <Source>bui/tests/utils/parser_test.py</Source>
-    <Source>bui/tests/backend/__init__.py</Source>
-    <Source>bui/tests/backend/application_test.py</Source>
-    <Source>bui/tests/backend/constraint_test.py</Source>
-    <Source>bui/tests/backend/abstract_test.py</Source>
-    <Source>bui/tests/backend/layout_test.py</Source>
-    <Source>bui/tests/backend/event_test.py</Source>
-    <Source>bui/tests/backend/container_test.py</Source>
-    <Source>bui/tests/frontend/blender/__init__.py</Source>
-    <Source>bui/tests/frontend/pyglet/__init__.py</Source>
-    <Source>bui/tests/structure.py</Source>
     <Source>bui/frontend/__init__.py</Source>
     <Source>bui/frontend/pyopengl/__init__.py</Source>
     <Source>bui/frontend/pyopengl/application.py</Source>
@@ -93,6 +75,24 @@
     <Source>examples/pyopengl/__init__.py</Source>
     <Source>examples/pyopengl/simple.py</Source>
     <Source>bui/frontend/pyopengl/event.py</Source>
+    <Source>bui/backend/serializer.py</Source>
+    <Source>tests/__init__.py</Source>
+    <Source>tests/structure.py</Source>
+    <Source>tests/frontend/__init__.py</Source>
+    <Source>tests/utils/__init__.py</Source>
+    <Source>tests/utils/tree_test.py</Source>
+    <Source>tests/utils/parser_test.py</Source>
+    <Source>tests/backend/__init__.py</Source>
+    <Source>tests/backend/application_test.py</Source>
+    <Source>tests/backend/constraint_test.py</Source>
+    <Source>tests/backend/abstract_test.py</Source>
+    <Source>tests/backend/layout_test.py</Source>
+    <Source>tests/backend/serializer_test.py</Source>
+    <Source>tests/backend/event_test.py</Source>
+    <Source>tests/backend/container_test.py</Source>
+    <Source>tests/pyglet/__init__.py</Source>
+    <Source>tests/frontend/blender/__init__.py</Source>
+    <Source>tests/frontend/pyglet/__init__.py</Source>
   </Sources>
   <Forms>
   </Forms>
@@ -103,8 +103,6 @@
   <Interfaces>
   </Interfaces>
   <Others>
-    <Other>bui/tests/__init__.py</Other>
-    <Other>bui/tests/pyglet/__init__.py</Other>
     <Other>bui/__init__.py</Other>
   </Others>
   <Vcs>
