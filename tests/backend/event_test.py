@@ -10,7 +10,7 @@ from bui.utils.coordinate import Coordinate
 from bui.utils.meta import AllMethodsStatic
 from bui.utils.serializer import unserialize
 
-from bui.tests.structure import MinimalStructure, StructureForEventTests, \
+from ..structure import MinimalStructure, StructureForEventTests, \
                       StructureForStateEventTests, structure_keys
 
 bui.backend.event.PRINT_BUTTON_EVENT_NAMES = True

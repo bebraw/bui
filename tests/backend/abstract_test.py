@@ -3,7 +3,7 @@ from bui.backend.abstract import *
 from bui.backend.container import *
 from bui.utils.serializer import unserialize
 
-from bui.tests.structure import FillElement, MinimalStructure
+from ..structure import FillElement, MinimalStructure
 
 class TestAbstractObject():
     def test_create_abstract_object(self):

@@ -4,7 +4,13 @@ from bui.backend.element import *
 
 from bui.utils.serializer import unserialize
 
-from bui.tests.structure import *
+from ..structure import StructureWithVerticalContainerChild, \
+                        StructureWithHorizontalContainerChild, \
+                        StructureWithMultipleContainers, \
+                        StructureWithFillElements, \
+                        StructureWithUIStructure, \
+                        StructureWithVerticalContainerChildren, \
+                        StructureForSimpleScript
 
 def test_unserialize_valid_structure_with_vertical_child_container():
     root_container = unserialize(StructureWithVerticalContainerChild())
