@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from bui.utils.coordinate import Coordinate
+
 from abstract import AbstractContainer
 from container import HorizontalContainer, VerticalContainer
 
@@ -16,7 +18,7 @@ class BaseLayoutManager(object):
         self.initialize_element_widths(self.root_container)
         self.initialize_coordinates()
     
-    def initialize_coordinates(self):
+    def initialize_coordinates(self, coord=None):
         def initialize_coordinates_recursion(elem, coord, parent_is_visible=True):
             elem.x = coord.x
             elem.y = coord.y
@@ -55,7 +57,8 @@ class BaseLayoutManager(object):
                 elem.x = None
                 elem.y = None
         
-        coord = self.window_manager.get_initial_coordinates()
+        coord = coord or Coordinate()
+        
         initialize_coordinates_recursion(self.root_container, coord)
     
     def initialize_element_heights(self, elem, parent_is_visible=True):

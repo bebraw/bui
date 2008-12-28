@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-from bui.utils.coordinate import Coordinate
 
 class BaseWindowManager(object):
-    def get_coordinates(self):
-        return (0, 0, 0, 0, )
-    
-    def get_initial_coordinates(self):
-        return Coordinate(0, self.height)
+    def __init__(self, name=None, width=None, height=None):
+        self.name = name
+        self.width = width
+        self.height = height
     
     def get_height(self):
-        xmin, ymin, xmax, ymax = self.get_coordinates()
-        
-        return ymax - ymin
-    height = property(get_height)
+        return self._height
+    def set_height(self, height):
+        self._height = max(height, 1)
+    height = property(get_height, set_height)
     
     def get_width(self):
-        xmin, ymin, xmax, ymax, = self.get_coordinates()
-        
-        return xmax - xmin
-    width = property(get_width)
+        return self._width
+    def set_width(self, width):
+        self._width = max(width, 1)
+    width = property(get_width, set_width)

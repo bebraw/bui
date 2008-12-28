@@ -19,3 +19,15 @@ class WindowManager(BaseWindowManager):
         mouse_x, mouse_y = Window.GetMouseCoords()
         
         return Coordinate(mouse_x-xmin, mouse_y-ymin)
+
+    def get_height(self):
+        xmin, ymin, xmax, ymax = self.get_coordinates()
+        
+        return ymax - ymin
+    height = property(get_height, BaseWindowManager.set_height)
+    
+    def get_width(self):
+        xmin, ymin, xmax, ymax, = self.get_coordinates()
+        
+        return xmax - xmin
+    width = property(get_width, BaseWindowManager.set_width)

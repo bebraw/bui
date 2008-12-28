@@ -78,10 +78,10 @@ class TestBaseEventManager():
         assert self.root_container.children[4].width == 400
     
     def test_manager_has_right_key_events(self):
-        assert self.event_manager.key_events['a'].press == Events.add_monkey
-        assert self.event_manager.key_events['d'].press == Events.delete_all
-        assert self.event_manager.key_events['s'].press == Events.press_s
-        assert self.event_manager.key_events['s'].release == Events.release_s
+        assert self.event_manager.key_events[ord('a')].press == Events.add_monkey
+        assert self.event_manager.key_events[ord('d')].press == Events.delete_all
+        assert self.event_manager.key_events[ord('s')].press == Events.press_s
+        assert self.event_manager.key_events[ord('s')].release == Events.release_s
     
     def test_trigger_key_events(self):
         self.event_manager.key_event('a', PRESS)
