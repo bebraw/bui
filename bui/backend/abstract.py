@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.utils.math import clamp
+from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
 
 class AbstractObject(object):
@@ -9,8 +10,10 @@ class AbstractObject(object):
         self.x_offset = 0
         self.y_offset = 0
         self.name = ''
-        self.height = None
         
+        self.height = 0
+        
+        # TODO: make auto_width hidden (to AbstractChild) and use width = 'auto' instead?
         self.auto_width = False
         self.min_width = 0
         self.max_width = 0
@@ -21,6 +24,13 @@ class AbstractObject(object):
         self.bg_color = None
         self.events = []
         
+        # should make this hidden! (make it possible not to override this via serializer)
+        self.common = Singleton()
+        
+        # default attribute values for common
+        if not hasattr(self.common, 'element_height'):
+            self.common.element_height = 20
+        
         # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
         for name in ( n for n in dir(self) if n[0] != '_' ):
             attr = getattr(self, name)
@@ -30,11 +40,13 @@ class AbstractObject(object):
     
     def get_height(self):
         if self.visible:
-            return self._height
+            if self._height is not None:
+                return self._height
+            return self.common.element_height
         
         return 0
     def set_height(self, height):
-        self._height = max(height, 0)
+        self._height = max(height, 0) or None
     height = property(get_height, set_height)
     
     def get_min_width(self):
@@ -81,6 +93,10 @@ class AbstractObject(object):
         pass
 
 class AbstractChild(TreeChild, AbstractObject):
+    def __init__(self, **kvargs):
+        super(AbstractChild, self).__init__(**kvargs)
+    
+    # move whole property here?
     def get_visible(self):
         hidden_parent = self.find_parent(visible=False)
         
@@ -103,12 +119,14 @@ class AbstractContainer(TreeParent, AbstractChild):
         abstract_object.parent = self
         self.children.append(abstract_object)
         
-        self.update_structure()
+        if hasattr(self.common, 'application'):
+            self.common.application.update_structure()
     
     def remove(self, abstract_object):
         self.children.remove(abstract_object)
         
-        self.update_structure()
+        if hasattr(self.common, 'application'):
+            self.common.application.update_structure()
     
     def render(self):
         self.render_bg_color()
@@ -117,9 +135,3 @@ class AbstractContainer(TreeParent, AbstractChild):
             if child.visible:
                 child.render_bg_color()
                 child.render()
-    
-    def update_structure(self):
-        root_elem = self.find_root_element()
-        
-        if hasattr(root_elem, 'application'):
-            root_elem.application.update_structure()

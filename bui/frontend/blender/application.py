@@ -45,7 +45,7 @@ class Application(BaseApplication):
             self.event_manager.key_events[BLENDER_KEYS[event]].press = check_state_events   
         
         self.window_manager = WindowManager()
-        self.layout_manager = LayoutManager(self.window_manager, self.root_container, element_height)
+        self.layout_manager = LayoutManager(self.window_manager, self.root_container)
         
         global app
         app = self

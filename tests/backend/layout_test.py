@@ -12,7 +12,7 @@ from tests.structure import HiddenRootContainer, \
 
 def test_initialize_layout_with_simple_structure():
     root_container = unserialize(StructureWithUIStructure)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -24,7 +24,7 @@ def test_initialize_layout_with_simple_structure():
     
 def test_initialize_layout_with_structure_having_hidden_container():
     root_container = unserialize(StructureWithVerticalContainerChild)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -44,7 +44,7 @@ def test_initialize_layout_with_structure_having_hidden_container():
 
 def test_initialize_layout_with_structure_having_multiple_children():
     root_container = unserialize(StructureForEventTests)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -77,7 +77,7 @@ def test_initialize_layout_with_structure_having_multiple_children():
 
 def test_initialize_layout_with_structure_having_vertical_containers():
     root_container = unserialize(MultipleVerticalContainers)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -103,7 +103,7 @@ def test_initialize_layout_with_structure_having_vertical_containers():
 
 def test_initialize_layout_with_hidden_structures():
     root_container = unserialize(HiddenRootContainer)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -139,7 +139,7 @@ def test_initialize_layout_with_hidden_structures():
 
 def test_initialize_layout_with_auto():
     root_container = unserialize(AutoContainer)
-    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container)
     layout_manager.initialize_layout()
     
     manager_root_container = layout_manager.root_container
@@ -154,7 +154,6 @@ def test_initialize_layout_with_auto():
     
     # test min_width
     manager_root_container.width = 50
-    print root_child.auto_width
     assert root_child.width == 100
     
     # test max_width

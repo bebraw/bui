@@ -10,12 +10,13 @@ class BaseApplication(object):
     def __init__(self, structure, keys, events=None, constraints=None,
                  ui_initializer=None, element_height=20):
         self.root_container = unserialize(structure)
-        self.root_container.application = self
+        self.root_container.common.element_height = 20
+        self.root_container.common.application = self
         
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
         self.window_manager = BaseWindowManager()
-        self.layout_manager = BaseLayoutManager(self.window_manager, self.root_container, element_height)
+        self.layout_manager = BaseLayoutManager(self.window_manager, self.root_container)
         
         self.ui_initializer = ui_initializer
         if hasattr(ui_initializer, '__call__'):
@@ -24,7 +25,10 @@ class BaseApplication(object):
     def redraw(self):
         # TODO: trigger constraint check only by events???
         self.constraint_manager.check_constraints()
+        
+        # TODO: get rid of this? (implicit update to layout?)
         self.layout_manager.initialize_layout() # checking constraints may alter layout
+        
         self.root_container.render()
     
     def run(self):
