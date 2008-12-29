@@ -29,7 +29,10 @@ class AbstractObject(object):
                 setattr(self, name, kvargs[name])
     
     def get_height(self):
-        return self._height
+        if self.visible:
+            return self._height
+        
+        return 0
     def set_height(self, height):
         self._height = max(height, 0)
     height = property(get_height, set_height)
@@ -65,19 +68,37 @@ class AbstractObject(object):
             self._width = max(width, 0)
     width = property(get_width, set_width)
     
+    def get_visible(self):
+        return self._visible
+    def set_visible(self, visible):
+        self._visible = visible
+    visible = property(get_visible, set_visible)
+    
     def render(self):
         pass
     
     def render_bg_color(self):
         pass
 
-class AbstractElement(TreeChild, AbstractObject):
+class AbstractChild(TreeChild, AbstractObject):
+    def get_visible(self):
+        hidden_parent = self.find_parent(visible=False)
+        
+        if hidden_parent:
+            return False
+        
+        return self._visible
+    visible = property(get_visible, AbstractObject.set_visible)
+
+class AbstractElement(AbstractChild):
     def __init__(self, **kvargs):
-        self.children = []
-        self.variable = None
+        self.children = [] # FIXME: get rid of this at some point
+        self.variable = None # this belongs here?
+        self.x = None # x and y belong here?
+        self.y = None
         super(AbstractElement, self).__init__(**kvargs)
 
-class AbstractContainer(TreeChild, TreeParent, AbstractObject):
+class AbstractContainer(TreeParent, AbstractChild):
     def append(self, abstract_object):
         abstract_object.parent = self
         self.children.append(abstract_object)
