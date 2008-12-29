@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-28, 15:53:11 -->
+<!-- Saved: 2008-12-28, 21:40:17 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -93,6 +93,7 @@
     <Source>tests/pyglet/__init__.py</Source>
     <Source>tests/frontend/blender/__init__.py</Source>
     <Source>tests/frontend/pyglet/__init__.py</Source>
+    <Source>bui/frontend/pyopengl/element.py</Source>
   </Sources>
   <Forms>
   </Forms>

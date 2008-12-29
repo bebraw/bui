@@ -52,4 +52,4 @@ class Application(BaseApplication):
     
     def run(self):
         super(Application, self).run()
-        Draw.Register(self.gui, self.event_manager.key_event, self.event_manager.element_event)
+        Draw.Register(self.redraw, self.event_manager.key_event, self.event_manager.element_event)

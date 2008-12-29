@@ -12,7 +12,6 @@ from bui.backend.container import HorizontalContainer, VerticalContainer
 
 # set drawing functions to use Blender's OpenGL implementation
 # TODO: tidy up (get rid of ogl and just dump whole namespace into draw?)
-
 import bui.graphics.opengl.decorators
 import bui.graphics.opengl.draw
 
