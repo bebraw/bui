@@ -15,7 +15,11 @@ class UIStructure():
     root_structure = '''
     VerticalContainer:
         name: root_vertical
+        bg_color: [0.0, 0.0, 1.0]
         width: 400
+        children:
+            - Label:
+                name: Some label
     '''
 
 hotkeys = '''

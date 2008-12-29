@@ -21,7 +21,7 @@ class BaseApplication(object):
         if hasattr(ui_initializer, '__call__'):
             self.ui_initializer = ui_initializer
     
-    def gui(self):
+    def redraw(self):
         # TODO: trigger constraint check only by events???
         self.constraint_manager.check_constraints()
         self.layout_manager.initialize_layout() # checking constraints may alter layout
