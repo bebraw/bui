@@ -3,8 +3,8 @@
 class BaseWindowManager(object):
     def __init__(self, name=None, width=None, height=None):
         self.name = name
-        self.width = width
         self.height = height
+        self.width = width
     
     def get_height(self):
         return self._height
