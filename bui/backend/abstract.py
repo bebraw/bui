@@ -3,6 +3,8 @@ from bui.utils.tree import TreeChild, TreeParent
 
 class AbstractObject(object):
     def __init__(self, **kvargs):
+        super(AbstractObject, self).__init__(**kvargs)
+        
         self.x_offset = 0
         self.y_offset = 0
         self.name = ''
@@ -12,17 +14,25 @@ class AbstractObject(object):
         self.visible = True
         self.bg_color = None
         self.events = []
-        super(AbstractObject, self).__init__(**kvargs)
         
-        for suitable_value in self.__dict__:
-            arg_value = self.__check_arg(kvargs, suitable_value)
+        # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
+        for name in ( n for n in dir(self) if n[0] != '_' ):
+            attr = getattr(self, name)
             
-            if arg_value is not None:
-                self.__dict__[suitable_value] = arg_value
+            if not callable(attr) and kvargs.has_key(name):
+                setattr(self, name, kvargs[name])
     
-    def __check_arg(self, dict, arg):
-        if dict.has_key(arg):
-            return dict[arg]
+    def get_height(self):
+        return self._height
+    def set_height(self, height):
+        self._height = max(height, 0)
+    height = property(get_height, set_height)
+    
+    def get_width(self):
+        return self._width
+    def set_width(self, width):
+        self._width = max(width, 0)
+    width = property(get_width, set_width)
     
     def render(self):
         pass
