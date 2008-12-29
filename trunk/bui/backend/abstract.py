@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from bui.utils.math import clamp
 from bui.utils.tree import TreeChild, TreeParent
 
 class AbstractObject(object):
@@ -9,7 +10,12 @@ class AbstractObject(object):
         self.y_offset = 0
         self.name = ''
         self.height = None
+        
+        self.auto_width = False
+        self.min_width = 0
+        self.max_width = 0
         self.width = None
+        
         self.event_handler = None
         self.visible = True
         self.bg_color = None
@@ -28,10 +34,35 @@ class AbstractObject(object):
         self._height = max(height, 0)
     height = property(get_height, set_height)
     
+    def get_min_width(self):
+        return self._min_width
+    def set_min_width(self, min_width):
+        if hasattr(self, 'max_width'):
+            tmp_width = min(min_width, self.max_width)
+        else:
+            tmp_width = min_width
+        
+        self._min_width = max(tmp_width, 0)
+    min_width = property(get_min_width, set_min_width)
+    
+    def get_max_width(self):
+        return self._max_width
+    def set_max_width(self, max_width):
+        if hasattr(self, 'min_width'):
+            tmp_width = max(max_width, self.min_width)
+        else:
+            tmp_width = max_width
+        
+        self._max_width = max(tmp_width, 0)
+    max_width = property(get_max_width, set_max_width)
+    
     def get_width(self):
         return self._width
     def set_width(self, width):
-        self._width = max(width, 0)
+        if self.auto_width:
+            self._width = clamp(width, self.min_width, self.max_width)
+        else:
+            self._width = max(width, 0)
     width = property(get_width, set_width)
     
     def render(self):

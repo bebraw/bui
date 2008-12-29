@@ -23,8 +23,8 @@ class TestAbstractElement():
         
         assert len(abstract_element.children) == 0
         assert abstract_element.event_handler == None
-        assert abstract_element.height == None
-        assert abstract_element.width == None
+        assert abstract_element.height == 0
+        assert abstract_element.width == 0
         assert abstract_element.name == ''
         assert abstract_element.visible == True
         assert abstract_element.variable == None

@@ -203,6 +203,17 @@ class FillElement():
         width: 100
     '''
 
+class AutoContainer():
+    root_structure = '''
+    VerticalContainer:
+        width: 300
+        children:
+            - VerticalContainer:
+                auto_width: True
+                min_width: 100
+                max_width: 500
+    '''
+
 structure_keys = '''
 a: add_monkey
 d: delete_all
