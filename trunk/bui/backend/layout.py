@@ -5,16 +5,15 @@ from abstract import AbstractContainer
 from container import HorizontalContainer, VerticalContainer
 
 class BaseLayoutManager(object):
-    def __init__(self, window_manager, root_container, element_height):
+    def __init__(self, window_manager, root_container):
         assert isinstance(root_container, AbstractContainer)
-        assert isinstance(element_height, int)
         
         self.window_manager = window_manager
-        self.element_height = element_height
         self.root_container = root_container
     
     def initialize_layout(self):
-        self.initialize_element_heights(self.root_container)
+        # FIXME: height trigger
+        self.root_container.height = self.root_container.height
         # FIXME: trigger width initializing (kludge). the problem is that widths cannot be
         # cascaded until the structure has been fully constructed (causes issues in setters too).
         # it would probably make sense to delay setting of widths in construction phase (cascade
@@ -64,30 +63,3 @@ class BaseLayoutManager(object):
         coord = coord or Coordinate()
         
         initialize_coordinates_recursion(self.root_container, coord)
-    
-    # cascade heights!
-    def initialize_element_heights(self, elem):
-        if isinstance(elem, AbstractContainer):
-            elem.height = 0
-        
-        if isinstance(elem, VerticalContainer):
-            for child in elem.children:
-                if isinstance(child, HorizontalContainer):
-                    child.height = child.find_child_max_height()
-        
-        if elem.children:
-            heights = []
-            for child in elem.children:
-                height = self.initialize_element_heights(child)
-                
-                heights.append(height)
-            
-            if isinstance(elem, VerticalContainer):
-                elem.height = sum(heights)
-            else:
-                elem.height += max(heights)
-        
-        if not isinstance(elem, AbstractContainer):
-            elem.height = elem.height or self.element_height
-        
-        return elem.height

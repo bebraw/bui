@@ -2,11 +2,22 @@
 from abstract import AbstractContainer, AbstractObject
 
 class HorizontalContainer(AbstractContainer):
-    def find_child_max_height(self): # TODO: test!
+    def get_height(self):
+        record_height = self._find_child_max_height()
+        
+        if record_height > self._height:
+            return record_height
+        return self._height
+    height = property(get_height, AbstractContainer.set_height)
+    
+    # TODO: should check children recursively! (vcontainer inside vcontainer etc.)
+    # add a test case for this
+    def _find_child_max_height(self):
         record_height = 0
         
-        for child in self.children:
-            record_height = max(record_height, child.height)
+        if hasattr(self, 'children'):
+            for child in self.children:
+                record_height = max(record_height, child.height)
         
         return record_height
     
@@ -14,10 +25,10 @@ class HorizontalContainer(AbstractContainer):
         super(HorizontalContainer, self).set_width(width)
         
         if hasattr(self, 'children'):
-            self.calculate_children_widths()
+            self._calculate_children_widths()
     width = property(AbstractObject.get_width, set_width)
     
-    def calculate_children_widths(self):
+    def _calculate_children_widths(self):
         children_widths = len(self.children)*[None]
         width_left = self.width
         free_indices = []
@@ -42,6 +53,22 @@ class HorizontalContainer(AbstractContainer):
             child.width = children_widths[i]
 
 class VerticalContainer(AbstractContainer):
+    def get_height(self):
+        if self.visible:
+            # TODO: make it possible to determine height explicitly (-> scrollbar)
+            self._height = 0
+            
+            if hasattr(self, 'children'):
+                heights = []
+                for child in self.children:
+                    if child.visible and child.height:
+                        heights.append(child.height)
+                
+                self._height = sum(heights)
+        
+        return super(AbstractContainer, self).get_height()
+    height = property(get_height, AbstractObject.set_height)
+    
     def set_width(self, width):
         self._width = max(width, 0)
         

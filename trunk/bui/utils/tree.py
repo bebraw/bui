@@ -15,7 +15,8 @@ class TreeChild(object):
         if variable is not None:
             if variable == variable_value:
                 return self.parent
-            
+        
+        if hasattr(self, 'parent') and self.parent:
             return self.parent._parent_recursion(variable_name, variable_value)
     
     def find_parent(self, **kvargs):

@@ -100,7 +100,7 @@ class TestStateEvents():
         
         # TODO: use factory instead?
         window_manager = BaseWindowManager()
-        layout_manager = BaseLayoutManager(window_manager, self.root_container, 20)
+        layout_manager = BaseLayoutManager(window_manager, self.root_container)
         layout_manager.initialize_layout()
         
         self.root_container.render()
