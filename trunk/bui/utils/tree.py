@@ -6,8 +6,14 @@ class TreeChild(object):
         self.parent = kvargs['parent'] if kvargs.has_key('parent') else None
     
     def _parent_recursion(self, variable_name, variable_value):
-        if self.parent and self.parent.__dict__.has_key(variable_name):
-            if self.parent.__dict__[variable_name] == variable_value:
+        try:
+            variable_index = dir(self.parent).index(variable_name)
+            variable = getattr(self.parent, dir(self.parent)[variable_index])
+        except:
+            variable = None
+        
+        if variable is not None:
+            if variable == variable_value:
                 return self.parent
             
             return self.parent._parent_recursion(variable_name, variable_value)

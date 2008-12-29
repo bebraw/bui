@@ -40,6 +40,7 @@ def test_initialize_layout_with_structure_having_hidden_container():
     assert root_child.y == None
     assert root_child.height == 0
     assert root_child.width == 200
+    assert root_child.visible == False
 
 def test_initialize_layout_with_structure_having_multiple_children():
     root_container = unserialize(StructureForEventTests)
@@ -111,6 +112,7 @@ def test_initialize_layout_with_hidden_structures():
     assert manager_root_container.y == None
     assert manager_root_container.height == 0
     assert manager_root_container.width == 300
+    assert manager_root_container.visible == False
     
     root_child = manager_root_container.children[0]
     
@@ -118,6 +120,7 @@ def test_initialize_layout_with_hidden_structures():
     assert root_child.y == None
     assert root_child.height == 0
     assert root_child.width == 300
+    assert root_child.visible == False
     
     root_child_child = root_child.children[0]
     
@@ -125,12 +128,14 @@ def test_initialize_layout_with_hidden_structures():
     assert root_child_child.y == None
     assert root_child_child.height == 0
     assert root_child_child.width == 300
+    assert root_child_child.visible == False
     
     for child in root_child_child.children:
         assert child.x == None
         assert child.y == None
         assert child.height == 0
         assert child.width == 100
+        assert child.visible == False
 
 def test_initialize_layout_with_auto():
     root_container = unserialize(AutoContainer)

@@ -65,10 +65,8 @@ class BaseLayoutManager(object):
         
         initialize_coordinates_recursion(self.root_container, coord)
     
-    def initialize_element_heights(self, elem, parent_is_visible=True):
-        if not elem.visible:
-            parent_is_visible = elem.visible
-        
+    # cascade heights!
+    def initialize_element_heights(self, elem):
         if isinstance(elem, AbstractContainer):
             elem.height = 0
         
@@ -80,7 +78,7 @@ class BaseLayoutManager(object):
         if elem.children:
             heights = []
             for child in elem.children:
-                height = self.initialize_element_heights(child, parent_is_visible)
+                height = self.initialize_element_heights(child)
                 
                 heights.append(height)
             
@@ -89,10 +87,7 @@ class BaseLayoutManager(object):
             else:
                 elem.height += max(heights)
         
-        if parent_is_visible:
-            if not isinstance(elem, AbstractContainer):
-                elem.height = elem.height or self.element_height
-        else:
-            elem.height = 0
+        if not isinstance(elem, AbstractContainer):
+            elem.height = elem.height or self.element_height
         
         return elem.height
