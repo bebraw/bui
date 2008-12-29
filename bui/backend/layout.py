@@ -15,7 +15,11 @@ class BaseLayoutManager(object):
     
     def initialize_layout(self):
         self.initialize_element_heights(self.root_container)
-        self.initialize_element_widths(self.root_container)
+        # FIXME: trigger width initializing (kludge). the problem is that widths cannot be
+        # cascaded until the structure has been fully constructed (causes issues in setters too).
+        # it would probably make sense to delay setting of widths in construction phase (cascade
+        # only after child-parent relations have been formed)
+        self.root_container.width = self.root_container.width
         self.initialize_coordinates()
     
     def initialize_coordinates(self, coord=None):
@@ -92,40 +96,3 @@ class BaseLayoutManager(object):
             elem.height = 0
         
         return elem.height
-    
-    def initialize_element_widths(self, elem):
-        if elem.parent:
-            if not elem.width:
-                elem.width = elem.parent.width
-            
-            elem.width = min(elem.width, elem.parent.width)
-            
-            if isinstance(elem, HorizontalContainer):
-                self.calculate_children_widths(elem, elem.children, elem.width)
-        
-        for child in elem.children:
-            self.initialize_element_widths(child)
-    
-    def calculate_children_widths(self, elem, children, width):
-        children_widths = len(children)*[None]
-        width_left = width
-        free_indices = []
-        
-        # TODO: doesn't handle predef-free-predef-free case yet? (should it?)
-        for i, child in enumerate(children):
-            children_widths[i] = child.width
-            
-            if child.width:
-                width_left -= child.width
-            else:
-                free_indices.append(i)
-        
-        amount = len(free_indices)
-        avg_per_child = width_left / amount if amount else 0
-        extra_pixels = width_left - amount * avg_per_child
-        
-        for i, free_index in enumerate(free_indices):
-            children_widths[free_index] = avg_per_child if i >= extra_pixels else avg_per_child + 1
-        
-        for i, child in enumerate(children):
-            child.width = children_widths[i]

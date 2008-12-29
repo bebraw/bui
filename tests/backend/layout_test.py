@@ -7,7 +7,8 @@ from tests.structure import HiddenRootContainer, \
                       MultipleVerticalContainers, \
                       StructureWithUIStructure, \
                       StructureWithVerticalContainerChild, \
-                      StructureForEventTests \
+                      StructureForEventTests, \
+                      AutoContainer
 
 def test_initialize_layout_with_simple_structure():
     root_container = unserialize(StructureWithUIStructure)
@@ -57,14 +58,14 @@ def test_initialize_layout_with_structure_having_multiple_children():
     assert root_first_child.x == 0
     assert root_first_child.y == 0
     assert root_first_child.height == 20
-    assert root_first_child.width == 40
+    assert root_first_child.width == 200
     
     root_second_child = manager_root_container.children[1]
     
     assert root_second_child.x == 0
     assert root_second_child.y == 20
     assert root_second_child.height == 20
-    assert root_second_child.width == 20
+    assert root_second_child.width == 200
     
     root_third_child = manager_root_container.children[2]
     
@@ -90,7 +91,7 @@ def test_initialize_layout_with_structure_having_vertical_containers():
     assert root_first_child.x == 0
     assert root_first_child.y == 0
     assert root_first_child.height == 60
-    assert root_first_child.width == 50
+    assert root_first_child.width == 200 # VerticalContainer doesn't preserve width!
     
     root_second_child = manager_root_container.children[1]
     
@@ -130,3 +131,27 @@ def test_initialize_layout_with_hidden_structures():
         assert child.y == None
         assert child.height == 0
         assert child.width == 100
+
+def test_initialize_layout_with_auto():
+    root_container = unserialize(AutoContainer)
+    layout_manager = BaseLayoutManager(BaseWindowManager(), root_container, 20)
+    layout_manager.initialize_layout()
+    
+    manager_root_container = layout_manager.root_container
+    assert manager_root_container.width == 300
+    
+    # test nominal case
+    root_child = manager_root_container.children[0]
+    assert root_child.auto_width == True
+    assert root_child.width == 300
+    assert root_child.min_width == 100
+    assert root_child.max_width == 500
+    
+    # test min_width
+    manager_root_container.width = 50
+    print root_child.auto_width
+    assert root_child.width == 100
+    
+    # test max_width
+    manager_root_container.width = 1000
+    assert root_child.width == 500
