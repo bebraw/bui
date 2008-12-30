@@ -12,6 +12,7 @@ class Number(AbstractBlenderElement):
         self.value = float(self.value)
     
     def render(self):
+        super(Number, self).render()
         try:
             Draw.Number(self.name, self.event, self.x, self.y,
                         self.width, self.height, self.value, self.min, self.max,
@@ -27,6 +28,7 @@ class IntNumber(AbstractBlenderElement):
         super(IntNumber, self).__init__(**kvargs)
     
     def render(self):
+        super(IntNumber, self).render()
         Draw.Number(self.name, self.event, self.x, self.y,
                     self.width, self.height, int(self.value), int(self.min),
                     int(self.max), self.tooltip, self.update_value)

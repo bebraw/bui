@@ -4,7 +4,7 @@ import fnmatch
 import bpy
 from Blender import Draw
 
-from bui.backend.container import VerticalContainer
+from bui.backend.container.vertical import VerticalContainer
 from bui.backend.element.fill import Fill
 
 from bui.frontend.blender.application import Application

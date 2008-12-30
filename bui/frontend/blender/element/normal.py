@@ -10,5 +10,6 @@ class Normal(AbstractBlenderElement):
         super(Normal, self).__init__(**kvargs)
     
     def render(self):
+        super(Normal, self).render()
         Draw.Normal(self.event, self.x, self.y, self.width,
                     self.height, self.value, self.tooltip, self.update_value)

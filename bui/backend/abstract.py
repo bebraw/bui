@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
+from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
 from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
+
+class Common(Singleton):
+    def __init__(self):
+        if not hasattr(self, 'init_called'):
+            self.init_called = True
+            
+            self.element_height = 20
+            self.render_coordinate = Coordinate()
+            self.invert_y = False
 
 class AbstractObject(object):
     def __init__(self, **kvargs):
@@ -24,12 +34,10 @@ class AbstractObject(object):
         self.bg_color = None
         self.events = []
         
-        # should make this hidden! (make it possible not to override this via serializer)
-        self.common = Singleton()
-        
-        # default attribute values for common
-        if not hasattr(self.common, 'element_height'):
-            self.common.element_height = 20
+        # should make these hidden! (make it possible not to override this via serializer)
+        self.common = Common()
+        self.x = 0
+        self.y = 0
         
         # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
         for name in ( n for n in dir(self) if n[0] != '_' ):
@@ -85,8 +93,26 @@ class AbstractObject(object):
         self._visible = visible
     visible = property(get_visible, set_visible)
     
+    def get_y(self):
+        if self.common.invert_y and hasattr(self.common, 'window_manager'):
+            return self.common.window_manager.height - self._y - self.height
+        return self._y
+    def set_y(self, y):
+        self._y = y
+    y = property(get_y, set_y)
+    
+    def initialize_render(self):
+        self.common.render_coordinate = Coordinate()
+    
     def render(self):
-        pass
+        # TODO: how to handle absolute coords?
+        self.x = self.common.render_coordinate.x # to property?
+        self.y = self.common.render_coordinate.y # to property?
+        
+        self.common.render_coordinate.x += self.x_offset
+        self.common.render_coordinate.y += self.y_offset
+        
+        self.render_bg_color()
     
     def render_bg_color(self):
         pass

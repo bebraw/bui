@@ -29,3 +29,12 @@ class VerticalContainer(AbstractContainer):
         
         super(AbstractContainer, self).set_width(width)
     width = property(AbstractContainer.get_width, set_width)
+    
+    def render(self):
+        super(VerticalContainer, self).render()
+        
+        for child in self.children:
+            child.render()
+            
+            if not isinstance(child, VerticalContainer):
+                self.common.render_coordinate.y += child.height

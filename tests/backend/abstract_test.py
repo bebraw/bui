@@ -22,7 +22,6 @@ class TestAbstractElement():
     def test_create_abstract_element(self):
         abstract_element = AbstractElement()
         
-        assert len(abstract_element.children) == 0
         assert abstract_element.event_handler == None
         assert abstract_element.height == 20
         assert abstract_element.width == 0

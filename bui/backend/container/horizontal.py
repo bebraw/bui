@@ -2,6 +2,7 @@
 from bui.backend.abstract import AbstractObject
 
 from abstract import AbstractContainer
+from vertical import VerticalContainer
 
 class HorizontalContainer(AbstractContainer):
     def get_height(self):
@@ -53,3 +54,21 @@ class HorizontalContainer(AbstractContainer):
         
         for i, child in enumerate(self.children):
             child.width = children_widths[i]
+    
+    def render(self):
+        super(HorizontalContainer, self).render()
+        
+        tmp_x = self.common.render_coordinate.x
+        
+        for child in self.children:
+            tmp_y = None
+            
+            if isinstance(child, VerticalContainer):
+                tmp_y = self.common.render_coordinate.y
+            
+            child.render()
+            
+            self.common.render_coordinate.x += child.width
+            self.common.render_coordinate.y = tmp_y or self.common.render_coordinate.y
+        
+        self.common.render_coordinate.x = tmp_x
