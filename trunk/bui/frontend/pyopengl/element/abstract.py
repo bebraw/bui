@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import OpenGL.GL
 
-from bui.backend.element.abstract import AbstractElement
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractChild, AbstractObject
 
 # set drawing functions to use Blender's OpenGL implementation
 # TODO: tidy up (get rid of ogl and just dump whole namespace into draw?)
@@ -20,14 +19,17 @@ def render_bg_color(self):
 
 setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
-class AbstractOpenGLElement(AbstractElement):
-    def __init__(self, **kvargs):
+class AbstractOpenGLElement(AbstractChild):
+    def __init__(self):
+        super(AbstractOpenGLElement, self).__init__()
         self.event = 0
+    
+    def initialize(self, **kvargs):
         self.tooltip = ''
         self.max_input_length = 0
         self.min = 0.0
         self.max = 1.0
-        super(AbstractOpenGLElement, self).__init__(**kvargs)
+        super(AbstractOpenGLElement, self).initialize(**kvargs)
     
     def update_value(self, evt, val):
         self.value = val

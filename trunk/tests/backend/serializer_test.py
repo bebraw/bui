@@ -4,13 +4,20 @@ from bui.backend.container.vertical import VerticalContainer
 from bui.backend.element.fill import Fill
 from bui.backend.serializer import unserialize
 
-from ..structure import StructureWithVerticalContainerChild, \
+from ..structure import MinimalStructure, \
+                        StructureWithVerticalContainerChild, \
                         StructureWithHorizontalContainerChild, \
                         StructureWithMultipleContainers, \
                         StructureWithFillElements, \
                         StructureWithUIStructure, \
                         StructureWithVerticalContainerChildren, \
                         StructureForSimpleScript
+
+def test_unserialize_valid_minimal_structure():
+    root_container = unserialize(MinimalStructure())
+    
+    assert isinstance(root_container, VerticalContainer)
+    assert root_container.width == 400
 
 def test_unserialize_valid_structure_with_vertical_child_container():
     root_container = unserialize(StructureWithVerticalContainerChild())
@@ -95,13 +102,14 @@ def test_unserialize_valid_structure_with_many_vertical_containers():
     root_container = unserialize(StructureWithVerticalContainerChildren())
     
     assert isinstance(root_container, VerticalContainer)
+    assert root_container.name == 'root container'
     assert root_container.width == 200
     assert len(root_container.children) == 4
     
     child_container = root_container.children[0]
     
     assert isinstance(child_container, VerticalContainer)
-    assert child_container.name == 'foobar'
+    assert child_container.name == 'foobarbaz'
     assert child_container.visible == False
     assert child_container.width == 50
     

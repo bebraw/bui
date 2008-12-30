@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import Blender
 
-from bui.backend.abstract import AbstractObject
-from bui.backend.element.abstract import AbstractElement
+from bui.backend.abstract import AbstractChild, AbstractObject
 
 # right place for binding? (should probably use separate func for this) see separator.py too!
 import bui.graphics.opengl.draw
@@ -17,14 +16,17 @@ def render_bg_color(self):
 
 setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
-class AbstractBlenderElement(AbstractElement):
-    def __init__(self, **kvargs):
+class AbstractBlenderElement(AbstractChild):
+    def __init__(self):
+        super(AbstractBlenderElement, self).__init__()
         self.event = 0
+    
+    def initialize(self, **kvargs):
         self.tooltip = ''
         self.max_input_length = 0
         self.min = 0.0
         self.max = 1.0
-        super(AbstractBlenderElement, self).__init__(**kvargs)
+        super(AbstractBlenderElement, self).initialize(**kvargs)
     
     def update_value(self, evt, val):
         self.value = val

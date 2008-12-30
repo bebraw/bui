@@ -2,7 +2,7 @@
 
 class TreeChild(object):
     def __init__(self, **kvargs):
-        super(TreeChild, self).__init__(**kvargs)
+        super(TreeChild, self).__init__()
         self.parent = kvargs['parent'] if kvargs.has_key('parent') else None
     
     def _parent_recursion(self, variable_name, variable_value):
@@ -34,8 +34,8 @@ class TreeChild(object):
         return self.parent.find_root_element()
 
 class TreeParent(object):
-    def __init__(self, **kvargs):
-        super(TreeParent, self).__init__(**kvargs)
+    def __init__(self):
+        super(TreeParent, self).__init__()
         self.children = []
     
     def _child_recursion(self, variable_name, variable_value):
@@ -56,6 +56,13 @@ class TreeParent(object):
             arg_key = kvargs.keys()[0]
             arg_value = kvargs.values()[0]
             return self._child_recursion(arg_key, arg_value)
+    
+    def append(self, abstract_object):
+        abstract_object.parent = self
+        self.children.append(abstract_object)
+    
+    def remove(self, abstract_object):
+        self.children.remove(abstract_object)
     
     # TODO: override del instance.children instead? TEST!
     def remove_children(self):

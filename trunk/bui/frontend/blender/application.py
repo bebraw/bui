@@ -42,10 +42,6 @@ class Application(BaseApplication):
         self.root_container.common.window_manager = self.window_manager
         self.root_container.common.invert_y = True
         
-        # hack to calculate height/width (should happen during serialization!)
-        self.root_container.height = self.root_container.height
-        self.root_container.width = self.root_container.width
-        
         global app
         app = self
     

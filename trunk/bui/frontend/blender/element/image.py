@@ -15,7 +15,7 @@ from utils import change_extension, convert_svg_to_png, find_file_path, get_icon
                   load_image
 
 class Image(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.dir = Blender.Get('uscriptsdir')
         self.file = ''
         self.x_zoom = 1.0
@@ -25,7 +25,7 @@ class Image(AbstractBlenderElement):
         self.clip_width = -1
         self.clip_height = -1
         self.image_block = None
-        super(Image, self).__init__(**kvargs)
+        super(Image, self).initialize(**kvargs)
         
         # TODO: it would be safer to check the file header
         if self.file.endswith('svg'):

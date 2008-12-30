@@ -12,7 +12,7 @@ from abstract import AbstractBlenderElement
 from utils import load_image
 
 class Icon(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         """ Adapted from txtPyBrowser114j.py by Remigiusz Fiedler """
         def get_icon_position(index):
             row = index / 25
@@ -20,7 +20,7 @@ class Icon(AbstractBlenderElement):
             return row, col
         
         self.file = 'blenderbuttons.png'
-        super(Icon, self).__init__(**kvargs)
+        super(Icon, self).initialize(**kvargs)
         
         index = BLENDER_ICONS.index(self.name)
         row, col = get_icon_position(index)

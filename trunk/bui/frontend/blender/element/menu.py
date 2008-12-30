@@ -7,9 +7,9 @@ from abstract import AbstractBlenderElement
 # and the element.
 
 class Menu(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = 0
-        super(Menu, self).__init__(**kvargs)
+        super(Menu, self).initialize(**kvargs)
     
     def render(self):
         super(Menu, self).render()

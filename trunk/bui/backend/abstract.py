@@ -14,11 +14,15 @@ class Common(Singleton):
             self.invert_y = False
 
 class AbstractObject(object):
-    def __init__(self, **kvargs):
-        super(AbstractObject, self).__init__(**kvargs)
+    def __init__(self):
+        super(AbstractObject, self).__init__()
+        self.common = Common()
+        self.events = []
         
-        self.x_offset = 0
-        self.y_offset = 0
+        self.x = 0
+        self.y = 0
+    
+    def initialize(self, **kvargs):
         self.name = ''
         
         self.height = 0
@@ -29,15 +33,13 @@ class AbstractObject(object):
         self.max_width = 0
         self.width = None
         
+        self.x_offset = 0
+        self.y_offset = 0
+        
         self.event_handler = None
+        self.variable = None
         self.visible = True
         self.bg_color = None
-        self.events = []
-        
-        # should make these hidden! (make it possible not to override this via serializer)
-        self.common = Common()
-        self.x = 0
-        self.y = 0
         
         # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
         for name in ( n for n in dir(self) if n[0] != '_' ):
@@ -79,12 +81,11 @@ class AbstractObject(object):
     max_width = property(get_max_width, set_max_width)
     
     def get_width(self):
+        if self.auto_width:
+            return clamp(self._width, self.min_width, self.max_width)
         return self._width
     def set_width(self, width):
-        if self.auto_width:
-            self._width = clamp(width, self.min_width, self.max_width)
-        else:
-            self._width = max(width, 0)
+        self._width = max(width, 0)
     width = property(get_width, set_width)
     
     def get_visible(self):
@@ -118,9 +119,6 @@ class AbstractObject(object):
         pass
 
 class AbstractChild(TreeChild, AbstractObject):
-    def __init__(self, **kvargs):
-        super(AbstractChild, self).__init__(**kvargs)
-    
     # move whole property here?
     def get_visible(self):
         hidden_parent = self.find_parent(visible=False)

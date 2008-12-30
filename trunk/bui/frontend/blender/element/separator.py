@@ -15,9 +15,9 @@ from abstract import AbstractBlenderElement
 from utils import draw_text
 
 class Separator(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.color = 3*[0.0]
-        super(Separator, self).__init__(**kvargs)
+        super(Separator, self).initialize(**kvargs)
     
     def render(self):
         super(Separator, self).render()

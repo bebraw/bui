@@ -10,9 +10,9 @@ class PushButton(AbstractBlenderElement):
                         self.width, self.height, self.tooltip)
 
 class ToggleButton(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = False
-        super(ToggleButton, self).__init__(**kvargs)
+        super(ToggleButton, self).initialize(**kvargs)
     
     def render(self):
         super(ToggleButton, self).render()

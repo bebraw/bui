@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractElement
+from bui.backend.abstract import AbstractChild
 
-class Fill(AbstractElement):
+class Fill(AbstractChild):
     pass

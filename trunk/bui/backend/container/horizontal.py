@@ -17,17 +17,15 @@ class HorizontalContainer(AbstractContainer):
     def _find_child_max_height(self):
         record_height = 0
         
-        if hasattr(self, 'children'):
-            for child in self.children:
-                record_height = max(record_height, child.height)
+        for child in self.children:
+            record_height = max(record_height, child.height)
         
         return record_height
     
     def set_width(self, width):
         super(HorizontalContainer, self).set_width(width)
         
-        if hasattr(self, 'children'):
-            self._calculate_children_widths()
+        self._calculate_children_widths()
     width = property(AbstractObject.get_width, set_width)
     
     # TODO: add a test case for this (via set_width)

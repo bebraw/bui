@@ -4,9 +4,9 @@ from Blender import Draw
 from abstract import AbstractBlenderElement
 
 class Slider(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = 0.0
-        super(Slider, self).__init__(**kvargs)
+        super(Slider, self).initialize(**kvargs)
     
     def render(self):
         super(Slider, self).render()

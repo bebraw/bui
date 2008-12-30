@@ -4,9 +4,9 @@ from Blender import Draw
 from abstract import AbstractBlenderElement
 
 class ColorPicker(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = (0.0, 0.0, 0.0, )
-        super(ColorPicker, self).__init__(**kvargs)
+        super(ColorPicker, self).initialize(**kvargs)
     
     def render(self):
         super(ColorPicker, self).render()

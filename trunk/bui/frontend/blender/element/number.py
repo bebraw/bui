@@ -4,11 +4,11 @@ from Blender import Draw
 from abstract import AbstractBlenderElement
 
 class Number(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.range = 0 # no clickstep
         self.precision = 0.0 # 4 decimals
         self.value = 0.0
-        super(Number, self).__init__(**kvargs)
+        super(Number, self).initialize(**kvargs)
         self.value = float(self.value)
     
     def render(self):
