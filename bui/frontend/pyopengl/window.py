@@ -44,4 +44,4 @@ class WindowManager(BaseWindowManager):
         glLoadIdentity()
         
         # Displacement trick for exact pixelization
-        glTranslatef(0.375, 0.375, 0);
+        glTranslatef(0.375, 0.375, 0)

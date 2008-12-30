@@ -18,16 +18,19 @@ class BaseApplication(object):
         self.window_manager = BaseWindowManager()
         self.layout_manager = BaseLayoutManager(self.window_manager, self.root_container)
         
+        #self.layout_manager.initialize_layout()
+        
         self.ui_initializer = ui_initializer
         if hasattr(ui_initializer, '__call__'):
             self.ui_initializer = ui_initializer
     
     def redraw(self):
         # TODO: trigger constraint check only by events???
+        # TODO: get rid of this?
         self.constraint_manager.check_constraints()
         
         # TODO: get rid of this? (implicit update to layout?)
-        self.layout_manager.initialize_layout() # checking constraints may alter layout
+        self.layout_manager.initialize_coordinates() # checking constraints may alter layout
         
         self.root_container.render()
     

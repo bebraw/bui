@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from bui.utils.coordinate import Coordinate
 
-from abstract import AbstractContainer
-from container import HorizontalContainer, VerticalContainer
+from container.abstract import AbstractContainer
+from container.horizontal import HorizontalContainer
+from container.vertical import VerticalContainer
 
 class BaseLayoutManager(object):
     def __init__(self, window_manager, root_container):
         assert isinstance(root_container, AbstractContainer)
         
-        self.window_manager = window_manager
+        self.window_manager = window_manager # TODO: get rid of this (blender frontend depends on this)
         self.root_container = root_container
     
     def initialize_layout(self):
