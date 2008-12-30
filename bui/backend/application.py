@@ -32,5 +32,6 @@ class BaseApplication(object):
         if self.ui_initializer:
             self.ui_initializer(self.root_container)
     
+    # TODO: get rid of this?
     def update_structure(self):
         self.event_manager.construct_element_event_ids(self.root_container)

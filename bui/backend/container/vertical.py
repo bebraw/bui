@@ -9,13 +9,12 @@ class VerticalContainer(AbstractContainer):
             # TODO: make it possible to determine height explicitly (-> scrollbar)
             self._height = 0
             
-            if hasattr(self, 'children'):
-                heights = []
-                for child in self.children:
-                    if child.visible and child.height:
-                        heights.append(child.height)
-                
-                self._height = sum(heights)
+            heights = []
+            for child in self.children:
+                if child.visible and child.height:
+                    heights.append(child.height)
+            
+            self._height = sum(heights)
         
         return super(AbstractContainer, self).get_height()
     height = property(get_height, AbstractObject.set_height)
@@ -23,12 +22,12 @@ class VerticalContainer(AbstractContainer):
     def set_width(self, width):
         self._width = max(width, 0)
         
-        if hasattr(self, 'children'):
-            for child in self.children:
+        for child in self.children:
+            if not child.width:
                 child.width = self.width
         
         super(AbstractContainer, self).set_width(width)
-    width = property(AbstractContainer.get_width, set_width)
+    width = property(AbstractObject.get_width, set_width)
     
     def render(self):
         super(VerticalContainer, self).render()

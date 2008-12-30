@@ -5,9 +5,9 @@ from abstract import AbstractBlenderElement
 
 #FIXME: self.update_value callback doesn't get called for some reason -> value does not get updated
 class Normal(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = (1.0, 1.0, 1.0, )
-        super(Normal, self).__init__(**kvargs)
+        super(Normal, self).initialize(**kvargs)
     
     def render(self):
         super(Normal, self).render()

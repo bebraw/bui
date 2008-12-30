@@ -50,10 +50,11 @@ class StructureWithVerticalContainerChild():
 class StructureWithVerticalContainerChildren():
     root_structure = '''
     VerticalContainer:
+        name: 'root container'
         width: 200
         children:
             - VerticalContainer:
-                name: foobar
+                name: foobarbaz
                 visible: False
                 width: 50
             - VerticalContainer:

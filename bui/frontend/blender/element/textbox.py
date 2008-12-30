@@ -4,9 +4,9 @@ from Blender import Draw
 from abstract import AbstractBlenderElement
 
 class TextBox(AbstractBlenderElement):
-    def __init__(self, **kvargs):
+    def initialize(self, **kvargs):
         self.value = ''
-        super(TextBox, self).__init__(**kvargs)
+        super(TextBox, self).initialize(**kvargs)
     
     def render(self):
         super(TextBox, self).render()
