@@ -13,8 +13,7 @@ class HorizontalContainer(AbstractContainer):
         return self._height
     height = property(get_height, AbstractContainer.set_height)
     
-    # TODO: should check children recursively! (vcontainer inside vcontainer etc.)
-    # add a test case for this
+    # TODO: add a test case for this
     def _find_child_max_height(self):
         record_height = 0
         
@@ -31,6 +30,7 @@ class HorizontalContainer(AbstractContainer):
             self._calculate_children_widths()
     width = property(AbstractObject.get_width, set_width)
     
+    # TODO: add a test case for this (via set_width)
     def _calculate_children_widths(self):
         children_widths = len(self.children)*[None]
         width_left = self.width
