@@ -17,10 +17,12 @@ class AbstractContainer(TreeParent, AbstractChild):
         if hasattr(self.common, 'application'):
             self.common.application.update_structure()
     
-    def render(self):
-        self.render_bg_color()
+    #def render(self):
+    #    super(AbstractContainer, self).render()
         
-        for child in self.children:
-            if child.visible:
-                child.render_bg_color()
-                child.render()
+        #self.render_bg_color()
+        
+        #for child in self.children:
+        #    if child.visible:
+        #        child.render_bg_color()
+        #        child.render()

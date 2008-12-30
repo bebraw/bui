@@ -2,6 +2,9 @@
 import Blender
 from Blender import Draw
 
+from bui.backend.container.horizontal import HorizontalContainer
+from bui.backend.container.vertical import VerticalContainer
+
 # right place for binding? (should probably use separate func for this)
 import bui.graphics.opengl.draw
 setattr(bui.graphics.opengl.draw, 'ogl', Blender.BGL)
@@ -17,6 +20,8 @@ class Separator(AbstractBlenderElement):
         super(Separator, self).__init__(**kvargs)
     
     def render(self):
+        super(Separator, self).render()
+        
         text_sep_dist = 10
         
         if isinstance(self.parent, HorizontalContainer):

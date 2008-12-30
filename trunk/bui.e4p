@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2008-12-30, 11:53:09 -->
+<!-- Saved: 2008-12-30, 14:49:48 -->
 <!-- Copyright (C) 2008 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -51,14 +51,12 @@
     <Source>bui/backend/__init__.py</Source>
     <Source>bui/backend/window.py</Source>
     <Source>bui/backend/application.py</Source>
-    <Source>bui/backend/layout.py</Source>
     <Source>bui/backend/abstract.py</Source>
     <Source>bui/backend/constraint.py</Source>
     <Source>bui/frontend/blender/event.py</Source>
     <Source>bui/frontend/blender/__init__.py</Source>
     <Source>bui/frontend/blender/window.py</Source>
     <Source>bui/frontend/blender/application.py</Source>
-    <Source>bui/frontend/blender/layout.py</Source>
     <Source>bui/frontend/blender/keys.py</Source>
     <Source>bui/frontend/pyglet/__init__.py</Source>
     <Source>bui/frontend/pyglet/application.py</Source>
@@ -81,7 +79,6 @@
     <Source>tests/backend/application_test.py</Source>
     <Source>tests/backend/constraint_test.py</Source>
     <Source>tests/backend/abstract_test.py</Source>
-    <Source>tests/backend/layout_test.py</Source>
     <Source>tests/backend/serializer_test.py</Source>
     <Source>tests/backend/event_test.py</Source>
     <Source>tests/backend/container_test.py</Source>

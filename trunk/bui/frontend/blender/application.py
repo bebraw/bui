@@ -8,7 +8,6 @@ from bui.backend.application import BaseApplication
 import element
 
 from event import EventManager
-from layout import LayoutManager
 from window import WindowManager
 
 from keys import BLENDER_KEYS
@@ -40,7 +39,8 @@ class Application(BaseApplication):
             self.event_manager.key_events[BLENDER_KEYS[event]].press = check_state_events   
         
         self.window_manager = WindowManager()
-        self.layout_manager = LayoutManager(self.window_manager, self.root_container)
+        self.root_container.common.window_manager = self.window_manager
+        self.root_container.common.invert_y = True
         
         global app
         app = self

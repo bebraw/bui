@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
+import Blender
+
 from bui.backend.abstract import AbstractObject
 from bui.backend.element.abstract import AbstractElement
+
+# right place for binding? (should probably use separate func for this) see separator.py too!
+import bui.graphics.opengl.draw
+setattr(bui.graphics.opengl.draw, 'ogl', Blender.BGL)
+
+from bui.graphics.opengl.draw import draw_rectangle
 
 # NOTE: this needs to be set directly to AbstractObject so that it affects containers too!
 def render_bg_color(self):
@@ -20,3 +28,7 @@ class AbstractBlenderElement(AbstractElement):
     
     def update_value(self, evt, val):
         self.value = val
+    
+    def render(self):
+        super(AbstractBlenderElement, self).render()
+        #print self.x, self.y, self.common.window_manager.height

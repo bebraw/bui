@@ -3,7 +3,6 @@ from bui.backend.serializer import unserialize
 
 from constraint import BaseConstraintManager
 from event import BaseEventManager
-from layout import BaseLayoutManager
 from window import BaseWindowManager
 
 class BaseApplication(object):
@@ -16,9 +15,6 @@ class BaseApplication(object):
         self.constraint_manager = BaseConstraintManager(self.root_container, constraints)
         self.event_manager = BaseEventManager(self.root_container, keys, events)
         self.window_manager = BaseWindowManager()
-        self.layout_manager = BaseLayoutManager(self.window_manager, self.root_container)
-        
-        #self.layout_manager.initialize_layout()
         
         self.ui_initializer = ui_initializer
         if hasattr(ui_initializer, '__call__'):
@@ -29,9 +25,7 @@ class BaseApplication(object):
         # TODO: get rid of this?
         self.constraint_manager.check_constraints()
         
-        # TODO: get rid of this? (implicit update to layout?)
-        self.layout_manager.initialize_coordinates() # checking constraints may alter layout
-        
+        self.root_container.initialize_render() # TODO: get rid of this
         self.root_container.render()
     
     def run(self):

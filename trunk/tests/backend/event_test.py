@@ -3,9 +3,7 @@ import bui.backend.event
 
 from bui.backend.container import *
 from bui.backend.event import BaseEventManager
-from bui.backend.layout import BaseLayoutManager
 from bui.backend.serializer import unserialize
-from bui.backend.window import BaseWindowManager
 
 from bui.utils.coordinate import Coordinate
 from bui.utils.meta import AllMethodsStatic
@@ -98,11 +96,7 @@ class TestStateEvents():
     def setup_method(self, method):
         self.root_container = unserialize(StructureForStateEventTests)
         
-        # TODO: use factory instead?
-        window_manager = BaseWindowManager()
-        layout_manager = BaseLayoutManager(window_manager, self.root_container)
-        layout_manager.initialize_layout()
-        
+        self.root_container.initialize_render() # TODO: get rid of this
         self.root_container.render()
         
         self.print_foo_elem = self.root_container.children[0]
