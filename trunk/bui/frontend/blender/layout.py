@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from bui.utils.coordinate import Coordinate
 
-from bui.backend.abstract import AbstractContainer
+from bui.backend.container.abstract import AbstractContainer
 from bui.backend.layout import BaseLayoutManager
 
 class LayoutManager(BaseLayoutManager):

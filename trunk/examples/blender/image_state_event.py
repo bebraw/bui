@@ -2,7 +2,7 @@
 from Blender import Draw
 
 from bui.frontend.blender.application import Application
-from bui.frontend.blender.element import Image
+from bui.frontend.blender.element.image import Image
 
 from bui.utils.meta import AllMethodsStatic
 

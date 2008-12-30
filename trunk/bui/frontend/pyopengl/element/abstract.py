@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
 import OpenGL.GL
 
-from bui.backend.abstract import AbstractElement, AbstractObject
+from bui.backend.element.abstract import AbstractElement
+from bui.backend.abstract import AbstractObject
 
 # set drawing functions to use Blender's OpenGL implementation
 # TODO: tidy up (get rid of ogl and just dump whole namespace into draw?)
-import bui.graphics.opengl.decorators
 import bui.graphics.opengl.draw
-
-setattr(bui.graphics.opengl.decorators, 'ogl', OpenGL.GL)
 setattr(bui.graphics.opengl.draw, 'ogl', OpenGL.GL)
 
-from bui.graphics.opengl.decorators import *
-from bui.graphics.opengl.draw import *
-
-from OpenGL.GL import *
-from OpenGL.GLUT import *
-from OpenGL.GLU import *
+from bui.graphics.opengl.draw import draw_rectangle
 
 # TODO: this is common for all opengl implementations -> to util funcs
 # NOTE: this needs to be set directly to AbstractObject so that it affects containers too!
@@ -38,7 +31,3 @@ class AbstractOpenGLElement(AbstractElement):
     
     def update_value(self, evt, val):
         self.value = val
-
-class Label(AbstractOpenGLElement):
-    def render(self):
-        print 'render label' # use cairo + pango for this?

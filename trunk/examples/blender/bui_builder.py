@@ -4,7 +4,7 @@ from Blender import Draw
 import bui.backend.container
 from bui.utils.meta import AllMethodsStatic
 
-import bui.frontend.blender.element
+import bui.frontend.blender.element # FIXME: element has been split to modules!
 from bui.frontend.blender.application import Application
 from bui.frontend.blender.element import Label
 

@@ -2,7 +2,7 @@
 from bui.utils.parser import read_yaml
 from bui.utils.tree import TreeParent
 
-from container import AbstractContainer
+from container.abstract import AbstractContainer
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 

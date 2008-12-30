@@ -43,7 +43,6 @@ class AbstractObject(object):
             if self._height is not None:
                 return self._height
             return self.common.element_height
-        
         return 0
     def set_height(self, height):
         self._height = max(height, 0) or None
@@ -105,33 +104,3 @@ class AbstractChild(TreeChild, AbstractObject):
         
         return self._visible
     visible = property(get_visible, AbstractObject.set_visible)
-
-class AbstractElement(AbstractChild):
-    def __init__(self, **kvargs):
-        self.children = [] # FIXME: get rid of this at some point
-        self.variable = None # this belongs here?
-        self.x = None # x and y belong here?
-        self.y = None
-        super(AbstractElement, self).__init__(**kvargs)
-
-class AbstractContainer(TreeParent, AbstractChild):
-    def append(self, abstract_object):
-        abstract_object.parent = self
-        self.children.append(abstract_object)
-        
-        if hasattr(self.common, 'application'):
-            self.common.application.update_structure()
-    
-    def remove(self, abstract_object):
-        self.children.remove(abstract_object)
-        
-        if hasattr(self.common, 'application'):
-            self.common.application.update_structure()
-    
-    def render(self):
-        self.render_bg_color()
-        
-        for child in self.children:
-            if child.visible:
-                child.render_bg_color()
-                child.render()

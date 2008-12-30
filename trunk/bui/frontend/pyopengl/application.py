@@ -6,14 +6,8 @@ from OpenGL.GLUT import glutDisplayFunc, glutIdleFunc, glutMainLoop, glutSwapBuf
 
 from bui.backend.application import BaseApplication
 
-# add elements to backend serializer so it can find them
-# TODO: convert this to a func
-import bui.backend.serializer
+# trigger element to add modify serializer namespace. could be neater...
 import element
-
-for var_name, var_item in vars(element).items():
-    if type(var_item) == type:
-        setattr(bui.backend.serializer, var_name, var_item)
 
 from event import EventManager
 from window import WindowManager

@@ -5,10 +5,11 @@ import bpy
 from Blender import Draw
 
 from bui.backend.container import VerticalContainer
-from bui.backend.element import Fill
+from bui.backend.element.fill import Fill
 
 from bui.frontend.blender.application import Application
-from bui.frontend.blender.element import Image, Label
+from bui.frontend.blender.element.image import Image
+from bui.frontend.blender.element.label import Label
 
 from bui.utils.meta import AllMethodsStatic
 
