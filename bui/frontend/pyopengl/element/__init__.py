@@ -4,7 +4,7 @@
 # see http://ginstrom.com/scribbles/2007/10/24/python-introspection-with-the-inspect-module/
 
 # TODO: make this dynamic if possible
-module_names = ('label', )
+module_names = ('label', 'separator', )
 
 serializer = __import__('bui.backend.serializer', globals(), locals(), 'bui')
 

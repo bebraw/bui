@@ -2,8 +2,8 @@
 
 class Coordinate():
     def __init__(self, x=0, y=0):
-        assert type(x) == int
-        assert type(y) == int
+        assert type(x) in (float, int)
+        assert type(y) in (float, int)
         self.x = x
         self.y = y
     

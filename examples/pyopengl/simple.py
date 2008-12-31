@@ -15,17 +15,31 @@ class UIStructure():
     root_structure = '''
     VerticalContainer:
         name: root_vertical
-        bg_color: [0.0, 0.0, 1.0]
+        bg_color: [0.2, 0.5, 0.6]
         width: auto
         children:
-            - Label:
-                name: Some label
-            - Label:
-                name: Another label
-                alpha: 0.5 # test alpha
-            - Label:
-                name: Hello world!
-                color: [0.0, 1.0, 0.0] # probably color: green would be nicer
+            - VerticalContainer:
+                children:
+                    - Label:
+                        name: Some label
+                    - Label:
+                        name: Another label
+                        alpha: 0.5 # test alpha
+                    - Separator:
+                        name: Test separator
+                    - Label:
+                        name: Hello world!
+                        color: [0.0, 1.0, 0.0] # probably color: green would be nicer
+            - HorizontalContainer:
+                bg_color: [0.5, 0.2, 0.2]
+                children:
+                    - Label:
+                        name: First child
+                        width: 100
+                    - Label:
+                        name: Second child
+                        bg_color: [0.3, 0.8, 0.5]
+                        width: 200
     '''
 
 hotkeys = '''
