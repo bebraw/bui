@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from bui.backend.abstract import AbstractObject
-
 from bui.utils.tree import TreeParent
 
 # TODO: this class becomes redundant if event updates are changed to use observers!

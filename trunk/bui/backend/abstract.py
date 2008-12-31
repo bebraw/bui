@@ -11,7 +11,10 @@ class AbstractObject(TreeChild):
         self.common = Common()
         
         self.x = 0
+        self.x_is_relative = True
+        
         self.y = 0
+        self.y_is_relative = True
         
         self.auto_width = False
     
@@ -83,12 +86,15 @@ class AbstractObject(TreeChild):
                 width = self.common.window_manager.width
             
             return clamp(width, self.min_width, self.max_width)
+        
         return self._width
     def set_width(self, width):
         if width == 'auto':
             self.auto_width = True
-        
-        self._width = max(width, 0)
+        elif width is None and hasattr(self.parent, 'width'):
+            self._width = self.parent.width
+        else:
+            self._width = max(width, 0)
     width = property(get_width, set_width)
     
     def get_visible(self):
@@ -109,9 +115,13 @@ class AbstractObject(TreeChild):
         self.common.render_coordinate = Coordinate()
     
     def render(self):
-        # TODO: how to handle absolute coords?
-        self.x = self.common.render_coordinate.x # to property?
-        self.y = self.common.render_coordinate.y # to property?
+        # TODO: how to handle absolute coords? figure out absolute coords!!! (label needs this)
+        
+        if self.x_is_relative: # self.x.is_relative ???
+            self.x = self.common.render_coordinate.x # to property?
+        
+        if self.y_is_relative:
+            self.y = self.common.render_coordinate.y # to property?
         
         self.common.render_coordinate.x += self.x_offset
         self.common.render_coordinate.y += self.y_offset
