@@ -20,6 +20,8 @@ class Application(BaseApplication):
                                           constraints, ui_initializer, element_height)
         
         self.window_manager = WindowManager(window_name, window_width, window_height)
+        self.root_container.common.window_manager = self.window_manager
+        
         self.event_manager = EventManager(self.root_container, keys, events)
         
         glutDisplayFunc(self.redraw)

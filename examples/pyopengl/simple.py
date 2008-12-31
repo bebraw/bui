@@ -16,7 +16,7 @@ class UIStructure():
     VerticalContainer:
         name: root_vertical
         bg_color: [0.0, 0.0, 1.0]
-        width: 400
+        width: auto
         children:
             - Label:
                 name: Some label
