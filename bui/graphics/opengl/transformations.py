@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from OpenGL.GL import *
-from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 def mirror_x():
     glScalef(-1.0, 1.0, 1.0)
