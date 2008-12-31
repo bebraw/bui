@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import Blender
-from Blender import Draw
 from bui.backend.container.horizontal import HorizontalContainer
 from bui.backend.container.vertical import VerticalContainer
 from bui.graphics.opengl.draw import draw_line
