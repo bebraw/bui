@@ -4,20 +4,10 @@ from bui.utils.math import clamp
 from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
 
-class Common(Singleton):
-    def __init__(self):
-        if not hasattr(self, 'init_called'):
-            self.init_called = True
-            
-            self.element_height = 20
-            self.render_coordinate = Coordinate()
-            self.invert_y = False
-
-class AbstractObject(object):
+class AbstractObject(TreeChild):
     def __init__(self):
         super(AbstractObject, self).__init__()
         self.common = Common()
-        self.events = []
         
         self.x = 0
         self.y = 0
@@ -37,7 +27,9 @@ class AbstractObject(object):
         self.y_offset = 0
         
         self.event_handler = None
+        self.events = []
         self.variable = None
+        
         self.visible = True
         self.bg_color = None
         
@@ -118,13 +110,11 @@ class AbstractObject(object):
     def render_bg_color(self):
         pass
 
-class AbstractChild(TreeChild, AbstractObject):
-    # move whole property here?
-    def get_visible(self):
-        hidden_parent = self.find_parent(visible=False)
-        
-        if hidden_parent:
-            return False
-        
-        return self._visible
-    visible = property(get_visible, AbstractObject.set_visible)
+class Common(Singleton):
+    def __init__(self):
+        if not hasattr(self, 'init_called'):
+            self.init_called = True
+            
+            self.element_height = 20
+            self.render_coordinate = Coordinate()
+            self.invert_y = False

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw
-
 from abstract import AbstractBlenderElement
 
 #FIXME: self.update_value callback doesn't get called for some reason -> value does not get updated

@@ -34,4 +34,6 @@ class BaseApplication(object):
     
     # TODO: get rid of this?
     def update_structure(self):
-        self.event_manager.construct_element_event_ids(self.root_container)
+        # nasty hack as the updates are not nice yet (gets called during unserialize)
+        if hasattr(self, 'event_manager'):
+            self.event_manager.construct_element_event_ids(self.root_container)

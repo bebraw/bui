@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
 
 def enable_alpha(func):
     def wrapper(self, *args, **kvargs):
-        ogl.glEnable(ogl.GL_BLEND)
-        ogl.glBlendFunc(ogl.GL_SRC_ALPHA, ogl.GL_ONE_MINUS_SRC_ALPHA)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         
         try:
             return func(self, *args, **kvargs)
         finally:
-            ogl.glDisable(ogl.GL_BLEND)
+            glDisable(GL_BLEND)
     
     wrapper.__name__ = func.__name__
     wrapper.__dict__ = func.__dict__
@@ -17,12 +20,12 @@ def enable_alpha(func):
 
 def enable_texture2d(func):
     def wrapper(self, *args, **kvargs):
-        ogl.glEnable(ogl.GL_TEXTURE_2D)
+        glEnable(GL_TEXTURE_2D)
         
         try:
             return func(self, *args, **kvargs)
         finally:
-            ogl.glDisable(ogl.GL_TEXTURE_2D)
+            glDisable(GL_TEXTURE_2D)
     
     wrapper.__name__ = func.__name__
     wrapper.__dict__ = func.__dict__

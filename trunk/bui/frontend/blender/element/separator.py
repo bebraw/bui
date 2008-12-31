@@ -1,16 +1,9 @@
 # -*- coding: utf-8 -*-
 import Blender
 from Blender import Draw
-
 from bui.backend.container.horizontal import HorizontalContainer
 from bui.backend.container.vertical import VerticalContainer
-
-# right place for binding? (should probably use separate func for this)
-import bui.graphics.opengl.draw
-setattr(bui.graphics.opengl.draw, 'ogl', Blender.BGL)
-
 from bui.graphics.opengl.draw import draw_line
-
 from abstract import AbstractBlenderElement
 from utils import draw_text
 

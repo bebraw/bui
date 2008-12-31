@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
 
 class MatrixStack():
     def __enter__(self):
-        ogl.glPushMatrix()
+        glPushMatrix()
     
     def __exit__(self, type, value, traceback):
-        ogl.glPopMatrix()
+        glPopMatrix()

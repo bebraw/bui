@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from Blender import Draw
-
 from abstract import AbstractBlenderElement
 
 # TODO: add rest of menus (Popup etc.). Also rethink the mapping between definition
