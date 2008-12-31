@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
 from bui.utils.singleton import Singleton
@@ -11,16 +12,16 @@ class AbstractObject(TreeChild):
         
         self.x = 0
         self.y = 0
+        
+        self.auto_width = False
     
     def initialize(self, **kvargs):
         self.name = ''
         
         self.height = 0
         
-        # TODO: make auto_width hidden (to AbstractChild) and use width = 'auto' instead?
-        self.auto_width = False
         self.min_width = 0
-        self.max_width = 0
+        self.max_width = sys.maxint
         self.width = None
         
         self.x_offset = 0
@@ -74,9 +75,19 @@ class AbstractObject(TreeChild):
     
     def get_width(self):
         if self.auto_width:
-            return clamp(self._width, self.min_width, self.max_width)
+            width = self._width
+            
+            if self.parent:
+                width = self.parent.width
+            elif hasattr(self.common, 'window_manager'):
+                width = self.common.window_manager.width
+            
+            return clamp(width, self.min_width, self.max_width)
         return self._width
     def set_width(self, width):
+        if width == 'auto':
+            self.auto_width = True
+        
         self._width = max(width, 0)
     width = property(get_width, set_width)
     
