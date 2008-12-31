@@ -63,7 +63,8 @@ class HorizontalContainer(AbstractContainer):
             if isinstance(child, VerticalContainer):
                 tmp_y = self.common.render_coordinate.y
             
-            child.render()
+            if child.visible:
+                child.render()
             
             self.common.render_coordinate.x += child.width
             self.common.render_coordinate.y = tmp_y or self.common.render_coordinate.y

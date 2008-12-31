@@ -32,7 +32,8 @@ class VerticalContainer(AbstractContainer):
         super(VerticalContainer, self).render()
         
         for child in self.children:
-            child.render()
+            if child.visible:
+                child.render()
             
             if not isinstance(child, VerticalContainer):
                 self.common.render_coordinate.y += child.height
