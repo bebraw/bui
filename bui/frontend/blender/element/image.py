@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
-
 import Blender
 from Blender import Draw
-
-# FIXME: bound in right place? see separator.py too!
-import bui.graphics.opengl.decorators
-setattr(bui.graphics.opengl.decorators, 'ogl', Blender.BGL)
-
 from bui.graphics.opengl.decorators import enable_alpha
-
 from abstract import AbstractBlenderElement
 from utils import change_extension, convert_svg_to_png, find_file_path, get_icons_dir, \
                   load_image
@@ -42,10 +35,6 @@ class Image(AbstractBlenderElement):
             self.file = png_name # use png version from now on
         
         self.image_block = load_image(self.dir, self.file)
-        self.set_element_dimensions()
-    
-    def load_image(self, name):
-        self.image_block = load_image(self.dir, name)
         self.set_element_dimensions()
     
     def set_element_dimensions(self):

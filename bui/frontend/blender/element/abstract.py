@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
-import Blender
-
-from bui.backend.abstract import AbstractChild, AbstractObject
-
-# right place for binding? (should probably use separate func for this) see separator.py too!
-import bui.graphics.opengl.draw
-setattr(bui.graphics.opengl.draw, 'ogl', Blender.BGL)
-
+from bui.backend.abstract import AbstractObject
 from bui.graphics.opengl.draw import draw_rectangle
 
+# TODO: this is common for all opengl implementations -> to util funcs
 # NOTE: this needs to be set directly to AbstractObject so that it affects containers too!
 def render_bg_color(self):
     if self.bg_color:
@@ -16,12 +10,9 @@ def render_bg_color(self):
 
 setattr(AbstractObject, 'render_bg_color', render_bg_color)
 
-class AbstractBlenderElement(AbstractChild):
-    def __init__(self):
-        super(AbstractBlenderElement, self).__init__()
-        self.event = 0
-    
+class AbstractBlenderElement(AbstractObject):
     def initialize(self, **kvargs):
+        self.event = 0
         self.tooltip = ''
         self.max_input_length = 0
         self.min = 0.0
@@ -33,4 +24,3 @@ class AbstractBlenderElement(AbstractChild):
     
     def render(self):
         super(AbstractBlenderElement, self).render()
-        #print self.x, self.y, self.common.window_manager.height

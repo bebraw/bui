@@ -64,7 +64,6 @@ class TreeParent(object):
     def remove(self, abstract_object):
         self.children.remove(abstract_object)
     
-    # TODO: override del instance.children instead? TEST!
     def remove_children(self):
         for child in self.children:
             child.parent = None

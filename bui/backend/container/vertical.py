@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from bui.backend.abstract import AbstractObject
-
 from abstract import AbstractContainer
 
 class VerticalContainer(AbstractContainer):

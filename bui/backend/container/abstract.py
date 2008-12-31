@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractChild
+from bui.backend.abstract import AbstractObject
 
 from bui.utils.tree import TreeParent
 
-class AbstractContainer(TreeParent, AbstractChild):
+# TODO: this class becomes redundant if event updates are changed to use observers!
+
+class AbstractContainer(TreeParent, AbstractObject):
     def append(self, abstract_object):
         super(AbstractContainer, self).append(abstract_object)
         

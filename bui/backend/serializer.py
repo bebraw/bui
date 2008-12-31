@@ -22,7 +22,7 @@ def unserialize(document_container, root_structure=None):
                     class_name = root_object[0]
                     class_args = root_object[1]
                 
-                class_instance = globals()[class_name]()
+                class_instance = globals()[class_name]() # should use a factory to get this!
                 
                 # store args so they can be used later when constructing details
                 class_instance.args = class_args

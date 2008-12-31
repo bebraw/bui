@@ -55,3 +55,32 @@ class TestTreeParent():
         assert parent3.find_child(name=3) is None
         assert parent3.find_child(name=3, variable=10) is None
         assert parent3.find_child() is None
+    
+    def test_append(self):
+        parent = TreeParent()
+        child = TreeParent()
+        
+        parent.append(child)
+        
+        assert len(parent.children) == 1
+        assert parent.children[0] == child
+    
+    def test_remove(self):
+        parent = TreeParent()
+        child = TreeParent()
+        
+        parent.append(child)
+        parent.remove(child)
+        
+        assert len(parent.children) == 0
+    
+    def test_remove_children(self):
+        parent = TreeParent()
+        child1 = TreeParent()
+        child2 = TreeParent()
+        
+        parent.append(child1)
+        parent.append(child2)
+        parent.remove_children()
+        
+        assert len(parent.children) == 0

@@ -72,7 +72,8 @@ class TestBaseEventManager():
         
         assert len(self.root_container.children) == 5
         
-        # should be 200 as root container width constraints this. where and when to check this???
+        # should be 200 as root container width constraints this
+        # where and when to check this??? TODO: handle with properties!
         assert self.root_container.children[4].width == 400
     
     def test_manager_has_right_key_events(self):
@@ -95,12 +96,7 @@ class StateEvents():
 class TestStateEvents():
     def setup_method(self, method):
         self.root_container = unserialize(StructureForStateEventTests)
-        
-        self.root_container.initialize_render() # TODO: get rid of this
-        self.root_container.render()
-        
         self.print_foo_elem = self.root_container.children[0]
-        
         self.event_manager = BaseEventManager(self.root_container, structure_keys, StateEvents)
     
     def test_manager_has_right_element_events(self):

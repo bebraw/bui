@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 import Blender
 from Blender import Draw
-
-# FIXME: bound in right place? see image.py too!
-import bui.graphics.opengl.decorators
-setattr(bui.graphics.opengl.decorators, 'ogl', Blender.BGL)
-
 from bui.graphics.opengl.decorators import enable_alpha
-
 from abstract import AbstractBlenderElement
 from utils import load_image
 
