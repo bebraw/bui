@@ -20,6 +20,12 @@ class UIStructure():
         children:
             - Label:
                 name: Some label
+            - Label:
+                name: Another label
+                alpha: 0.5 # test alpha
+            - Label:
+                name: Hello world!
+                color: [0.0, 1.0, 0.0] # probably color: green would be nicer
     '''
 
 hotkeys = '''
