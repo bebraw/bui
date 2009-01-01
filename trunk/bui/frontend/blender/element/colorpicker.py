@@ -8,7 +8,6 @@ class ColorPicker(AbstractBlenderElement):
         super(ColorPicker, self).initialize(**kvargs)
     
     def render(self):
-        super(ColorPicker, self).render()
         Draw.ColorPicker(self.event, self.x, self.y,
                          self.width, self.height, self.value,
                          self.tooltip, self.update_value)

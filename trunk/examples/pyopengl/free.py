@@ -20,17 +20,16 @@ class UIStructure():
         children:
             - VerticalLayout:
                 x: 10
-                x_is_relative: False # should be set automagically if definition has abs coords!
                 y: 20
-                y_is_relative: False
-                width: 600
+                min_width: 300
+                max_width: 600
                 height: 100
                 children:
                     - Label:
                         name: Some label
                     - Label:
                         name: Another label
-                        alpha: 0.5 # test alpha
+                        alpha: 0.5
                     - Separator:
                         name: Test separator
                     - Label:
@@ -41,16 +40,14 @@ class UIStructure():
                         color: [1.0, 1.0, 0.0]
             - HorizontalLayout:
                 x: 50
-                x_is_relative: False
                 y: 150
-                y_is_relative: False
                 width: auto
                 height: 100
                 bg_color: [0.5, 0.2, 0.2]
                 children:
                     - Label:
                         name: First child
-                        width: 100
+                        width: 300
                     - Label:
                         name: Second child
                         bg_color: [0.3, 0.8, 0.5]

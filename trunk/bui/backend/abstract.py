@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+from bui.graphics.opengl.draw import draw_rectangle
 from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
 from bui.utils.singleton import Singleton
@@ -12,7 +13,6 @@ class Common(Singleton):
             self.init_called = True
             
             self.element_height = 20
-            self.render_coordinate = Coordinate()
             self.invert_y = False
             self.window_manager = None
 
@@ -33,11 +33,9 @@ class AbstractObject(TreeChild):
         self.visible = True
         
         self.x = 0
-        self.x_is_relative = True
         self.x_offset = 0
         
         self.y = 0
-        self.y_is_relative = True
         self.y_offset = 0
         
         self.height = 0
@@ -122,40 +120,41 @@ class AbstractObject(TreeChild):
         self._y = y
     y = property(get_y, set_y)
     
-    def initialize_render(self):
-        self.common.render_coordinate = Coordinate()
-    
-    def render(self):
-        # TODO: figure out how to handle absolute coords in nice way
-        # 1. if unserialized version has coords, should use absolute after that
-        # 2. note that if container is given absolute coords its coords of its
-        # children should be relative to these coords!!!
-        # 3. get rid of foo_is_relative flags?? (misleading as relative should be 34% etc.)
-        # 4. should keep track of relative rendering (relative coords inside relative coords etc.)
-        
-        if self.x_is_relative:
-            self.x = self.common.render_coordinate.x
+    def render(self, render_coordinate):
+        if render_coordinate:
+            render_coordinate.x += self.x
+            render_coordinate.y += self.y
         else:
-            self.common.render_coordinate.x = self.x
+            render_coordinate = Coordinate(self.x, self.y)
         
-        if self.y_is_relative:
-            self.y = self.common.render_coordinate.y
-        else:
-            self.common.render_coordinate.y = self.y
+        render_coordinate.x += self.x_offset
+        render_coordinate.y += self.y_offset
         
-        self.common.render_coordinate.x += self.x_offset
-        self.common.render_coordinate.y += self.y_offset
+        self.render_bg_color(render_coordinate)
         
-        self.render_bg_color()
+        return render_coordinate
     
-    def render_bg_color(self):
-        pass
+    def render_bg_color(self, render_coordinate):
+        if self.bg_color:
+            draw_rectangle(self.bg_color, render_coordinate.x, render_coordinate.y,
+                           render_coordinate.x + self.width, render_coordinate.y + self.height)
 
-# TODO: this class becomes redundant if event updates are changed to use observers!
 class AbstractLayout(TreeParent, AbstractObject):
     def __init__(self):
         super(AbstractLayout, self).__init__()
         self.is_free = False
+    
+    def render_child(self, child, render_coordinate):
+        if child.visible:
+            if isinstance(child, AbstractLayout):
+                render_coordinate = child.render(render_coordinate)
+            else:
+                child.x = render_coordinate.x
+                child.y = render_coordinate.y
+                child.render_bg_color(render_coordinate)
+                child.render()
+        
+        return render_coordinate
     
     def append(self, abstract_object):
         super(AbstractLayout, self).append(abstract_object)

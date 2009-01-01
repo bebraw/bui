@@ -14,12 +14,8 @@ class Separator(AbstractOpenGLElement):
         
         self.label = Label()
         self.label.initialize(**kvargs)
-        
-        self.label.x_is_relative = False # causes the problem as the system takes only one parent in count!!!
     
     def render(self):
-        super(Separator, self).render()
-        
         text_sep_dist = 10
         
         if isinstance(self.parent, HorizontalLayout):
@@ -40,13 +36,11 @@ class Separator(AbstractOpenGLElement):
             sep_end_x = max(sep_begin_x, text_x - text_sep_dist)
             draw_line(0.5, self.color, sep_begin_x, y_coord, sep_end_x, y_coord)
             
-            #text_y= y_coord - bbox.height / 2.0
+            text_y= y_coord - bbox.height / 2.0
             
-            # this should be relative to current
             self.label.x = text_x
-            #self.label.y = text_y
+            self.label.y = text_y
             
-            # FIXME: moves render_coordinate!!! (next item rendered gets same x)
             self.label.render()
             
             sep_end_x = self.x + self.width
