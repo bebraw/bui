@@ -20,9 +20,9 @@ class Application(BaseApplication):
                                           constraints, ui_initializer, element_height)
         
         self.window_manager = WindowManager(window_name, window_width, window_height)
-        self.root_container.common.window_manager = self.window_manager
+        self.root_layout.common.window_manager = self.window_manager
         
-        self.event_manager = EventManager(self.root_container, keys, events)
+        self.event_manager = EventManager(self.root_layout, keys, events)
         
         glutDisplayFunc(self.redraw)
         #glutIdleFunc(self.redraw) # uncomment this if timers are added

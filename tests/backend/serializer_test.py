@@ -1,31 +1,30 @@
 # -*- coding: utf-8 -*-
-from bui.backend.container.horizontal import HorizontalContainer
-from bui.backend.container.vertical import VerticalContainer
 from bui.backend.element.fill import Fill
+from bui.backend.layout import *
 from bui.backend.serializer import unserialize
 from bui.backend.window import BaseWindowManager
 from ..structure import MinimalStructure, \
-                        StructureWithHiddenVerticalContainerChild, \
+                        StructureWithHiddenVerticalLayoutChild, \
                         StructureWithUIStructure, \
                         StructureWithAuto
 
 def test_unserialize_valid_minimal_structure():
     root_container = unserialize(MinimalStructure())
     
-    assert isinstance(root_container, VerticalContainer)
+    assert isinstance(root_container, VerticalLayout)
     assert root_container.width == 400
 
 def test_unserialize_valid_structure_with_hidden_vertical_child_container():
-    root_container = unserialize(StructureWithHiddenVerticalContainerChild())
+    root_container = unserialize(StructureWithHiddenVerticalLayoutChild())
     
-    assert isinstance(root_container, VerticalContainer)
+    assert isinstance(root_container, VerticalLayout)
     assert root_container.width == 200
     assert root_container.visible == True
     assert len(root_container.children) == 1
     
     child_container = root_container.children[0]
     
-    assert isinstance(child_container, VerticalContainer)
+    assert isinstance(child_container, VerticalLayout)
     assert child_container.name == 'foobar'
     
     # note that the width of root limits the width of child
@@ -41,14 +40,14 @@ def test_unserialize_valid_structure_with_hidden_vertical_child_container():
 def test_unserialize_valid_structure_with_uistructure():
     root_container = unserialize(StructureWithUIStructure())
     
-    assert isinstance(root_container, VerticalContainer)
+    assert isinstance(root_container, VerticalLayout)
     assert root_container.width == 300
     assert len(root_container.children) == 2
     
     child_container = root_container.children[0]
     
     # note that the width of root limits the width of child
-    assert isinstance(child_container, VerticalContainer)
+    assert isinstance(child_container, VerticalLayout)
     assert child_container.width == 300
     
     child_element = root_container.children[1]
@@ -59,7 +58,7 @@ def test_unserialize_valid_structure_with_uistructure():
 def test_unserialize_structure_with_auto():
     root_container = unserialize(StructureWithAuto())
     
-    assert isinstance(root_container, VerticalContainer)
+    assert isinstance(root_container, VerticalLayout)
     assert root_container._width == 'auto'
     assert root_container.width == 0
     assert len(root_container.children) == 2

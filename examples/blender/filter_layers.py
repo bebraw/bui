@@ -30,10 +30,10 @@ def assign_all_objects_to_layer(layer):
 
 class UIStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 400
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Label:
                         name: Filter layers v0.9
@@ -44,12 +44,12 @@ class UIStructure():
                         width: 20
             - Fill:
                 height: 10
-            - VerticalContainer:
+            - VerticalLayout:
                 name: layers
                 children:
                     - UIStructure:
                         name: layer_structure
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - PushButton:
                         name: Add layer
@@ -58,11 +58,11 @@ class UIStructure():
     '''
     
     layer_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         name: layer
         bg_color: [0.3, 0.3, 0.3]
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - ToggleButton:
                         variable: layer_number
@@ -97,16 +97,16 @@ class UIStructure():
                         tooltip: Delete layer
                         event_handler: delete_layer
                         width: 20
-            - VerticalContainer:
+            - VerticalLayout:
                 name: filters_container
                 bg_color: [0.4, 0.4, 0.4]
                 children:
-                    - VerticalContainer:
+                    - VerticalLayout:
                         name: filters
                         children:
                         - UIStructure:
                             name: filter_structure
-                    - HorizontalContainer:
+                    - HorizontalLayout:
                         children:
                             - Fill:
                                 width: 20
@@ -119,11 +119,11 @@ class UIStructure():
     '''
     
     filter_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         name: filter
         bg_color: [0.5, 0.5, 0.5]
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Fill:
                         width: 20

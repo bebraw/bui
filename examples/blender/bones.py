@@ -10,10 +10,10 @@ from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 400
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 name: test_hori
                 children:
                     - Label:
@@ -23,7 +23,7 @@ class UIStructure():
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
-            - VerticalContainer:
+            - VerticalLayout:
                 name: armature_bones
     '''
 

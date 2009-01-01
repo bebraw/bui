@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.backend.container.horizontal import HorizontalContainer
-from bui.backend.container.vertical import VerticalContainer
+from bui.backend.layout import *
 from bui.backend.element.fill import Fill
 
 from bui.utils.parser import read_yaml

@@ -8,23 +8,23 @@ from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 600
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Label:
                         name: Amazing state event test v0.1
             - Fill:
                 height: 10
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Image:
                         file: Mandril.png
                         height: 100
                         events:
                             on_mouse_over: show_big_image
-            - HorizontalContainer:
+            - HorizontalLayout:
                 name: big_image
     '''
 

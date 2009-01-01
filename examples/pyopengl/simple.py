@@ -13,12 +13,12 @@ from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         name: root_vertical
         bg_color: [0.2, 0.5, 0.6]
         width: auto
         children:
-            - VerticalContainer:
+            - VerticalLayout:
                 children:
                     - Label:
                         name: Some label
@@ -30,7 +30,7 @@ class UIStructure():
                     - Label:
                         name: Hello world!
                         color: [0.0, 1.0, 0.0] # probably color: green would be nicer
-            - HorizontalContainer:
+            - HorizontalLayout:
                 bg_color: [0.5, 0.2, 0.2]
                 children:
                     - Label:

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import bui.backend.event
-from bui.backend.container import *
 from bui.backend.event import BaseEventManager
+from bui.backend.layout import *
 from bui.backend.serializer import unserialize
 from bui.utils.coordinate import Coordinate
 from bui.utils.meta import AllMethodsStatic
 from ..structure import MinimalStructure, StructureForEventTests, \
-                      StructureForStateEventTests, structure_keys
+                        StructureForStateEventTests, structure_keys
 
 bui.backend.event.PRINT_BUTTON_EVENT_NAMES = True
 
@@ -33,12 +33,12 @@ class Events(AllMethodsStatic):
 
 class TestBaseEventManager():
     def setup_method(self, method):
-        self.root_container = unserialize(StructureForEventTests)
-        self.add_monkey_elem = self.root_container.children[0]
-        self.delete_all_elem = self.root_container.children[2]
-        self.add_to_ui_structure = self.root_container.children[3]
+        self.root_layout = unserialize(StructureForEventTests)
+        self.add_monkey_elem = self.root_layout.children[0]
+        self.delete_all_elem = self.root_layout.children[2]
+        self.add_to_ui_structure = self.root_layout.children[3]
         
-        self.event_manager = BaseEventManager(self.root_container, structure_keys, Events)
+        self.event_manager = BaseEventManager(self.root_layout, structure_keys, Events)
     
     def test_manager_has_right_element_events(self):
         assert self.event_manager.element_events[1].element == self.add_monkey_elem
@@ -55,7 +55,7 @@ class TestBaseEventManager():
     
     def test_construct_element_event_ids(self):
         # note that event ids have already been constructed once in __init__!
-        self.event_manager.construct_element_event_ids(self.root_container)
+        self.event_manager.construct_element_event_ids(self.root_layout)
         self.test_manager_has_right_element_events()
     
     def test_trigger_element_events(self):
@@ -63,14 +63,14 @@ class TestBaseEventManager():
         self.event_manager.element_event(2)
     
     def test_add_to_ui_structure(self):
-        assert len(self.root_container.children) == 4
+        assert len(self.root_layout.children) == 4
         
-        self.event_manager.element_event(3) # adds new VerticalContainer to the structure!
+        self.event_manager.element_event(3) # adds new VerticalLayout to the structure!
         
-        assert len(self.root_container.children) == 5
+        assert len(self.root_layout.children) == 5
         
-        # note that the width of root container limits this width
-        assert self.root_container.children[4].width == 200
+        # note that the width of root layout limits this width
+        assert self.root_layout.children[4].width == 200
     
     def test_manager_has_right_key_events(self):
         assert self.event_manager.key_events[ord('a')].press == Events.add_monkey
@@ -91,9 +91,9 @@ class StateEvents():
 
 class TestStateEvents():
     def setup_method(self, method):
-        self.root_container = unserialize(StructureForStateEventTests)
-        self.print_foo_elem = self.root_container.children[0]
-        self.event_manager = BaseEventManager(self.root_container, structure_keys, StateEvents)
+        self.root_layout = unserialize(StructureForStateEventTests)
+        self.print_foo_elem = self.root_layout.children[0]
+        self.event_manager = BaseEventManager(self.root_layout, structure_keys, StateEvents)
     
     def test_manager_has_right_element_events(self):
         assert len(self.event_manager.element_events) == 0

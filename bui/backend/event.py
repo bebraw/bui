@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
 from bui.utils.tree import TreeParent
-
-from container.abstract import AbstractContainer
+from abstract import AbstractLayout
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class BaseEventManager(object):
-    def __init__(self, root_container, keys, events):
-        assert isinstance(root_container, AbstractContainer)
+    def __init__(self, root_layout, keys, events):
+        assert isinstance(root_layout, AbstractLayout)
         assert isinstance(keys, str)
         
-        self.root_container = root_container
+        self.root_layout = root_layout
         self.events = events
         
         self.element_events = ElementEventContainer()
         self.key_events = EventContainer()
         self.state_events = EventContainer()
         
-        self.construct_element_event_ids(self.root_container)
+        self.construct_element_event_ids(self.root_layout)
         self.construct_key_event_ids(keys)
-        self.construct_state_event_ids(self.root_container)
+        self.construct_state_event_ids(self.root_layout)
     
     def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
@@ -90,9 +89,9 @@ class BaseEventManager(object):
             key_event = self.key_events[evt]
             
             if pressed and key_event.press:
-                key_event.press(self.root_container)
+                key_event.press(self.root_layout)
             elif hasattr(key_event, 'release'):
-                key_event.release(self.root_container)
+                key_event.release(self.root_layout)
     
     def check_state_events(self, coordinate):
         triggered_event = False
@@ -102,7 +101,7 @@ class BaseEventManager(object):
                 if coordinate.inside(element):
                     triggered_event = True
                     func = getattr(state_event, 'on_mouse_over')
-                    func(self.root_container)
+                    func(self.root_layout)
         
         return triggered_event
 
