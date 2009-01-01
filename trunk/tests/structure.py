@@ -139,6 +139,22 @@ class StructureWithAuto():
                 width: 50
     '''
 
+class StructureWithFreeLayout():
+    root_structure = '''
+    FreeLayout:
+        children:
+            - Fill:
+                name: first fill
+            - Fill:
+                name: second fill
+                x: 40
+                y: 500
+            - Fill:
+                name: third fill
+                width: 800
+                height: 800
+    '''
+
 structure_keys = '''
 a: add_monkey
 d: delete_all

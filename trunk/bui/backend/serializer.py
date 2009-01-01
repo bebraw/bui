@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from bui.backend.layout import *
-from bui.backend.element.fill import Fill
-
 from bui.utils.parser import read_yaml
+from element.fill import Fill
+from layout import *
 
 def unserialize(document_container, root_structure=None):
     def construct_hierarchy(current_object, document_container):
