@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractLayout, AbstractObject
 
+class FreeLayout(AbstractLayout):
+    def __init__(self):
+        super(AbstractLayout, self).__init__()
+        
+        # FIXME: this gets past cyclic dependency. perhaps there's a nicer solution
+        self.is_free = True
+
 class HorizontalLayout(AbstractLayout):
     def get_height(self):
         record_height = self._find_child_max_height()

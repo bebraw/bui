@@ -6,19 +6,39 @@ from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
 from window import BaseWindowManager
 
+class Common(Singleton):
+    def __init__(self, reset_values=False):
+        if not hasattr(self, 'init_called') or reset_values:
+            self.init_called = True
+            
+            self.element_height = 20
+            self.render_coordinate = Coordinate()
+            self.invert_y = False
+            self.window_manager = None
+
 class AbstractObject(TreeChild):
     def __init__(self):
         super(AbstractObject, self).__init__()
         self.common = Common()
+    
+    def initialize(self, **kvargs):
+        '''
+        The idea is that unserialize calls this and provides kvargs
+        that are then passed on to defined attributes.
+        '''
+        self.name = ''
+        
+        # TODO: convert bg_color to just bg (container) that can contain color/gradient/texture/etc. ?
+        self.bg_color = None 
+        self.visible = True
         
         self.x = 0
         self.x_is_relative = True
+        self.x_offset = 0
         
         self.y = 0
         self.y_is_relative = True
-    
-    def initialize(self, **kvargs):
-        self.name = ''
+        self.y_offset = 0
         
         self.height = 0
         
@@ -26,15 +46,9 @@ class AbstractObject(TreeChild):
         self.min_width = 0
         self.max_width = sys.maxint
         
-        self.x_offset = 0
-        self.y_offset = 0
-        
         self.event_handler = None
         self.events = []
         self.variable = None
-        
-        self.visible = True
-        self.bg_color = None
         
         # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
         for name in ( n for n in dir(self) if n[0] != '_' ):
@@ -43,12 +57,12 @@ class AbstractObject(TreeChild):
             if not callable(attr) and kvargs.has_key(name):
                 setattr(self, name, kvargs[name])
     
+    # TODO: should there be min and max height just like for width???
+    
     def get_height(self):
-        if self.visible:
-            if self._height is not None:
-                return self._height
-            return self.common.element_height
-        return 0
+        if self._height is not None:
+            return self._height
+        return self.common.element_height
     def set_height(self, height):
         self._height = max(height, 0) or None
     height = property(get_height, set_height)
@@ -62,18 +76,12 @@ class AbstractObject(TreeChild):
     min_width = property(get_min_width, set_min_width)
     
     def get_max_width(self):
-        parent_width = sys.maxint
-        ret_width = sys.maxint
+        if hasattr(self, '_max_width') and self.parent:
+            if self._max_width < self.parent.width or self.parent.is_free:
+                return self._max_width
+            return self.parent.width
         
-        if hasattr(self.parent, 'width'):
-            parent_width = self.parent.width
-            ret_width = parent_width
-        
-        if hasattr(self, '_max_width'):
-            if self._max_width < parent_width:
-                ret_width = self._max_width
-        
-        return ret_width
+        return sys.maxint
     def set_max_width(self, max_width):
         self._max_width = max(max_width, self.min_width)
     max_width = property(get_max_width, set_max_width)
@@ -134,6 +142,10 @@ class AbstractObject(TreeChild):
 
 # TODO: this class becomes redundant if event updates are changed to use observers!
 class AbstractLayout(TreeParent, AbstractObject):
+    def __init__(self):
+        super(AbstractLayout, self).__init__()
+        self.is_free = False
+    
     def append(self, abstract_object):
         super(AbstractLayout, self).append(abstract_object)
         
@@ -147,13 +159,3 @@ class AbstractLayout(TreeParent, AbstractObject):
         # get rid of this? how to update events?
         if hasattr(self.common, 'application'):
             self.common.application.update_structure()
-
-class Common(Singleton):
-    def __init__(self):
-        if not hasattr(self, 'init_called'):
-            self.init_called = True
-            
-            self.element_height = 20
-            self.render_coordinate = Coordinate()
-            self.invert_y = False
-            self.window_manager = None
