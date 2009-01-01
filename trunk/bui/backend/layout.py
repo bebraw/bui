@@ -7,6 +7,13 @@ class FreeLayout(AbstractLayout):
         
         # FIXME: this gets past cyclic dependency. perhaps there's a nicer solution
         self.is_free = True
+    
+    def render(self):
+        super(FreeLayout, self).render()
+        
+        for child in self.children:
+            if child.visible:
+                child.render()
 
 class HorizontalLayout(AbstractLayout):
     def get_height(self):
@@ -42,8 +49,6 @@ class HorizontalLayout(AbstractLayout):
             children_widths[i] = child._width
             
             if child._width:
-                print 'decrementing width left'
-                print width_left, child._width
                 width_left -= child._width
             else:
                 free_indices.append(i)
@@ -59,6 +64,7 @@ class HorizontalLayout(AbstractLayout):
             else: 
                 children_widths[free_index] = avg_per_child + 1
         
+        # assign new widths
         for i, child in enumerate(self.children):
             child.width = children_widths[i]
     

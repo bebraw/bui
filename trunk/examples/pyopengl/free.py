@@ -12,12 +12,19 @@ from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
-    VerticalLayout:
-        name: root_vertical
+    FreeLayout:
+        name: free root
         bg_color: [0.2, 0.5, 0.6]
         width: auto
+        height: 300 # add auto setting? without width/height should use window dimensions? (x/y?)
         children:
             - VerticalLayout:
+                x: 10
+                x_is_relative: False # should be set automagically if definition has abs coords!
+                y: 20
+                y_is_relative: False
+                width: 600
+                height: 100
                 children:
                     - Label:
                         name: Some label
@@ -28,8 +35,17 @@ class UIStructure():
                         name: Test separator
                     - Label:
                         name: Hello world!
-                        color: [0.0, 1.0, 0.0] # probably color: green would be nicer
+                        color: [0.0, 1.0, 0.0] # TODO: probably color: green would be nicer
+                    - Label:
+                        name: Hello world 2!
+                        color: [1.0, 1.0, 0.0]
             - HorizontalLayout:
+                x: 50
+                x_is_relative: False
+                y: 150
+                y_is_relative: False
+                width: auto
+                height: 100
                 bg_color: [0.5, 0.2, 0.2]
                 children:
                     - Label:
@@ -42,23 +58,10 @@ class UIStructure():
     '''
 
 hotkeys = '''
-d:
-    press: d_was_pressed
-    release: d_was_released
-s: foobar
 q: quit_script
 '''
 
 class Events(AllMethodsStatic):
-    def d_was_pressed(elem):
-        print 'you pressed d!'
-    
-    def d_was_released(elem):
-        print 'you released d!'
-    
-    def foobar(elem):
-        print 'foobar'
-    
     def quit_script(elem):
         sys.exit()
 
