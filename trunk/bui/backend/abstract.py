@@ -4,6 +4,7 @@ from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
 from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
+from window import BaseWindowManager
 
 class AbstractObject(TreeChild):
     def __init__(self):
@@ -15,17 +16,15 @@ class AbstractObject(TreeChild):
         
         self.y = 0
         self.y_is_relative = True
-        
-        self.auto_width = False
     
     def initialize(self, **kvargs):
         self.name = ''
         
         self.height = 0
         
+        self.width = None
         self.min_width = 0
         self.max_width = sys.maxint
-        self.width = None
         
         self.x_offset = 0
         self.y_offset = 0
@@ -55,46 +54,47 @@ class AbstractObject(TreeChild):
     height = property(get_height, set_height)
     
     def get_min_width(self):
-        return self._min_width
+        if hasattr(self, '_min_width'):
+            return self._min_width
+        return 0
     def set_min_width(self, min_width):
-        if hasattr(self, 'max_width'):
-            tmp_width = min(min_width, self.max_width)
-        else:
-            tmp_width = min_width
-        
-        self._min_width = max(tmp_width, 0)
+        self._min_width = max(min(min_width, self.max_width), 0)
     min_width = property(get_min_width, set_min_width)
     
     def get_max_width(self):
-        return self._max_width
-    def set_max_width(self, max_width):
-        if hasattr(self, 'min_width'):
-            tmp_width = max(max_width, self.min_width)
-        else:
-            tmp_width = max_width
+        parent_width = sys.maxint
+        ret_width = sys.maxint
         
-        self._max_width = max(tmp_width, 0)
+        if hasattr(self.parent, 'width'):
+            parent_width = self.parent.width
+            ret_width = parent_width
+        
+        if hasattr(self, '_max_width'):
+            if self._max_width < parent_width:
+                ret_width = self._max_width
+        
+        return ret_width
+    def set_max_width(self, max_width):
+        self._max_width = max(max_width, self.min_width)
     max_width = property(get_max_width, set_max_width)
     
     def get_width(self):
-        if self.auto_width:
-            width = self._width
-            
-            if self.parent:
-                width = self.parent.width
-            elif hasattr(self.common, 'window_manager'):
-                width = self.common.window_manager.width
-            
-            return clamp(width, self.min_width, self.max_width)
+        width = 0
         
-        return self._width
+        if hasattr(self, '_width'):
+            if self.parent:
+                width = self._width if self._width else self.parent.width
+                
+                if self._width == 'auto':
+                    width = self.parent.width
+            elif self.common.window_manager:
+                width = self.common.window_manager.width
+            elif self._width != 'auto':
+                width = self._width
+        
+        return clamp(width, self.min_width, self.max_width)
     def set_width(self, width):
-        if width == 'auto':
-            self.auto_width = True
-        elif width is None and hasattr(self.parent, 'width'):
-            self._width = self.parent.width
-        else:
-            self._width = max(width, 0)
+        self._width = width
     width = property(get_width, set_width)
     
     def get_visible(self):
@@ -104,7 +104,7 @@ class AbstractObject(TreeChild):
     visible = property(get_visible, set_visible)
     
     def get_y(self):
-        if self.common.invert_y and hasattr(self.common, 'window_manager'):
+        if self.common.invert_y and self.common.window_manager:
             return self.common.window_manager.height - self._y - self.height
         return self._y
     def set_y(self, y):
@@ -139,3 +139,4 @@ class Common(Singleton):
             self.element_height = 20
             self.render_coordinate = Coordinate()
             self.invert_y = False
+            self.window_manager = None

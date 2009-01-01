@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-
 from bui.backend.constraint import ConstraintContainer, BaseConstraintManager
 from bui.utils.meta import AllMethodsStatic
 

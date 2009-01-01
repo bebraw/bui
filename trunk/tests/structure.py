@@ -204,15 +204,16 @@ class FillElement():
         width: 100
     '''
 
-class AutoContainer():
+class StructureWithAuto():
     root_structure = '''
     VerticalContainer:
-        width: 300
+        width: auto
         children:
-            - VerticalContainer:
-                auto_width: True
-                min_width: 100
-                max_width: 500
+            - Fill:
+                name: filler
+            - Fill:
+                name: another filler
+                width: 50
     '''
 
 structure_keys = '''

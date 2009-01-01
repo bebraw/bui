@@ -3,7 +3,7 @@ from bui.backend.container.horizontal import HorizontalContainer
 from bui.backend.container.vertical import VerticalContainer
 from bui.backend.element.fill import Fill
 from bui.backend.serializer import unserialize
-
+from bui.backend.window import BaseWindowManager
 from ..structure import MinimalStructure, \
                         StructureWithVerticalContainerChild, \
                         StructureWithHorizontalContainerChild, \
@@ -11,7 +11,8 @@ from ..structure import MinimalStructure, \
                         StructureWithFillElements, \
                         StructureWithUIStructure, \
                         StructureWithVerticalContainerChildren, \
-                        StructureForSimpleScript
+                        StructureForSimpleScript, \
+                        StructureWithAuto
 
 def test_unserialize_valid_minimal_structure():
     root_container = unserialize(MinimalStructure())
@@ -31,7 +32,9 @@ def test_unserialize_valid_structure_with_vertical_child_container():
     
     assert isinstance(child_container, VerticalContainer)
     assert child_container.name == 'foobar'
-    assert child_container.width == 300
+    
+    # note that the width of root limits the width of child
+    assert child_container.width == 200
     assert child_container.visible == False
 
 def test_unserialize_valid_structure_with_horizontal_child_container():
@@ -90,8 +93,9 @@ def test_unserialize_valid_structure_with_uistructure():
     
     child_container = root_container.children[0]
     
+    # note that the width of root limits the width of child
     assert isinstance(child_container, VerticalContainer)
-    assert child_container.width == 400
+    assert child_container.width == 300
     
     child_element = root_container.children[1]
     
@@ -133,3 +137,25 @@ def test_unserialize_valid_structure_for_simple_script():
     assert len(root_container.children) == 3
     
     # add more asserts...
+
+def test_unserialize_structure_with_auto():
+    root_container = unserialize(StructureWithAuto())
+    
+    assert isinstance(root_container, VerticalContainer)
+    assert root_container._width == 'auto'
+    assert root_container.width == 0
+    assert len(root_container.children) == 2
+    
+    child_fill = root_container.children[0]
+    assert isinstance(child_fill, Fill)
+    assert child_fill.width == 0
+    
+    another_child = root_container.children[1]
+    assert isinstance(another_child, Fill)
+    assert another_child.width == 0
+    
+    window_manager = BaseWindowManager(width=500)
+    root_container.common.window_manager = window_manager
+    assert root_container.width == 500
+    assert child_fill.width == 500
+    assert another_child.width == 50
