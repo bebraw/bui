@@ -32,15 +32,15 @@ class Application(BaseApplication):
         super(Application, self).__init__(structure, keys, events,
                                           constraints, ui_initializer, element_height)
         
-        self.event_manager = EventManager(self.root_container, keys, events)
+        self.event_manager = EventManager(self.root_layout, keys, events)
         
         for event in ('mouse_x', 'mouse_y'):
             self.event_manager.key_events[BLENDER_KEYS[event]] = Event()
             self.event_manager.key_events[BLENDER_KEYS[event]].press = check_state_events   
         
         self.window_manager = WindowManager()
-        self.root_container.common.window_manager = self.window_manager
-        self.root_container.common.invert_y = True
+        self.root_layout.common.window_manager = self.window_manager
+        self.root_layout.common.invert_y = True
         
         global app
         app = self

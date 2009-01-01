@@ -10,4 +10,4 @@
 -add relative width/height?
 -improve tests!!!
 -separate style from UI definition (CSS style selectors (take a look at jQuery))
--fade (animate container bgs (active highlighted) based on time delta since active)
+-fade (animate layout bgs (active highlighted) based on time delta since active)

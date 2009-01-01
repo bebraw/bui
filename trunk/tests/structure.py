@@ -13,7 +13,7 @@ some_item:
 
 class StructureWithUIStructure():   
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 300
         children:
             - UIStructure:
@@ -23,22 +23,22 @@ class StructureWithUIStructure():
     '''
     
     minimal_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 400
     '''
 
 class MinimalStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 400
     '''
 
-class StructureWithHiddenVerticalContainerChild(): 
+class StructureWithHiddenVerticalLayoutChild(): 
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 200
         children:
-            - VerticalContainer:
+            - VerticalLayout:
                 name: foobar
                 visible: False
                 width: 300
@@ -49,7 +49,7 @@ class StructureWithHiddenVerticalContainerChild():
 
 class StructureForEventTests():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 200
         children:
             - Fill:
@@ -67,7 +67,7 @@ class StructureForEventTests():
 
 class StructureForStateEventTests():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 200
         children:
             - Fill:
@@ -77,12 +77,12 @@ class StructureForStateEventTests():
                     on_mouse_over: print_foo
     '''
 
-class MultipleVerticalContainers():
+class MultipleVerticalLayouts():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: 200
         children:
-            - VerticalContainer:
+            - VerticalLayout:
                 width: 50
                 children:
                     - Fill:
@@ -91,7 +91,7 @@ class MultipleVerticalContainers():
                         name: bar
                     - Fill:
                         name: foofoo
-            - VerticalContainer:
+            - VerticalLayout:
                 children:
                     - Fill:
                         name: cat
@@ -103,15 +103,15 @@ class MultipleVerticalContainers():
                         name: snake
     '''
 
-class HiddenRootContainer():
+class HiddenRootLayout():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         visible: False
         width: 300
         children:
-            - VerticalContainer:
+            - VerticalLayout:
                 children:
-                    - HorizontalContainer:
+                    - HorizontalLayout:
                         children:
                             - Fill:
                                 name: foobar
@@ -129,7 +129,7 @@ class FillElement():
 
 class StructureWithAuto():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         width: auto
         children:
             - Fill:

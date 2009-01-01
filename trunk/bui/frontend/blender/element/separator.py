@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.backend.container.horizontal import HorizontalContainer
-from bui.backend.container.vertical import VerticalContainer
+from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
 from abstract import AbstractBlenderElement
 from utils import draw_text
@@ -15,13 +14,13 @@ class Separator(AbstractBlenderElement):
         
         text_sep_dist = 10
         
-        if isinstance(self.parent, HorizontalContainer):
+        if isinstance(self.parent, HorizontalLayout):
             x_coord = self.x + self.width / 2.0
             
             # TODO: implement name rendering (should rotate Draw.Text somehow?)
             draw_line(0.5, self.color, x_coord, self.y, x_coord, self.y + self.height)
         
-        if isinstance(self.parent, VerticalContainer):
+        if isinstance(self.parent, VerticalLayout):
             y_coord = self.y + self.height / 2.0
             
             # HACK! draw text in some not visible place to get its width (needed for centering)

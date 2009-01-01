@@ -1,41 +1,41 @@
 # -*- coding: utf-8 -*-
 import sys
-from bui.backend.constraint import ConstraintContainer, BaseConstraintManager
+from bui.backend.constraint import BaseConstraintManager, ConstraintContainer
 from bui.utils.meta import AllMethodsStatic
 
-root_container_name = 'test_container'
+root_layout_name = 'test_container'
 
 class Constraints(AllMethodsStatic):
     def priority_is_zero_constraint(root_elem):
         '''priority=0'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def priority_is_one_constraint(root_elem):
         '''priority=1'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def priority_is_two_constraint(root_elem):
         '''priority=2'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def priority_is_two_too_constraint(root_elem):
         '''priority=2'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def priority_is_negative_constraint(root_elem):
         '''priority=-3'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def priority_is_not_int_constraint(root_elem):
         '''priority=cat'''
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
     
     def some_constraint(root_elem):
-        assert root_elem == root_container_name
+        assert root_elem == root_layout_name
 
 class TestBaseConstraintManager():
     def setup_method(self, method):
-        self.constraint_manager = BaseConstraintManager(root_container_name, Constraints)
+        self.constraint_manager = BaseConstraintManager(root_layout_name, Constraints)
         assert len(self.constraint_manager.constraints) == 7
     
     def test_check_constraints(self):

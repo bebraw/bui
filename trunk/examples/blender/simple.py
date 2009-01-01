@@ -7,11 +7,11 @@ from bui.utils.meta import AllMethodsStatic
 
 class UIStructure():
     root_structure = '''
-    VerticalContainer:
+    VerticalLayout:
         name: root_vertical
         width: 400
         children:
-            - HorizontalContainer:
+            - HorizontalLayout:
                 name: test_hori
                 children:
                     - Icon:
@@ -35,7 +35,7 @@ class UIStructure():
                         width: 20
             - Fill:
                 height: 10
-            - HorizontalContainer:
+            - HorizontalLayout:
                 name: last_hori
                 children:
                     - PushButton:
@@ -44,7 +44,7 @@ class UIStructure():
                         width: 100
                     - Slider:
                         name: Test slider
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Number:
                         name: Some number
@@ -56,7 +56,7 @@ class UIStructure():
                         max: 100
             - Fill:
                 height: 30
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Fill:
                         width: 20
@@ -67,7 +67,7 @@ class UIStructure():
                     - Image:
                        file: Mandril.png
                        height: 100
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Label:
                        name: 'SVG image:'
@@ -77,7 +77,7 @@ class UIStructure():
                        width: 200
             - Fill:
                 height: 15
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Label:
                         name: Foofoo
@@ -91,7 +91,7 @@ class UIStructure():
                         width: 50
             - Fill:
                 height: 15
-            - HorizontalContainer:
+            - HorizontalLayout:
                 children:
                     - Image:
                        file: Mandril.png

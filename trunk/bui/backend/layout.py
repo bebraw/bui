@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractObject
-from abstract import AbstractContainer
-from vertical import VerticalContainer
+from abstract import AbstractLayout, AbstractObject
 
-class HorizontalContainer(AbstractContainer):
+class HorizontalLayout(AbstractLayout):
     def get_height(self):
         record_height = self._find_child_max_height()
         
         if record_height > self._height:
             return record_height
         return self._height
-    height = property(get_height, AbstractContainer.set_height)
+    height = property(get_height, AbstractLayout.set_height)
     
     # TODO: add a test case for this
     def _find_child_max_height(self):
@@ -22,7 +20,7 @@ class HorizontalContainer(AbstractContainer):
         return record_height
     
     def set_width(self, width):
-        super(HorizontalContainer, self).set_width(width)
+        super(HorizontalLayout, self).set_width(width)
         
         self._calculate_children_widths()
     width = property(AbstractObject.get_width, set_width)
@@ -53,14 +51,14 @@ class HorizontalContainer(AbstractContainer):
             child.width = children_widths[i]
     
     def render(self):
-        super(HorizontalContainer, self).render()
+        super(HorizontalLayout, self).render()
         
         tmp_x = self.common.render_coordinate.x
         
         for child in self.children:
             tmp_y = None
             
-            if isinstance(child, VerticalContainer):
+            if isinstance(child, VerticalLayout):
                 tmp_y = self.common.render_coordinate.y
             
             if child.visible:
@@ -70,3 +68,29 @@ class HorizontalContainer(AbstractContainer):
             self.common.render_coordinate.y = tmp_y or self.common.render_coordinate.y
         
         self.common.render_coordinate.x = tmp_x
+
+class VerticalLayout(AbstractLayout):
+    def get_height(self):
+        if self.visible:
+            # TODO: make it possible to determine height explicitly (-> scrollbar)
+            self._height = 0
+            
+            heights = []
+            for child in self.children:
+                if child.visible and child.height:
+                    heights.append(child.height)
+            
+            self._height = sum(heights)
+        
+        return super(AbstractLayout, self).get_height()
+    height = property(get_height, AbstractObject.set_height)
+    
+    def render(self):
+        super(VerticalLayout, self).render()
+        
+        for child in self.children:
+            if child.visible:
+                child.render()
+            
+            if not isinstance(child, VerticalLayout):
+                self.common.render_coordinate.y += child.height

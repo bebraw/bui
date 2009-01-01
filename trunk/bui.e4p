@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-01, 10:10:25 -->
+<!-- Saved: 2009-01-01, 13:37:46 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -78,7 +78,6 @@
     <Source>tests/backend/constraint_test.py</Source>
     <Source>tests/backend/serializer_test.py</Source>
     <Source>tests/backend/event_test.py</Source>
-    <Source>tests/backend/container_test.py</Source>
     <Source>tests/frontend/blender/__init__.py</Source>
     <Source>bui/utils/math.py</Source>
     <Source>bui/utils/singleton.py</Source>
@@ -111,6 +110,7 @@
     <Source>bui/graphics/opengl/font.py</Source>
     <Source>bui/graphics/opengl/with_statements.py</Source>
     <Source>bui/frontend/pyopengl/element/separator.py</Source>
+    <Source>bui/backend/layout.py</Source>
   </Sources>
   <Forms>
   </Forms>
