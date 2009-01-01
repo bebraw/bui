@@ -126,11 +126,22 @@ class AbstractObject(TreeChild):
         self.common.render_coordinate = Coordinate()
     
     def render(self):
+        # TODO: figure out how to handle absolute coords in nice way
+        # 1. if unserialized version has coords, should use absolute after that
+        # 2. note that if container is given absolute coords its coords of its
+        # children should be relative to these coords!!!
+        # 3. get rid of foo_is_relative flags?? (misleading as relative should be 34% etc.)
+        # 4. should keep track of relative rendering (relative coords inside relative coords etc.)
+        
         if self.x_is_relative:
             self.x = self.common.render_coordinate.x
+        else:
+            self.common.render_coordinate.x = self.x
         
         if self.y_is_relative:
             self.y = self.common.render_coordinate.y
+        else:
+            self.common.render_coordinate.y = self.y
         
         self.common.render_coordinate.x += self.x_offset
         self.common.render_coordinate.y += self.y_offset
