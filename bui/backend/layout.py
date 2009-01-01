@@ -29,21 +29,22 @@ class HorizontalLayout(AbstractLayout):
     def set_width(self, width):
         super(HorizontalLayout, self).set_width(width)
         
-        self._calculate_children_widths()
+        if self._width:
+            self._calculate_children_widths()
     width = property(AbstractObject.get_width, set_width)
     
-    # TODO: add a test case for this (via set_width)
     def _calculate_children_widths(self):
         children_widths = len(self.children)*[None]
         width_left = self.width
         free_indices = []
         
-        # TODO: doesn't handle predef-free-predef-free case yet? (should it?)
         for i, child in enumerate(self.children):
-            children_widths[i] = child.width
+            children_widths[i] = child._width
             
-            if child.width:
-                width_left -= child.width
+            if child._width:
+                print 'decrementing width left'
+                print width_left, child._width
+                width_left -= child._width
             else:
                 free_indices.append(i)
         
@@ -51,8 +52,12 @@ class HorizontalLayout(AbstractLayout):
         avg_per_child = width_left / amount if amount else 0
         extra_pixels = width_left - amount * avg_per_child
         
+        # disperse extra pixels
         for i, free_index in enumerate(free_indices):
-            children_widths[free_index] = avg_per_child if i >= extra_pixels else avg_per_child + 1
+            if i >= extra_pixels:            
+                children_widths[free_index] = avg_per_child
+            else: 
+                children_widths[free_index] = avg_per_child + 1
         
         for i, child in enumerate(self.children):
             child.width = children_widths[i]

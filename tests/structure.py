@@ -155,6 +155,42 @@ class StructureWithFreeLayout():
                 height: 800
     '''
 
+class StructureWithHorizontalLayoutNoChildrenWidths():
+    root_structure = '''
+    HorizontalLayout:
+        width: 100
+        children:
+            - Fill:
+                name: first fill
+            - Fill:
+                name: second fill
+    '''
+
+class StructureWithHorizontalLayoutChildrenWidths():
+    root_structure = '''
+    HorizontalLayout:
+        width: 200
+        children:
+            - Fill:
+                name: first fill
+                width: 30
+            - Fill:
+                name: second fill
+                width: 80
+    '''
+
+class StructureWithHorizontalLayoutPartialChildrenWidths():
+    root_structure = '''
+    HorizontalLayout:
+        width: 300
+        children:
+            - Fill:
+                name: first fill
+                width: 120
+            - Fill:
+                name: second fill
+    '''
+
 structure_keys = '''
 a: add_monkey
 d: delete_all
