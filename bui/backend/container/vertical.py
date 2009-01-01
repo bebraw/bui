@@ -18,16 +18,6 @@ class VerticalContainer(AbstractContainer):
         return super(AbstractContainer, self).get_height()
     height = property(get_height, AbstractObject.set_height)
     
-    def set_width(self, width):
-        self._width = max(width, 0)
-        
-        for child in self.children:
-            if not child.width:
-                child.width = self.width
-        
-        super(AbstractContainer, self).set_width(width)
-    width = property(AbstractObject.get_width, set_width)
-    
     def render(self):
         super(VerticalContainer, self).render()
         

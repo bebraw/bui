@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 import bui.backend.event
-
 from bui.backend.container import *
 from bui.backend.event import BaseEventManager
 from bui.backend.serializer import unserialize
-
 from bui.utils.coordinate import Coordinate
 from bui.utils.meta import AllMethodsStatic
-
 from ..structure import MinimalStructure, StructureForEventTests, \
                       StructureForStateEventTests, structure_keys
 
@@ -72,9 +69,8 @@ class TestBaseEventManager():
         
         assert len(self.root_container.children) == 5
         
-        # should be 200 as root container width constraints this
-        # where and when to check this??? TODO: handle with properties!
-        assert self.root_container.children[4].width == 400
+        # note that the width of root container limits this width
+        assert self.root_container.children[4].width == 200
     
     def test_manager_has_right_key_events(self):
         assert self.event_manager.key_events[ord('a')].press == Events.add_monkey
