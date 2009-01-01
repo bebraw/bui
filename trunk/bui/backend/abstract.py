@@ -98,6 +98,9 @@ class AbstractObject(TreeChild):
     width = property(get_width, set_width)
     
     def get_visible(self):
+        if self.find_parent(visible=False):
+            return False
+        
         return self._visible
     def set_visible(self, visible):
         self._visible = visible
@@ -115,13 +118,11 @@ class AbstractObject(TreeChild):
         self.common.render_coordinate = Coordinate()
     
     def render(self):
-        # TODO: how to handle absolute coords? figure out absolute coords!!! (label needs this)
-        
-        if self.x_is_relative: # self.x.is_relative ???
-            self.x = self.common.render_coordinate.x # to property?
+        if self.x_is_relative:
+            self.x = self.common.render_coordinate.x
         
         if self.y_is_relative:
-            self.y = self.common.render_coordinate.y # to property?
+            self.y = self.common.render_coordinate.y
         
         self.common.render_coordinate.x += self.x_offset
         self.common.render_coordinate.y += self.y_offset
