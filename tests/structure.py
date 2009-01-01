@@ -33,7 +33,7 @@ class MinimalStructure():
         width: 400
     '''
 
-class StructureWithVerticalContainerChild(): 
+class StructureWithHiddenVerticalContainerChild(): 
     root_structure = '''
     VerticalContainer:
         width: 200
@@ -45,56 +45,6 @@ class StructureWithVerticalContainerChild():
                 children:
                     - Fill:
                         name: barbar
-    '''
-
-class StructureWithVerticalContainerChildren():
-    root_structure = '''
-    VerticalContainer:
-        name: 'root container'
-        width: 200
-        children:
-            - VerticalContainer:
-                name: foobarbaz
-                visible: False
-                width: 50
-            - VerticalContainer:
-                name: foobar
-            - VerticalContainer:
-                name: foobar
-            - VerticalContainer:
-                name: barbar
-    '''
-
-class StructureWithHorizontalContainerChild(): 
-    root_structure = '''
-    VerticalContainer:
-        width: 200
-        children:
-            - HorizontalContainer:
-                height: 40
-                width: 100
-    '''
-
-class StructureWithMultipleContainers():
-    root_structure = '''
-    VerticalContainer:
-        width: 200
-        children:
-            - HorizontalContainer:
-                width: 100
-            - VerticalContainer:
-                width: 150
-    '''
-
-class StructureWithFillElements():
-    root_structure = '''
-    VerticalContainer:
-        width: 200
-        children:
-            - Fill:
-                width: 100
-            - Fill:
-                width: 50
     '''
 
 class StructureForEventTests():
@@ -125,33 +75,6 @@ class StructureForStateEventTests():
                 width: 40
                 events:
                     on_mouse_over: print_foo
-    '''
-
-class StructureForSimpleScript():
-    root_structure = '''
-    VerticalContainer:
-        name: root_vertical
-        width: 400
-        children:
-            - HorizontalContainer:
-                name: test_hori
-                children:
-                    - Fill:
-                        name: Test script
-                    - Fill:
-                        name: X
-                        tooltip: Quit script
-                        event_handler: quit_script
-                        width: 20
-            - Fill:
-                height: 10
-            - HorizontalContainer:
-                name: last_hori
-                children:
-                    - Fill:
-                        name: Do something
-                        tooltip: Add some tool here
-                        width: 100
     '''
 
 class MultipleVerticalContainers():
