@@ -34,6 +34,7 @@ class UIStructure():
                 children:
                     - Label:
                         name: First child
+                        bg_color: [0.4, 0.9, 0.2]
                         width: 100
                     - Label:
                         name: Second child

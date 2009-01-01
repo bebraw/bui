@@ -11,7 +11,6 @@ class Menu(AbstractBlenderElement):
         super(Menu, self).initialize(**kvargs)
     
     def render(self):
-        super(Menu, self).render()
         Draw.Menu(self.name, self.event, self.x, self.y,
                   self.width, self.height, self.value, self.tooltip,
                   self.update_value)

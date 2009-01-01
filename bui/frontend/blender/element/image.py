@@ -56,8 +56,6 @@ class Image(AbstractBlenderElement):
     
     @enable_alpha
     def render(self):
-        super(Image, self).render()
-        
         if self.image_block:
             width, height = self.image_block.getSize()
             self.x_zoom = float(self.width) / width

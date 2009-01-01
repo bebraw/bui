@@ -10,8 +10,6 @@ class Separator(AbstractBlenderElement):
         super(Separator, self).initialize(**kvargs)
     
     def render(self):
-        super(Separator, self).render()
-        
         text_sep_dist = 10
         
         if isinstance(self.parent, HorizontalLayout):

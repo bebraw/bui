@@ -25,8 +25,7 @@ class BaseApplication(object):
         # TODO: get rid of this?
         self.constraint_manager.check_constraints()
         
-        self.root_layout.initialize_render() # TODO: get rid of this
-        self.root_layout.render()
+        self.root_layout.render(render_coordinate=None) # override with begin_render???
     
     def run(self):
         if self.ui_initializer:

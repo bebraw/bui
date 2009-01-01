@@ -3,19 +3,40 @@ from abstract import AbstractLayout, AbstractObject
 
 class FreeLayout(AbstractLayout):
     def __init__(self):
-        super(AbstractLayout, self).__init__()
+        render_coordinate = super(AbstractLayout, self).__init__()
         
         # FIXME: this gets past cyclic dependency. perhaps there's a nicer solution
         self.is_free = True
     
-    def render(self):
-        super(FreeLayout, self).render()
+    def render(self, render_coordinate):
+        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
         
         for child in self.children:
-            if child.visible:
-                child.render()
+            self.render_child(child, render_coordinate=None)
+        
+        return render_coordinate
 
 class HorizontalLayout(AbstractLayout):
+    def render(self, render_coordinate):
+        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
+        
+        tmp_x = render_coordinate.x
+        
+        for child in self.children:
+            tmp_y = None
+            
+            if isinstance(child, VerticalLayout):
+                tmp_y = render_coordinate.y
+            
+            render_coordinate = self.render_child(child, render_coordinate)
+            
+            render_coordinate.x += child.width
+            render_coordinate.y = tmp_y or render_coordinate.y
+        
+        render_coordinate.x = tmp_x
+        
+        return render_coordinate
+    
     def get_height(self):
         record_height = self._find_child_max_height()
         
@@ -67,30 +88,21 @@ class HorizontalLayout(AbstractLayout):
         # assign new widths
         for i, child in enumerate(self.children):
             child.width = children_widths[i]
-    
-    def render(self):
-        super(HorizontalLayout, self).render()
-        
-        tmp_x = self.common.render_coordinate.x
-        
-        for child in self.children:
-            tmp_y = None
-            
-            if isinstance(child, VerticalLayout):
-                tmp_y = self.common.render_coordinate.y
-            
-            if child.visible:
-                child.render()
-            
-            self.common.render_coordinate.x += child.width
-            self.common.render_coordinate.y = tmp_y or self.common.render_coordinate.y
-        
-        self.common.render_coordinate.x = tmp_x
 
 class VerticalLayout(AbstractLayout):
+    def render(self, render_coordinate):
+        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
+        
+        for child in self.children:
+            render_coordinate = self.render_child(child, render_coordinate)
+            
+            if not isinstance(child, VerticalLayout):
+                render_coordinate.y += child.height
+        
+        return render_coordinate
+    
     def get_height(self):
         if self.visible:
-            # TODO: make it possible to determine height explicitly (-> scrollbar)
             self._height = 0
             
             heights = []
@@ -102,13 +114,3 @@ class VerticalLayout(AbstractLayout):
         
         return super(AbstractLayout, self).get_height()
     height = property(get_height, AbstractObject.set_height)
-    
-    def render(self):
-        super(VerticalLayout, self).render()
-        
-        for child in self.children:
-            if child.visible:
-                child.render()
-            
-            if not isinstance(child, VerticalLayout):
-                self.common.render_coordinate.y += child.height

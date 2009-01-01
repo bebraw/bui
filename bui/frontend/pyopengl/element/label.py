@@ -13,5 +13,4 @@ class Label(AbstractOpenGLElement):
         self.font = Font(self)
     
     def render(self):
-        super(Label, self).render()
         self.font.render()

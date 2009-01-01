@@ -30,7 +30,6 @@ class Icon(AbstractBlenderElement):
     
     @enable_alpha
     def render(self):
-        super(Icon, self).render()
         Draw.Image(self.image_block, self.x, self.y, 1.0, 1.0, self.clip_x,
                    self.clip_y, self.clip_width, self.clip_height)
 
