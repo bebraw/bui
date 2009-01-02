@@ -20,6 +20,7 @@ class BaseApplication(object):
         if hasattr(ui_initializer, '__call__'):
             self.ui_initializer = ui_initializer
     
+    # TODO: belongs to window manager?
     def redraw(self):
         # TODO: trigger constraint check only by events???
         # TODO: get rid of this?

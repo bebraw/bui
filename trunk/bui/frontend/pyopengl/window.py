@@ -22,8 +22,20 @@ class WindowManager(BaseWindowManager):
         # glutFullScreen() # TODO: add option for full screen
         
         glutReshapeFunc(self.resize)
+        glutVisibilityFunc(self.visibility)
         
         setup_2D_projection(self.width, self.height)
+    
+    def visibility(self, visible):
+        idle_func = None
+        
+        if visible:
+            idle_func = self.idle
+        
+        glutIdleFunc(idle_func)
+    
+    def idle(self):
+        glutPostRedisplay()
     
     def get_mouse_coordinates(self):
         return (0, 0) # TODO: implement
