@@ -26,11 +26,8 @@ class Application(BaseApplication):
         self.event_manager = EventManager(self.root_layout, keys, events)
         
         glutDisplayFunc(self.redraw)
-        glutIdleFunc(self.idle)
     
-    def idle(self):
-        glutPostRedisplay()
-    
+    # redraw belongs to window manager???
     def redraw(self):
         clear_color() # TODO: provide bg color
         super(Application, self).redraw()
