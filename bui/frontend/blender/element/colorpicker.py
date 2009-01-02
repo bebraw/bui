@@ -2,6 +2,8 @@
 from Blender import Draw
 from abstract import AbstractBlenderElement
 
+# TODO: note that this does not have label!!! (define label only at this level?)
+
 class ColorPicker(AbstractBlenderElement):
     def initialize(self, **kvargs):
         self.value = (0.0, 0.0, 0.0, )

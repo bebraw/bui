@@ -36,9 +36,9 @@ class UIStructure():
             - HorizontalLayout:
                 children:
                     - Label:
-                        name: Filter layers v0.9
+                        label: Filter layers v0.9
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
@@ -52,7 +52,7 @@ class UIStructure():
             - HorizontalLayout:
                 children:
                     - PushButton:
-                        name: Add layer
+                        label: Add layer
                         tooltip: Add new layer
                         width: 100
     '''
@@ -65,35 +65,35 @@ class UIStructure():
             - HorizontalLayout:
                 children:
                     - ToggleButton:
-                        variable: layer_number
+                        name: layer_number
                         event_handler: toggle_layer_number
                         width: 20
                     - TextBox:
-                        name: Name
+                        label: Name
                         value: Layer
                         tooltip: Please enter layer name here
                         max_input_length: 40
                     - ToggleButton:
-                        name: V
+                        label: V
                         value: True
                         tooltip: Visibility
                         width: 20
                     - ToggleButton:
-                        name: S
+                        label: S
                         value: True
                         tooltip: Selectability
                         width: 20
                     - ToggleButton:
-                        name: R
+                        label: R
                         value: True
                         tooltip: Renderability
                         width: 20
                     - ToggleButton:
-                        variable: show_filter
+                        name: show_filter
                         tooltip: Show/hide filter
                         width: 80
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Delete layer
                         event_handler: delete_layer
                         width: 20
@@ -111,7 +111,7 @@ class UIStructure():
                             - Fill:
                                 width: 20
                             - PushButton:
-                                name: Add filter
+                                label: Add filter
                                 tooltip: Add new filter
                                 width: 100
             - Fill:
@@ -128,19 +128,19 @@ class UIStructure():
                     - Fill:
                         width: 20
                     - Menu:
-                        name: 'Filter type %t|Data %x1|Name %x2|Group %x3' # TODO: refactor numbers out. define menu in different way???
+                        name: filter_type
+                        label: 'Filter type %t|Data %x1|Name %x2|Group %x3' # TODO: refactor numbers out. define menu in different way???
                         value: 1
-                        variable: filter_type
                         tooltip: Select filter type
                         width: 80
                     - TextBox:
-                        name: "Filter"
+                        name: filter_name
+                        label: "Filter"
                         value: ""
-                        variable: filter_name
                         tooltip: Enter filter clause
                         max_input_length: 40
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Delete filter
                         event_handler: delete_filter
                         width: 20
@@ -191,16 +191,16 @@ class Events(AllMethodsStatic):
         filters.remove(filter)
     
     def root_container_up(root_elem):
-        elem.x_offset += 20
+        elem.x += 20
     
     def root_container_down(root_elem):
-        elem.x_offset -= 20
+        elem.x -= 20
     
     def root_container_left(root_elem):
-        elem.y_offset -= 20
+        elem.y -= 20
     
     def root_container_right(root_elem):
-        elem.y_offset += 20
+        elem.y += 20
     
     def quit_script(elem):
         Draw.Exit()
@@ -213,14 +213,14 @@ class Constraints(AllMethodsStatic):
         prev_layer_number = None
         
         for i, layer in enumerate(layers.children):
-            layer_number_elem = layer.find_child(variable='layer_number')
+            layer_number_elem = layer.find_child(name='layer_number')
             layer_number = 0
             
-            if layer_number_elem.name:
-                layer_number = int(layer_number_elem.name)
+            if layer_number_elem.label:
+                layer_number = int(layer_number_elem.label)
             
             if layer_number != i + 1:
-                layer_number_elem.name = str(i + 1)
+                layer_number_elem.label = str(i + 1)
         
         # TODO: add check for upper limit (19 is max, if it goes to 20, get rid of that layer!)
     
@@ -229,31 +229,31 @@ class Constraints(AllMethodsStatic):
         view_layers = Window.ViewLayers()
         
         for i, layer in enumerate(layers.children):
-            layer_number_elem = layer.find_child(variable='layer_number')
+            layer_number_elem = layer.find_child(name='layer_number')
             layer_number_elem.value = i + 1 in view_layers 
     
     def show_filter_name_constraint(root_elem):
-        def set_show_filter_name(filters_parent, name):
+        def set_show_filter_label(filters_parent, label):
             layer = filters_parent.find_parent(name='layer')
-            show_filter = layer.find_child(variable='show_filter')
-            show_filter.name = name
+            show_filter = layer.find_child(name='show_filter')
+            show_filter.label = label
         
         layers = root_elem.find_child(name='layers')
         
         for layer in layers.children:
             filters = layer.find_child(name='filters')
-            name = 'Show filter'
+            label = 'Show filter'
             
             if len(filters.children) > 1:
-                name += 's'
+                label += 's'
             
-            set_show_filter_name(filters, name)
+            set_show_filter_label(filters, label)
     
     def filter_visibility_constraint(root_elem):
         layers = root_elem.find_child(name='layers')
         
         for layer in layers.children:
-            show_filter = layer.find_child(variable='show_filter')
+            show_filter = layer.find_child(name='show_filter')
             filters = layer.find_child(name='filters_container')
             filters.visible = show_filter.value
     
@@ -266,12 +266,12 @@ class Constraints(AllMethodsStatic):
         for layer in layers.children:
             filtered_objects = None
             filters = layer.find_child(name='filters')
-            layer_number = layer.find_child(variable='layer_number')
+            layer_number = layer.find_child(name='layer_number')
             
             for child in filters.children:
                 if child.name == 'filter':
-                    filter_type = child.find_child(variable='filter_type')
-                    filter_name = child.find_child(variable='filter_name')
+                    filter_type = child.find_child(name='filter_type')
+                    filter_name = child.find_child(name='filter_name')
                     
                     if filter_type.value == 1:
                         print 'filter data'
@@ -285,7 +285,7 @@ class Constraints(AllMethodsStatic):
             try:
                 for ob in filtered_objects:
                     layers = ob.layers
-                    layers.append(int(layer_number.name))
+                    layers.append(int(layer_number.label))
                     ob.layers = layers
             except TypeError:
                 pass

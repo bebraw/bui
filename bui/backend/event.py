@@ -129,7 +129,7 @@ class ElementEventContainer(EventContainer):
                 if element_event.element is element and element_event.handler is handler:
                     return
             
-            element.event = self.max_event_id
+            element.event_index = self.max_event_id
             self[self.max_event_id] = ElementEvent(element, handler)
             self.max_event_id += 1
 

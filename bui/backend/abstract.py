@@ -27,26 +27,26 @@ class AbstractObject(TreeChild):
         that are then passed on to defined attributes.
         '''
         self.name = ''
+        self.tooltip = ''
         
         # TODO: convert bg_color to just bg (container) that can contain color/gradient/texture/etc. ?
         self.bg_color = None 
         self.visible = True
         
         self.x = 0
-        self.x_offset = 0
-        
         self.y = 0
-        self.y_offset = 0
-        
-        self.height = 0
         
         self.width = None
         self.min_width = 0
         self.max_width = sys.maxint
         
+        self.height = 0
+        # self.min_width = 0 # TODO
+        # self.max_width = sys.maxint # TODO
+        
         self.event_handler = None
         self.events = []
-        self.variable = None
+        self.event_index = 0
         
         # adapted from http://blog.enterthefoo.com/2008/08/pythons-vars.html
         for name in ( n for n in dir(self) if n[0] != '_' ):
@@ -120,15 +120,12 @@ class AbstractObject(TreeChild):
         self._y = y
     y = property(get_y, set_y)
     
-    def render(self, render_coordinate):
+    def render(self, render_coordinate=None):
         if render_coordinate:
             render_coordinate.x += self.x
             render_coordinate.y += self.y
         else:
             render_coordinate = Coordinate(self.x, self.y)
-        
-        render_coordinate.x += self.x_offset
-        render_coordinate.y += self.y_offset
         
         self.render_bg_color(render_coordinate)
         

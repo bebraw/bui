@@ -17,9 +17,9 @@ class UIStructure():
                 bg_color: [0.9, 0.9, 0.9]
                 children:
                     - Label:
-                        name: BUI Builder v0.1
+                        label: BUI Builder v0.1
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
@@ -29,28 +29,28 @@ class UIStructure():
                         width: 150
                         children:
                             - Label:
-                                name: "UI Objects:"
+                                label: "UI Objects:"
                             - VerticalLayout:
                                 children:
                                     - Label:
-                                        name: "Layouts:"
+                                        label: "Layouts:"
                                     - VerticalLayout:
                                         name: layouts
                             - VerticalLayout:
                                 children:
                                     - Label:
-                                        name: "Elements:"
+                                        label: "Elements:"
                                     - VerticalLayout:
                                         name: elements
                     - VerticalLayout:
                         children:
                             - Label:
-                                name: "Build UI here."
+                                label: "Build UI here."
                     - VerticalLayout:
                         width: 150
                         children:
                             - Label:
-                                name: "Properties:"
+                                label: "Properties:"
     '''
 
 hotkeys = '''

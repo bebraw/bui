@@ -27,9 +27,9 @@ class UIStructure():
                         height: 40
                         width: 40
                     - Label:
-                        name: Test script
+                        label: Test script
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
@@ -39,20 +39,20 @@ class UIStructure():
                 name: last_hori
                 children:
                     - PushButton:
-                        name: Do something
+                        label: Do something
                         tooltip: Add some tool here
                         width: 100
                     - Slider:
-                        name: Test slider
+                        label: Test slider
             - HorizontalLayout:
                 children:
                     - Number:
-                        name: Some number
+                        label: Some number
                         value: 0.5
                     - Number:
-                        name: Another number
+                        label: Another number
                     - IntNumber:
-                        name: Some int number
+                        label: Some int number
                         max: 100
             - Fill:
                 height: 30
@@ -63,14 +63,14 @@ class UIStructure():
                     - Image:
                         file: Mandril.png
                     - Label:
-                        name: Foobar
+                        label: Foobar
                     - Image:
                        file: Mandril.png
                        height: 100
             - HorizontalLayout:
                 children:
                     - Label:
-                       name: 'SVG image:'
+                       label: 'SVG image:'
                     - Image:
                        file: home.svg
                        height: 100
@@ -80,9 +80,9 @@ class UIStructure():
             - HorizontalLayout:
                 children:
                     - Label:
-                        name: Foofoo
+                        label: Foofoo
                     - Number:
-                        name: Some number
+                        label: Some number
                     - Fill:
                         width: 50
                     #- Normal:
