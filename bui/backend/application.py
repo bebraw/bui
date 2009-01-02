@@ -29,7 +29,7 @@ class BaseApplication(object):
     
     def run(self):
         if self.ui_initializer:
-            self.ui_initializer(self.root_layout)
+            self.ui_initializer(self.root_layout, self.event_manager) # TODO: get rid of event_manager part? added just to test timer
     
     # TODO: get rid of this?
     def update_structure(self):

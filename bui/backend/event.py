@@ -6,20 +6,20 @@ from abstract import AbstractLayout
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class BaseEventManager(object):
-    def __init__(self, root_layout, keys, events):
-        assert isinstance(root_layout, AbstractLayout)
+    def __init__(self, root_elem, keys, events):
+        assert isinstance(root_elem, AbstractLayout)
         assert isinstance(keys, str)
         
-        self.root_layout = root_layout
+        self.root_elem = root_elem
         self.events = events
         
         self.element_events = ElementEventContainer()
         self.key_events = EventContainer()
         self.state_events = EventContainer()
         
-        self.construct_element_event_ids(self.root_layout)
+        self.construct_element_event_ids(self.root_elem)
         self.construct_key_event_ids(keys)
-        self.construct_state_event_ids(self.root_layout)
+        self.construct_state_event_ids(self.root_elem)
     
     def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
@@ -89,9 +89,9 @@ class BaseEventManager(object):
             key_event = self.key_events[evt]
             
             if pressed and key_event.press:
-                key_event.press(self.root_layout)
+                key_event.press(self.root_elem)
             elif hasattr(key_event, 'release'):
-                key_event.release(self.root_layout)
+                key_event.release(self.root_elem)
     
     def check_state_events(self, coordinate):
         triggered_event = False
@@ -101,7 +101,7 @@ class BaseEventManager(object):
                 if coordinate.inside(element):
                     triggered_event = True
                     func = getattr(state_event, 'on_mouse_over')
-                    func(self.root_layout)
+                    func(self.root_elem)
         
         return triggered_event
 
