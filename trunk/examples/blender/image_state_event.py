@@ -14,7 +14,7 @@ class UIStructure():
             - HorizontalLayout:
                 children:
                     - Label:
-                        name: Amazing state event test v0.1
+                        label: Amazing state event test v0.1
             - Fill:
                 height: 10
             - HorizontalLayout:

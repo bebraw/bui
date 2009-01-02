@@ -8,7 +8,7 @@ class FreeLayout(AbstractLayout):
         # FIXME: this gets past cyclic dependency. perhaps there's a nicer solution
         self.is_free = True
     
-    def render(self, render_coordinate):
+    def render(self, render_coordinate=None):
         render_coordinate = super(AbstractLayout, self).render(render_coordinate)
         
         for child in self.children:
@@ -17,7 +17,7 @@ class FreeLayout(AbstractLayout):
         return render_coordinate
 
 class HorizontalLayout(AbstractLayout):
-    def render(self, render_coordinate):
+    def render(self, render_coordinate=None):
         render_coordinate = super(AbstractLayout, self).render(render_coordinate)
         
         tmp_x = render_coordinate.x
@@ -90,7 +90,7 @@ class HorizontalLayout(AbstractLayout):
             child.width = children_widths[i]
 
 class VerticalLayout(AbstractLayout):
-    def render(self, render_coordinate):
+    def render(self, render_coordinate=None):
         render_coordinate = super(AbstractLayout, self).render(render_coordinate)
         
         for child in self.children:

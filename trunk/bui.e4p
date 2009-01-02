@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-01, 16:22:06 -->
+<!-- Saved: 2009-01-02, 10:43:07 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -108,6 +108,7 @@
     <Source>bui/frontend/pyopengl/element/separator.py</Source>
     <Source>bui/backend/layout.py</Source>
     <Source>examples/pyopengl/free.py</Source>
+    <Source>tests/utils/coordinate_test.py</Source>
   </Sources>
   <Forms>
   </Forms>

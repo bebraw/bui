@@ -23,23 +23,23 @@ class UIStructure():
                 bg_color: [1.0, 0.0, 0.0]
                 children:
                     - Label:
+                        label: Image Filter v0.2
                         bg_color: [0.5, 0.5, 0.5]
-                        name: Image Filter v0.2
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
             - HorizontalLayout:
                 children:
                     - TextBox:
+                        label: Filter
                         bg_color: [0.0, 1.0, 0.0]
-                        name: Filter
                         tooltip: Please enter image filter here
                         max_input_length: 40
                         width: 200
             - Separator:
-                name: Results
+                label: Results
                 height: 20
             - HorizontalLayout:
                 name: results
@@ -65,7 +65,7 @@ class Events(AllMethodsStatic):
                 
                 new_image = Image(file=image.name, width=200)
                 v_layout.append(new_image)
-                v_layout.append(Label(name=image.name))
+                v_layout.append(Label(label=image.name))
                 
                 results_elem.append(v_layout)
                 results_elem.append(Fill(width=10))

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+from bui.backend.abstract import AbstractObject
 from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
-from abstract import AbstractOpenGLElement
 from label import Label
 
-class Separator(AbstractOpenGLElement):
+class Separator(AbstractObject):
     def initialize(self, **kvargs):
+        self.label = ''
         self.color = 3*[0.0]
         self.alpha = 1.0
         self.font_name = 'Vera'

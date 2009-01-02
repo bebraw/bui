@@ -26,17 +26,17 @@ class UIStructure():
                 height: 100
                 children:
                     - Label:
-                        name: Some label
+                        label: Some label
                     - Label:
-                        name: Another label
+                        label: Another label
                         alpha: 0.5
                     - Separator:
-                        name: Test separator
+                        label: Test separator
                     - Label:
-                        name: Hello world!
+                        label: Hello world!
                         color: [0.0, 1.0, 0.0] # TODO: probably color: green would be nicer
                     - Label:
-                        name: Hello world 2!
+                        label: Hello world 2!
                         color: [1.0, 1.0, 0.0]
             - HorizontalLayout:
                 x: 50
@@ -46,10 +46,10 @@ class UIStructure():
                 bg_color: [0.5, 0.2, 0.2]
                 children:
                     - Label:
-                        name: First child
+                        label: First child
                         width: 300
                     - Label:
-                        name: Second child
+                        label: Second child
                         bg_color: [0.3, 0.8, 0.5]
                         width: 200
     '''

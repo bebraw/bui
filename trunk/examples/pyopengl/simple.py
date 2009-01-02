@@ -20,24 +20,24 @@ class UIStructure():
             - VerticalLayout:
                 children:
                     - Label:
-                        name: Some label
+                        label: Some label
                     - Label:
-                        name: Another label
+                        label: Another label
                         alpha: 0.5 # test alpha
                     - Separator:
-                        name: Test separator
+                        label: Test separator
                     - Label:
-                        name: Hello world!
+                        label: Hello world!
                         color: [0.0, 1.0, 0.0] # probably color: green would be nicer
             - HorizontalLayout:
                 bg_color: [0.5, 0.2, 0.2]
                 children:
                     - Label:
-                        name: First child
+                        label: First child
                         bg_color: [0.4, 0.9, 0.2]
                         width: 100
                     - Label:
-                        name: Second child
+                        label: Second child
                         bg_color: [0.3, 0.8, 0.5]
                         width: 200
     '''

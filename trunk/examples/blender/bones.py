@@ -17,9 +17,9 @@ class UIStructure():
                 name: test_hori
                 children:
                     - Label:
-                        name: Great bone script v0.1
+                        label: Great bone script v0.1
                     - PushButton:
-                        name: X
+                        label: X
                         tooltip: Quit script
                         event_handler: quit_script
                         width: 20
@@ -69,13 +69,13 @@ class Constraints(AllMethodsStatic):
                 # check if a bone has to be added
                 for bone_name in p.bones.keys(): 
                     if bone_name[:3] == "SLI":
-                        bone_elem = root_elem.find_child(name=bone_name)
+                        bone_elem = root_elem.find_child(label=bone_name)
                         
                         if not bone_elem:
                             armature_bones_elem = root_elem.find_child(name='armature_bones')
                             new_bone = unserialize(UIStructure, UIStructure.slider_structure)
                             armature_bones_elem.append(new_bone)
-                            new_bone.name = bone_name
+                            new_bone.label = bone_name
                 
                 # check if a bone has been removed
                 armature_bones = root_elem.find_child(name='armature_bones')

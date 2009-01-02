@@ -4,7 +4,10 @@ from abstract import AbstractBlenderElement
 
 class TextBox(AbstractBlenderElement):
     def initialize(self, **kvargs):
+        self.label = ''
         self.value = ''
+        self.max_input_length = 0
+        
         super(TextBox, self).initialize(**kvargs)
     
     def render(self):

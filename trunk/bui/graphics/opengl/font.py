@@ -52,4 +52,4 @@ class Font():
             translate(self.parent_object.x, self.parent_object.y + self.parent_object.height)
             mirror_y()
             
-            self.font.Render(self.parent_object.name) # TODO: self.parent_object.text better?
+            self.font.Render(self.parent_object.label)
