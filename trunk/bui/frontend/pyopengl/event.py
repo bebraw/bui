@@ -9,8 +9,7 @@ class EventManager(BaseEventManager):
         glutKeyboardFunc(self.key_pressed)
         glutKeyboardUpFunc(self.key_released)
         
-        self.timer_func = None # just a hack to store one timer func. should make this more dynamic
-        self.timers = TimersContainer()
+        self.timers = []
     
     def key_pressed(self, key, x, y):
         print key, x, y
@@ -24,12 +23,8 @@ class EventManager(BaseEventManager):
         ''' interval in seconds! '''
         self.timers.append(Timer(self.root_elem, func, interval))
 
-class TimersContainer(list):
-    def update(self):
-        for timer in self:
-            timer.update()
-
 # TODO: add start and stop too!
+# TODO: move to timer.py?
 class Timer():
     def __init__(self, root_elem, func, interval_in_seconds):
         self.root_elem = root_elem
@@ -39,9 +34,7 @@ class Timer():
         
         self.running = True
         
-        if self.running:
-            self.func(self.root_elem)
-            glutTimerFunc(self.interval_in_ms, self._update, 0)
+        self._update(0)
     
     def _update(self, value):
         self.func(self.root_elem)
