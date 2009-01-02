@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
-
-from OpenGL.GL import glClear, glClearColor, GL_COLOR_BUFFER_BIT
-from OpenGL.GLUT import glutDisplayFunc, glutIdleFunc, glutMainLoop, glutSwapBuffers
-
+from OpenGL.GLUT import *
 from bui.backend.application import BaseApplication
+from bui.graphics.opengl.color import clear_color
 
-# trigger element to add modify serializer namespace. could be neater...
+# trigger element to modify serializer namespace. could be neater...
 import element
 
 from event import EventManager
@@ -19,6 +17,9 @@ class Application(BaseApplication):
         super(Application, self).__init__(structure, keys, events,
                                           constraints, ui_initializer, element_height)
         
+        glutInit()
+        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
+        
         self.window_manager = WindowManager(window_name, window_width, window_height)
         self.root_layout.common.window_manager = self.window_manager
         
@@ -28,12 +29,10 @@ class Application(BaseApplication):
         #glutIdleFunc(self.redraw) # uncomment this if timers are added
     
     def redraw(self):
-        #glClearColor(.3, .3, .3, 0) # *bg_color + 0.0
-        glClear(GL_COLOR_BUFFER_BIT)
-        
+        clear_color() # TODO: provide bg color
         super(Application, self).redraw()
         
-        # double buffered drawing
+        # use double buffered drawing
         glutSwapBuffers() 
     
     def run(self):

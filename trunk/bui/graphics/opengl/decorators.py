@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from OpenGL.GL import *
-from OpenGL.GLU import *
-from OpenGL.GLUT import *
+from OpenGL.GL import glBlendFunc, glDisable, glEnable, GL_BLEND, \
+                      GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_TEXTURE_2D
 
 def enable_alpha(func):
     def wrapper(self, *args, **kvargs):

@@ -8,8 +8,8 @@ except ImportError:
 
 from bui.utils.coordinate import Coordinate
 from bui.utils.path import get_font_path
+from color import set_color
 from decorators import enable_alpha, enable_texture2d
-from setters import set_color
 from transformations import mirror_y, translate
 from with_statements import matrix_stack
 
