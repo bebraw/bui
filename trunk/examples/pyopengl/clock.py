@@ -52,7 +52,6 @@ def ui_initialize(root_elem, event_manager):
     # just temp hack to get timer running. could try decorator scheme instead
     event_manager.create_timer(update_clock, interval=0.5) # update twice per second
     # note that this starts timer!
-    # FIXME: timer slows down app when resizing!
 
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events, ui_initializer=ui_initialize)

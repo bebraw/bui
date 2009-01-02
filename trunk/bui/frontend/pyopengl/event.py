@@ -30,9 +30,6 @@ class TimersContainer(list):
             timer.update()
 
 # TODO: add start and stop too!
-# TODO: optimize? current implementation is "jumpy" on resize?
-# tried with time() based solution but that was equally "slow"
-# perhaps the problem is in layout code? (window change triggers width change etc.)
 class Timer():
     def __init__(self, root_elem, func, interval_in_seconds):
         self.root_elem = root_elem
