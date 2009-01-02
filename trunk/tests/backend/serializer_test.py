@@ -13,6 +13,8 @@ from ..structure import MinimalStructure, \
                         StructureWithHorizontalLayoutChildrenWidths, \
                         StructureWithHorizontalLayoutPartialChildrenWidths
 
+# TODO: separate layout specific tests to layout_test.py!
+
 class TestUnserialize():
     def setup_method(self, method):
         common = Common(reset_values=True)

@@ -26,7 +26,7 @@ class Application(BaseApplication):
         self.event_manager = EventManager(self.root_layout, keys, events)
         
         glutDisplayFunc(self.redraw)
-        #glutIdleFunc(self.redraw) # uncomment this if timers are added
+        glutIdleFunc(self.redraw) # uncomment this if timers are added
     
     def redraw(self):
         clear_color() # TODO: provide bg color
