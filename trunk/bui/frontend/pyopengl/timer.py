@@ -5,14 +5,13 @@ from OpenGL.GLUT import glutTimerFunc
 class Timer():
     def __init__(self, root_elem, func, interval_in_seconds):
         self.root_elem = root_elem
-        self.begin_time = None
         self.func = func
         self.interval_in_seconds = interval_in_seconds
         
         self._update(0)
     
     def _update(self, value):
-        self.func(self.root_elem)
+        self.func(self.root_elem, self)
         glutTimerFunc(self.interval_in_ms, self._update, 0)
     
     def get_interval_in_ms(self):
