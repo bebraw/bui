@@ -24,18 +24,12 @@ class BaseEventManager(object):
     def construct_element_event_ids(self, elem):
         if isinstance(elem, TreeParent):
             for child in elem.children:
-                event_handler = None
-                
-                if child.event_handler is not None and hasattr(self.events, child.event_handler):
-                    event_handler = getattr(self.events, child.event_handler)
-                else:
-                    if child.name is not None:
-                        handler_name = str(child.name).replace(' ', '_').lower()
-                        
-                        if hasattr(self.events, handler_name):
-                            event_handler = getattr(self.events, handler_name)
-                
-                self.element_events.append(child, event_handler)
+                if child.name:
+                    handler_name = (child.name).replace(' ', '_').lower()
+                    
+                    if hasattr(self.events, handler_name):
+                        event_handler = getattr(self.events, handler_name)
+                        self.element_events.append(child, event_handler)
                 
                 self.construct_element_event_ids(child)
     

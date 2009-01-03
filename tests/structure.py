@@ -1,16 +1,5 @@
 # -*- coding: utf-8 -*-
 
-structure_with_one_item = '''
-- some_item:
-'''
-
-structure_with_tabs = '''
-some_item:
-	children:
-		- other_item
-		- third_item
-'''
-
 class StructureWithUIStructure():   
     root_structure = '''
     VerticalLayout:
@@ -59,10 +48,10 @@ class StructureForEventTests():
                 name: Add giraffe
                 width: 20
             - Fill:
-                name: Delete animals
-                event_handler: delete_all
+                name: delete_all
+                label: Delete animals # FIXME: probably doesn't work as Fill doesn't have label!
             - Fill:
-                event_handler: add_to_ui_structure
+                name: add_to_ui_structure
     '''
 
 class StructureForStateEventTests():

@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from OpenGL.GLUT import glutTimerFunc
+from bui.backend.timer import BaseTimer, BaseTimerManager
+
+class TimerManager(BaseTimerManager):
+    pass
 
 # TODO: add start and stop too!
-class Timer():
+class Timer(BaseTimer):
     def __init__(self, root_elem, func, interval_in_seconds):
         self.root_elem = root_elem
         self.func = func

@@ -3,16 +3,46 @@ import os, sys
 from time import localtime, time
 
 # FIXME: evilness!
-bui_path = os.path.normpath(sys.path[0])
-bui_path = bui_path[:bui_path.rfind('/')]
-bui_path = bui_path[:bui_path.rfind('/')]
-sys.path.append(bui_path)
+try:
+    import bui
+except ImportError:
+    bui_path = os.path.normpath(sys.path[0])
+    bui_path = bui_path[:bui_path.rfind('/')]
+    bui_path = bui_path[:bui_path.rfind('/')]
+    sys.path.append(bui_path)
 
-from bui.frontend.pyopengl.application import Application
+from bui.frontend.pyopengl.window import WindowManager
+# TODO: nicer as from bui.utils import color (then color.generate()?)
+from bui.utils.color import generate_color
+from bui.utils.math import lerp
 from bui.utils.meta import AllMethodsStatic
 
-# TODO: make it possible to define config file for window
 # TODO: make it possible to use an element as root (scales to window width/height unless set otherwise!)
+
+# note that this sets up a single window with given attributes
+configuration = '''
+    label: Clock test
+    width: 400 # if not set, give exception (add full screen option!) (special case: there is global window width setting (use this instead!). see multi_window.py)
+    height: 200 # if not set, give exception
+    start_timers: True # False by default if not set
+    hotkeys: hotkeys # checks the hotkey container for this name. uses the first found by default?
+    structure: root_structure # should check for root_structure automagically???
+'''
+
+# hierarchy: WindowManager -> WindowContainer -> Window (is created by container that calls initialize with kvargs parsed from configuration and then sets values)
+
+# should use this instead!
+class UIStructureProperOne():
+    root_structure = '''
+        Label:
+            name: current_time
+    '''
+
+# even neater one!
+class UIStructureProperOneSecond():
+    root_structure = '''
+        Label: current_time
+    '''
 
 class UIStructure():
     root_structure = '''
@@ -22,79 +52,58 @@ class UIStructure():
         children:
             - Label:
                 name: current_time
+                label: foobar # TODO: get rid of this
                 bg_color: [0.0, 1.0, 0.0]
                 height: 80
+                width: 100 # TODO: doesn't work. check get/set width!!!
     '''
 
-hotkeys = '''
-q: quit_script
-'''
+class Hotkeys():
+    hotkeys = '''
+        q: quit_script
+    '''
 
 class Events(AllMethodsStatic):
-    def quit_script(elem):
+    def quit_script(elem, timers):
         sys.exit()
 
-# should put to Events?
-# could use something like following then
-#@timer(name='clock_timer', interval=0.5) # this should trigger timer automatically?
-def update_clock(root_elem, timer):
-    current_time = get_current_time_as_formatted_string()
-    clock = root_elem.find_child(name='current_time')
-    clock.label = current_time
+# implement interval setter!!! (see how constraints handle priority! -> use same implementation)
+class Timers(AllMethodsStatic):
+    def update_clock(root_elem, timer, timers):
+        ''' interval=0.5 '''
+        current_time = get_current_time_as_formatted_string()
+        clock = root_elem.find_child(name='current_time')
+        clock.label = current_time
+    
+    def update_clock_color(root_elem, timer, timers):
+        ''' interval=5.0 '''
+        clock = root_elem.find_child(name='current_time')
+        current_time = time()
+        
+        fac = (current_time-clock.new_color_start_time) / clock.new_color_interval
+        fac = min(fac, 1.0)
+        
+        clock.bg_color = lerp(clock.new_color, clock.old_color, fac)
+    
+    def generate_new_clock_color(root_elem, timer, timers):
+        ''' interval=1/24.0 ''' # neater as 1/24 ? import fixed div from future?
+        clock = root_elem.find_child(name='current_time')
+        
+        if not hasattr(clock, 'new_color'):
+            clock.new_color = generate_color()
+        
+        clock.old_color = clock.new_color
+        clock.new_color = generate_color()
+        
+        clock.new_color_start_time = time()
+        clock.new_color_interval = timer.interval_in_seconds
 
 def get_current_time_as_formatted_string(separator=':'):
-    ''' returns current time formatted as hh:mm:ss by default '''
+    ''' @return: current time formatted as hh:mm:ss by default '''
     time_list = localtime()[3:6]
     time_list_items_as_string = ['%02d%s' % (i, separator) for i in time_list]
     return ''.join(time_list_items_as_string)[:-1]
 
-# swap colors and generate new one after some bigger amount of time has elapsed!
-def update_clock_color(root_elem, timer):
-    clock = root_elem.find_child(name='current_time')
-    
-    # get fac ((current_time-start_time)/interval)
-    current_time = time()
-    fac = (current_time-clock.new_color_start_time) / clock.new_color_interval
-    fac = min(fac, 1.0)
-    clock.bg_color = lerp(clock.old_color, clock.new_color, fac)
-
-#generalize and move this to math utils
-def lerp(n, m, fac):
-    assert 0.0 <= fac <= 1.0, 'Got %f!' % fac
-    
-    # list version
-    n_part = [i*(1-fac) for i in n]
-    m_part = [i*(fac) for i in m]
-    return [i+j for i, j in zip(n_part, m_part)]
-    
-    # nominal case
-    #return n*fac + m*(1-fac)
-
-def generate_new_clock_color(root_elem, timer):
-    clock = root_elem.find_child(name='current_time')
-    
-    if not hasattr(clock, 'new_color'):
-        clock.new_color = generate_color()
-    
-    clock.old_color = clock.new_color
-    clock.new_color = generate_color()
-    
-    clock.new_color_start_time = time()
-    clock.new_color_interval = timer.interval_in_seconds
-    
-    print clock.old_color, clock.new_color
-
-def generate_color():
-    from random import random
-    return (random(), random(), random())
-
-def ui_initialize(root_elem, event_manager):
-    # just temp hack to get timer running. could try decorator scheme instead
-    event_manager.create_timer(update_clock, interval=0.5) # update twice per second
-    event_manager.create_timer(generate_new_clock_color, interval=5.0)
-    event_manager.create_timer(update_clock_color, interval=0.1)
-    # note that this starts timer!
-
 if __name__ == '__main__':
-    app = Application(UIStructure, hotkeys, Events, ui_initializer=ui_initialize)
-    app.run()
+    window_manager = WindowManager(configuration, UIStructure, Hotkeys, Events, Timers)
+    window_manager.run()
