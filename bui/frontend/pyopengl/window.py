@@ -11,20 +11,20 @@ import element
 class WindowManager(BaseWindowManager):
     def __init__(self, configuration, structure_document=None, hotkeys=None, events=None,
                  timers=None, constraints=None, initializers=None):
-        super(WindowManager, self).__init__(configuration, structure_document, hotkeys,
-                                                events, timers, constraints, initializers)
-        
         glutInit()
         glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH) # GLUT_DEPTH needed???
         
-        # evil hack?
+        super(WindowManager, self).__init__(configuration, structure_document, hotkeys,
+                                                events, timers, constraints, initializers)
+        
+        glutDisplayFunc(self.redraw)
+    
+    def initialize_windows(self):
         self.windows = []
         self.windows.append(Window(self.name, self.label, self.width, self.height, self.show_fps,
                                    self.logging, self.alignment, self.element_height,
-                                   self.start_timers, structure_document, self.structure, self.hotkeys,
-                                   self.initializer))
-        
-        glutDisplayFunc(self.redraw)
+                                   self.start_timers, self.structure_document, self.structure,
+                                   self.hotkeys, self.initializer))
     
     def get_mouse_coordinates(self):
         return (0, 0) # TODO: implement

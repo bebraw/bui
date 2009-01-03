@@ -18,11 +18,6 @@ class BaseWindowManager(object):
         #self.windows = BaseWindowContainer(configuration, structure, hotkeys, events,
         #                                   timers, constraints, initializers)
         
-        # check configuration and set up global constraint/event/timer managers
-        
-        # serialize configuration here now to get values assigned
-        parsed_configuration = read_yaml(configuration)
-        
         self.name = ''
         self.label = ''
         self.width = None
@@ -40,14 +35,12 @@ class BaseWindowManager(object):
         self.hotkeys = None
         self.initializer = None
         
-        if parsed_configuration:
-            for item, value in parsed_configuration.items():
-                if self.__dict__.has_key(item):
-                    self.__dict__[item] = value
+        self.parse_configuration(configuration)
         
-        if structure_document and self.structure:
-            #self.structure_document = structure_document # need to store document too???
-            self.structure = getattr(structure_document, self.structure)
+        # Note that everything after this does not affect configuration parsing!
+        self.structure_document = structure_document
+        if self.structure_document and self.structure:
+            self.structure = getattr(self.structure_document, self.structure)
         
         if self.hotkeys:
             self.hotkeys = getattr(hotkeys, self.hotkeys)
@@ -61,14 +54,22 @@ class BaseWindowManager(object):
         if not self.height:
             raise ValueMissingError, 'Missing height!'
         
-        # how to make subclass add right windows? super???
-        '''
+        self.initialize_windows()
+    
+    def parse_configuration(self, configuration):
+        parsed_configuration = read_yaml(configuration)
+        
+        for item, value in parsed_configuration.items():
+            if self.__dict__.has_key(item):
+                self.__dict__[item] = value
+    
+    def initialize_windows(self):
         self.windows = []
-        self.windows.append(BaseWindow(self.name, self.label, self.width, self.height, self.show_fps,
-                                       self.logging, self.alignment, self.element_height,
-                                       self.start_timers, structure_document, self.structure, self.hotkeys,
+        self.windows.append(BaseWindow(self.name, self.label, self.width, self.height,
+                                       self.show_fps, self.logging, self.alignment,
+                                       self.element_height, self.start_timers,
+                                       self.structure_document, self.structure, self.hotkeys,
                                        self.initializer))
-        '''
         
         #self.windows = BaseWindowContainer(configuration, structure, hotkeys, events,
         #                                   timers, constraints, initializers)
@@ -115,7 +116,7 @@ class BaseWindow(object):
         self.hotkeys = hotkeys
         self.initializer = initializer
         #self.initializer = UserInterfaceInitializer(initializer)
-        self.root_layout = EmptyLayout() # better to use AbstractObject instead???
+        self.root_layout = None #EmptyLayout() # better to use AbstractObject instead???
         
         # TODO: move this test to unserialize???
         if structure_document and structure:

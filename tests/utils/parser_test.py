@@ -3,7 +3,7 @@ from bui.utils.parser import read_yaml
 
 def test_read_invalid_file():
     file_content = read_yaml('foo.yaml')
-    assert file_content is None
+    assert file_content == {}
 
 # FIXME: skip this test if not tests are not run in the right directory
 def test_read_valid_file():
