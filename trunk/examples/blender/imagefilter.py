@@ -26,9 +26,9 @@ class UIStructure():
                         label: Image Filter v0.2
                         bg_color: [0.5, 0.5, 0.5]
                     - PushButton:
+                        name: quit_script
                         label: X
                         tooltip: Quit script
-                        event_handler: quit_script
                         width: 20
             - HorizontalLayout:
                 children:

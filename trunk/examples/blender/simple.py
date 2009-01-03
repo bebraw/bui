@@ -29,9 +29,9 @@ class UIStructure():
                     - Label:
                         label: Test script
                     - PushButton:
+                        name: quit_script
                         label: X
                         tooltip: Quit script
-                        event_handler: quit_script
                         width: 20
             - Fill:
                 height: 10

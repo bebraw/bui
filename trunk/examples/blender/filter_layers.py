@@ -38,9 +38,9 @@ class UIStructure():
                     - Label:
                         label: Filter layers v0.9
                     - PushButton:
+                        name: quit_script
                         label: X
                         tooltip: Quit script
-                        event_handler: quit_script
                         width: 20
             - Fill:
                 height: 10
@@ -66,7 +66,6 @@ class UIStructure():
                 children:
                     - ToggleButton:
                         name: layer_number
-                        event_handler: toggle_layer_number
                         width: 20
                     - TextBox:
                         label: Name
@@ -93,9 +92,9 @@ class UIStructure():
                         tooltip: Show/hide filter
                         width: 80
                     - PushButton:
+                        name: delete_layer
                         label: X
                         tooltip: Delete layer
-                        event_handler: delete_layer
                         width: 20
             - VerticalLayout:
                 name: filters_container
@@ -140,9 +139,9 @@ class UIStructure():
                         tooltip: Enter filter clause
                         max_input_length: 40
                     - PushButton:
+                        name: delete_filter
                         label: X
                         tooltip: Delete filter
-                        event_handler: delete_filter
                         width: 20
                     - Fill:
                         width: 20
@@ -155,7 +154,7 @@ q: quit_script
 '''
 
 class Events(AllMethodsStatic):
-    def toggle_layer_number(elem):
+    def layer_number(elem):
         layer_number = int(elem.name)
         visible_layers = Window.ViewLayers()
         
@@ -207,7 +206,7 @@ class Events(AllMethodsStatic):
 
 class Constraints(AllMethodsStatic):
     def layer_number_constraint(root_elem):
-        '''priority=1'''
+        ''' priority=1 '''
         layers = root_elem.find_child(name='layers')
         
         prev_layer_number = None

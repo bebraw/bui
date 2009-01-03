@@ -19,9 +19,9 @@ class UIStructure():
                     - Label:
                         label: Great bone script v0.1
                     - PushButton:
+                        name: quit_script
                         label: X
                         tooltip: Quit script
-                        event_handler: quit_script
                         width: 20
             - VerticalLayout:
                 name: armature_bones
@@ -29,12 +29,12 @@ class UIStructure():
 
     slider_structure = '''
     Slider:
+        name: test_handler
         min: 0.0
         max: 1.0
         value: 0.5
         height: 20
         width: 200
-        event_handler: test_handler
     '''
 
 hotkeys = '''

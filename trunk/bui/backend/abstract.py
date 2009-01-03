@@ -3,24 +3,13 @@ import sys
 from bui.graphics.opengl.draw import draw_rectangle
 from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
-from bui.utils.singleton import Singleton
 from bui.utils.tree import TreeChild, TreeParent
-from window import BaseWindowManager
 
-class Common(Singleton):
-    def __init__(self, reset_values=False):
-        if not hasattr(self, 'init_called') or reset_values:
-            self.init_called = True
-            
-            self.element_height = 20
-            self.invert_y = False
-            self.window_manager = None
+# TODO: figure out how to solve invert_y (to lower level?)
+# TODO: root aObject should have window as its parent?
+# should it be possible to access sibling of window???
 
 class AbstractObject(TreeChild):
-    def __init__(self):
-        super(AbstractObject, self).__init__()
-        self.common = Common()
-    
     def initialize(self, **kvargs):
         '''
         The idea is that unserialize calls this and provides kvargs
@@ -44,7 +33,7 @@ class AbstractObject(TreeChild):
         # self.min_width = 0 # TODO
         # self.max_width = sys.maxint # TODO
         
-        self.event_handler = None
+        # TODO: check if this should be here! -> to event stuff???
         self.events = []
         self.event_index = 0
         
@@ -60,7 +49,7 @@ class AbstractObject(TreeChild):
     def get_height(self):
         if self._height is not None:
             return self._height
-        return self.common.element_height
+        return 0 # XXX: should return element height (defined in config. WindowManager should know this?
     def set_height(self, height):
         self._height = max(height, 0) or None
     height = property(get_height, set_height)
@@ -93,8 +82,8 @@ class AbstractObject(TreeChild):
                 
                 if self._width == 'auto':
                     width = self.parent.width
-            elif self.common.window_manager:
-                width = self.common.window_manager.width
+            #elif XXX: self.common.window_manager: (should have parent, if doesn't have one, skip?)
+            #    width = self.common.window_manager.width
             elif self._width != 'auto':
                 width = self._width
         
@@ -113,8 +102,9 @@ class AbstractObject(TreeChild):
     visible = property(get_visible, set_visible)
     
     def get_y(self):
-        if self.common.invert_y and self.common.window_manager:
-            return self.common.window_manager.height - self._y - self.height
+        # XXX: handle on lower level?
+        #if self.common.invert_y and self.common.window_manager:
+        #    return self.common.window_manager.height - self._y - self.height
         return self._y
     def set_y(self, y):
         self._y = y
@@ -133,8 +123,10 @@ class AbstractObject(TreeChild):
     
     def render_bg_color(self, render_coordinate):
         if self.bg_color:
+            width_hack = self._width or 200 # FIXME!!! see XXX in property
+            
             draw_rectangle(self.bg_color, render_coordinate.x, render_coordinate.y,
-                           render_coordinate.x + self.width, render_coordinate.y + self.height)
+                           render_coordinate.x + width_hack, render_coordinate.y + self.height)
 
 class AbstractLayout(TreeParent, AbstractObject):
     def __init__(self):
@@ -156,13 +148,15 @@ class AbstractLayout(TreeParent, AbstractObject):
     def append(self, abstract_object):
         super(AbstractLayout, self).append(abstract_object)
         
+        # XXX: set up observers
         # get rid of this? how to update events?
-        if hasattr(self.common, 'application'):
-            self.common.application.update_structure()
+        #if hasattr(self.common, 'application'):
+        #    self.common.application.update_structure()
     
     def remove(self, abstract_object):
         super(AbstractLayout, self).remove(abstract_object)
         
+        # XXX: set up observers
         # get rid of this? how to update events?
-        if hasattr(self.common, 'application'):
-            self.common.application.update_structure()
+        #if hasattr(self.common, 'application'):
+        #    self.common.application.update_structure()

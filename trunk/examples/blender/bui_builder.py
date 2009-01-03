@@ -19,9 +19,9 @@ class UIStructure():
                     - Label:
                         label: BUI Builder v0.1
                     - PushButton:
+                        name: quit_script
                         label: X
                         tooltip: Quit script
-                        event_handler: quit_script
                         width: 20
             - HorizontalLayout:
                 children:
