@@ -10,4 +10,7 @@ def read_yaml(document):
     
     structure = safe_load(stream)
     
-    return structure if structure != document else None
+    if structure and structure != document:
+        return structure
+    
+    return {}
