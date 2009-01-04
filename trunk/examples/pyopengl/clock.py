@@ -26,6 +26,7 @@ configuration = '''
     start_timers: True # False by default if not set
     hotkeys: hotkeys # checks the hotkey container for this name. uses the first found by default?
     structure: root_structure # should check for root_structure automagically???
+    element_height: 20
 '''
 
 # should use this instead!
@@ -49,10 +50,9 @@ class UIStructure():
         children:
             - Label:
                 name: current_time
-                label: foobar # TODO: get rid of this
                 bg_color: [0.0, 1.0, 0.0]
-                height: 80 # TODO: gives error without height! check out!
-                #width: 100 # TODO: should this scale text to fit???
+                #height: 80
+                #width: 100 # TODO: should this case scale text to fit???
     '''
 
 class Hotkeys():

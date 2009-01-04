@@ -7,8 +7,17 @@ bui_path = bui_path[:bui_path.rfind('/')]
 bui_path = bui_path[:bui_path.rfind('/')]
 sys.path.append(bui_path)
 
-from bui.frontend.pyopengl.application import Application
+from bui.frontend.pyopengl.window import WindowManager
 from bui.utils.meta import AllMethodsStatic
+
+configuration = '''
+    label: Simple layout test
+    width: 640
+    height: 480
+    hotkeys: hotkeys
+    structure: root_structure
+    element_height: 20
+'''
 
 class UIStructure():
     root_structure = '''
@@ -42,13 +51,14 @@ class UIStructure():
                         width: 200
     '''
 
-hotkeys = '''
-d:
-    press: d_was_pressed
-    release: d_was_released
-s: foobar
-q: quit_script
-'''
+class Hotkeys():
+    hotkeys = '''
+    d:
+        press: d_was_pressed
+        release: d_was_released
+    s: foobar
+    q: quit_script
+    '''
 
 class Events(AllMethodsStatic):
     def d_was_pressed(elem):
@@ -64,5 +74,5 @@ class Events(AllMethodsStatic):
         sys.exit()
 
 if __name__ == '__main__':
-    app = Application(UIStructure, hotkeys, Events, window_name='test window')
-    app.run()
+    window_manager = WindowManager(configuration, UIStructure, Hotkeys, Events)
+    window_manager.run()
