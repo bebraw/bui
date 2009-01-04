@@ -116,7 +116,7 @@ class FillElement():
         width: 100
     '''
 
-class StructureWithAuto():
+class StructureWithAutoWidth():
     root_structure = '''
     VerticalLayout:
         width: auto

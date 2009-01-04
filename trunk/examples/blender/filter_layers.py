@@ -167,7 +167,7 @@ class Events(AllMethodsStatic):
         Window.ViewLayers(visible_layers)
     
     def add_layer(elem):
-        root = elem.find_root_element()
+        root = elem.find_root()
         layers = root.find_child(name='layers')
         
         root_structure = unserialize(UIStructure, UIStructure.layer_structure)

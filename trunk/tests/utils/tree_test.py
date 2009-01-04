@@ -24,9 +24,9 @@ class TestTreeChild():
         assert self.child3.find_parent(label='cat', variable=3) is None
         assert self.child4.find_parent() is None
     
-    def test_find_root_element(self):
-        assert self.child4.find_root_element() is self.root_child
-        assert self.root_child.find_root_element() is self.root_child
+    def test_find_root(self):
+        assert self.child4.find_root() is self.root_child
+        assert self.root_child.find_root() is self.root_child
 
 class TestTreeParent():
     def test_find_child(self):

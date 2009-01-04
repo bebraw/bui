@@ -55,7 +55,7 @@ class Events(AllMethodsStatic):
     
     def filter(elem):
         filter_clause = elem.value
-        root_elem = elem.find_root_element()
+        root_elem = elem.find_root()
         results_elem = root_elem.find_child(name='results')
         results_elem.remove_children()
         

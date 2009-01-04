@@ -27,7 +27,7 @@ class Events(AllMethodsStatic):
         pass
     
     def add_to_ui_structure(elem):
-        root_elem = elem.find_root_element()
+        root_elem = elem.find_root()
         structure_root = unserialize(MinimalStructure())
         root_elem.append(structure_root)
 

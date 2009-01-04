@@ -15,7 +15,7 @@ class WindowManager(BaseWindowManager):
         glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH) # GLUT_DEPTH needed???
         
         super(WindowManager, self).__init__(configuration, structure_document, hotkeys,
-                                                events, timers, constraints, initializers)
+                                            events, timers, constraints, initializers)
         
         glutDisplayFunc(self.redraw)
     
