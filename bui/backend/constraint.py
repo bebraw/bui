@@ -53,9 +53,8 @@ class ConstraintContainer(object):
             self.constraints[priority] = [func, ]
     
     def get_priority(self, func):
-        doc_str = func.__doc__
-        
-        if doc_str:
+        if func.__doc__:
+            doc_str = func.__doc__.strip()
             try:
                 exec(doc_str)
                 

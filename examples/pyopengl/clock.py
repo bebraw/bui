@@ -44,6 +44,7 @@ class UIStructureProperOneSecond():
         Label: current_time
     '''
 
+# TODO: check how element_height should scale
 class UIStructure():
     root_structure = '''
     HorizontalLayout:
@@ -54,7 +55,7 @@ class UIStructure():
                 label: foobar # TODO: get rid of this
                 bg_color: [0.0, 1.0, 0.0]
                 height: 80 # TODO: gives error without height! check out!
-                #width: 100 # TODO: doesn't work. check get/set width!!!
+                #width: 100 # TODO: should this scale text to fit???
     '''
 
 class Hotkeys():
@@ -75,7 +76,7 @@ class Timers(AllMethodsStatic):
         clock.label = current_time
     
     def update_clock_color(root_elem, timer, timers):
-        ''' interval=5.0 '''
+        ''' interval=1/24 '''
         clock = root_elem.find_child(name='current_time')
         current_time = time()
         
@@ -85,7 +86,7 @@ class Timers(AllMethodsStatic):
         clock.bg_color = lerp(clock.new_color, clock.old_color, fac)
     
     def generate_new_clock_color(root_elem, timer, timers):
-        ''' interval=1/24.0 ''' # neater as 1/24 ? import fixed div from future?
+        ''' interval=5.0 '''
         clock = root_elem.find_child(name='current_time')
         
         if not hasattr(clock, 'new_color'):
