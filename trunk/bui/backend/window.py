@@ -2,11 +2,14 @@
 from bui.backend.serializer import unserialize
 from bui.utils.errors import ValueMissingError
 from bui.utils.parser import read_yaml
-from bui.utils.tree import TreeChild
+from bui.utils.tree import TreeChild, TreeParent
 from constraint import BaseConstraintManager
 from event import BaseEventManager
 from timer import BaseTimerManager
 from serializer import unserialize
+
+# TODO: should use a list based scheme to determine conf item names, types, min, max etc.
+# to make testing easier
 
 # this class should handle global constraints/events/timers!
 class BaseWindowManager(object):
@@ -55,7 +58,10 @@ class BaseWindowManager(object):
         if not self.height:
             raise ValueMissingError, 'Missing height!'
         
+        self.timers = timers
+        
         self.initialize_windows()
+        self.initialize_timers()
     
     def parse_configuration(self, configuration):
         parsed_configuration = read_yaml(configuration)
@@ -64,7 +70,11 @@ class BaseWindowManager(object):
             if self.__dict__.has_key(item):
                 self.__dict__[item] = value
     
+    def initialize_timers(self):
+        pass # TODO: add tests and dummy BaseTimerManager
+    
     def initialize_windows(self):
+        # XXX: just one window for now
         self.windows = []
         self.windows.append(BaseWindow(self.name, self.label, self.width, self.height,
                                        self.show_fps, self.logging, self.alignment,
@@ -72,8 +82,7 @@ class BaseWindowManager(object):
                                        self.structure_document, self.structure, self.hotkeys,
                                        self.initializer))
         
-        #self.windows = BaseWindowContainer(configuration, structure, hotkeys, events,
-        #                                   timers, constraints, initializers)
+        #self.windows = BaseWindowContainer(...)
     
     def redraw(self):
         # TODO: clarify the way constraints are handled!
@@ -81,7 +90,12 @@ class BaseWindowManager(object):
         self.windows[0].redraw() # evil hack
     
     def run(self):
+        # XXX: supports only one window for now
         if len(self.windows) > 0:
+            # FIXME: timers should be per window! (how about global timers??? are timers always per window or are they always global?)
+            if self.start_timers:
+                self.timer_manager.start()
+            
             self.windows[0].run()
         #self.windows.run()
 
@@ -101,7 +115,7 @@ class BaseWindowContainer(list):
             window.run()
 
 # note that this should be easy to extend!!!
-class BaseWindow(TreeChild):
+class BaseWindow(TreeChild, TreeParent):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  element_height, start_timers, structure_document, structure,
                  hotkeys, initializer):
@@ -125,6 +139,9 @@ class BaseWindow(TreeChild):
         if structure_document and structure:
             self.root_layout = unserialize(structure_document, structure)
             self.root_layout.parent = self
+            self.children.append(self.root_layout)
+            # could use self.append also but i think this is neater as it's explicit
+            # TODO: check this out
         else:
             # TODO: should give nice warning (or just use assert?)
             print structure_document, structure

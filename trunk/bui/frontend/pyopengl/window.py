@@ -4,6 +4,7 @@ from OpenGL.GLUT import *
 from bui.backend.window import BaseWindow, BaseWindowContainer, BaseWindowManager
 from bui.graphics.opengl.color import clear_color
 from bui.graphics.opengl.projections import setup_2D_projection
+from timer import TimerManager
 
 # evil hack to modify serializer namespace!!!
 import element
@@ -18,6 +19,9 @@ class WindowManager(BaseWindowManager):
                                             events, timers, constraints, initializers)
         
         glutDisplayFunc(self.redraw)
+    
+    def initialize_timers(self):
+        self.timer_manager = TimerManager(self.windows[0], self.timers) # XXX: passing window in a nasty way
     
     def initialize_windows(self):
         self.windows = []

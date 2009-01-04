@@ -1,30 +1,40 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from OpenGL.GLUT import glutTimerFunc
 from bui.backend.timer import BaseTimer, BaseTimerManager
 
 class TimerManager(BaseTimerManager):
-    pass
+    def __init__(self, window, timers):
+        for timer_name in vars(timers).keys():
+            if timer_name[0] != '_': # parse interval from __doc__
+                timer_func = getattr(timers, timer_name)
+                
+                # XXX: similar code as in constraint -> unify
+                doc_str = timer_func.__doc__.strip()
+                
+                try:
+                    exec(doc_str)
+                except:
+                    interval = 0
+                
+                self[timer_name] = Timer(window, timer_func, interval)
 
-# TODO: add start and stop too!
 class Timer(BaseTimer):
-    def __init__(self, root_elem, func, interval_in_seconds):
-        self.root_elem = root_elem
-        self.func = func
-        self.interval_in_seconds = interval_in_seconds
-        
+    def __init__(self, window, func, interval_in_seconds):
+        super(Timer, self).__init__(window, func, interval_in_seconds)
+    
+    def start(self):
         self._update(0)
     
     def _update(self, value):
-        self.func(self.root_elem, self)
+        self.func(self.window, self, None) # TODO: timers reference
         glutTimerFunc(self.interval_in_ms, self._update, 0)
     
-    def get_interval_in_ms(self):
-        return int(self.interval_in_seconds * 1000)
-    interval_in_ms = property(get_interval_in_ms)
+    def stop(self):
+        return NotImplemented
     
-    def get_interval_in_seconds(self):
-        if hasattr(self, '_interval_in_seconds'):
-            return self._interval_in_seconds
-    def set_interval_in_seconds(self, interval_in_seconds):
-        self._interval_in_seconds = max(0.001, interval_in_seconds)
-    interval_in_seconds = property(get_interval_in_seconds, set_interval_in_seconds)
+    def pause(self):
+        return NotImplemented
+    
+    def resume(self):
+        return NotImplemented
