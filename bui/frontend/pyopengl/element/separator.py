@@ -13,8 +13,8 @@ class Separator(AbstractObject):
         
         super(Separator, self).initialize(**kvargs)
         
-        self.label = Label()
-        self.label.initialize(**kvargs)
+        self.text_label = Label()
+        self.text_label.initialize(**kvargs)
     
     def render(self):
         text_sep_dist = 10
@@ -28,7 +28,9 @@ class Separator(AbstractObject):
         if isinstance(self.parent, VerticalLayout):
             y_coord = self.y + self.height / 2.0
             
-            bbox = self.label.font.get_bounding_box()
+            self.text_label.height = self.height # XXX: without this draw_line starts to complain
+            
+            bbox = self.text_label.font.get_bounding_box()
             text_width = bbox.width
             
             text_x = self.x + (self.width - text_width) / 2.0
@@ -39,10 +41,10 @@ class Separator(AbstractObject):
             
             text_y= y_coord - bbox.height / 2.0
             
-            self.label.x = text_x
-            self.label.y = text_y
+            self.text_label.x = text_x
+            self.text_label.y = text_y
             
-            self.label.render()
+            self.text_label.render()
             
             sep_end_x = self.x + self.width
             sep_begin_x = min(sep_end_x, text_x + text_width + text_sep_dist)

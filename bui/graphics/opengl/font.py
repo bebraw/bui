@@ -37,7 +37,7 @@ class Font():
                 return self.top_right.y - self.bottom_left.y
             height = property(get_height)
         self.font.FaceSize(self.parent_object.height) # TODO: refactor out
-        bbox = self.font.BBox(self.parent_object.name)
+        bbox = self.font.BBox(self.parent_object.label)
         return BoundingBox(bbox)
     
     @enable_alpha
