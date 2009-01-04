@@ -43,13 +43,15 @@ class Font():
     @enable_alpha
     @enable_texture2d
     def render(self):
-        self.font.FaceSize(self.parent_object.height) # TODO: refactor out
-        
-        set_color(self.parent_object.color, self.parent_object.alpha)
-        
-        with matrix_stack():
-            # note that FTGL uses OpenGL drawing convention by default!
-            translate(self.parent_object.x, self.parent_object.y + self.parent_object.height)
-            mirror_y()
+        # FIXME: bit of a hack but can't allow too small labels to be drawn
+        if self.parent_object.height > 0:
+            self.font.FaceSize(self.parent_object.height) # TODO: refactor out
             
-            self.font.Render(self.parent_object.label)
+            set_color(self.parent_object.color, self.parent_object.alpha)
+            
+            with matrix_stack():
+                # note that FTGL uses OpenGL drawing convention by default!
+                translate(self.parent_object.x, self.parent_object.y + self.parent_object.height)
+                mirror_y()
+                
+                self.font.Render(self.parent_object.label)
