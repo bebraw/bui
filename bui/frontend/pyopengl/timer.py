@@ -5,19 +5,20 @@ from bui.backend.timer import BaseTimer, BaseTimerManager
 
 class TimerManager(BaseTimerManager):
     def __init__(self, window, timers):
-        for timer_name in vars(timers).keys():
-            if timer_name[0] != '_': # parse interval from __doc__
-                timer_func = getattr(timers, timer_name)
-                
-                # XXX: similar code as in constraint -> unify
-                doc_str = timer_func.__doc__.strip()
-                
-                try:
-                    exec(doc_str)
-                except:
-                    interval = 0
-                
-                self[timer_name] = Timer(window, timer_func, interval)
+        if timers:
+            for timer_name in vars(timers).keys():
+                if timer_name[0] != '_': # parse interval from __doc__
+                    timer_func = getattr(timers, timer_name)
+                    
+                    # XXX: similar code as in constraint -> unify
+                    doc_str = timer_func.__doc__.strip()
+                    
+                    try:
+                        exec(doc_str)
+                    except:
+                        interval = 0
+                    
+                    self[timer_name] = Timer(window, timer_func, interval)
 
 class Timer(BaseTimer):
     def __init__(self, window, func, interval_in_seconds):

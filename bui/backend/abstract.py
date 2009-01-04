@@ -41,6 +41,7 @@ class AbstractObject(TreeChild):
         for name in ( n for n in dir(self) if n[0] != '_' ):
             attr = getattr(self, name)
             
+            # TODO: get rid of callable?
             if not callable(attr) and kvargs.has_key(name):
                 setattr(self, name, kvargs[name])
     

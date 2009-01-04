@@ -12,7 +12,6 @@ except ImportError:
     sys.path.append(bui_path)
 
 from bui.frontend.pyopengl.window import WindowManager
-# TODO: nicer as from bui.utils import color (then color.generate()?)
 from bui.utils.color import generate_color
 from bui.utils.math import lerp
 from bui.utils.meta import AllMethodsStatic
@@ -28,8 +27,6 @@ configuration = '''
     hotkeys: hotkeys # checks the hotkey container for this name. uses the first found by default?
     structure: root_structure # should check for root_structure automagically???
 '''
-
-# hierarchy: WindowManager -> WindowContainer -> Window (is created by container that calls initialize with kvargs parsed from configuration and then sets values)
 
 # should use this instead!
 class UIStructureProperOne():
@@ -67,7 +64,6 @@ class Events(AllMethodsStatic):
     def quit_script(elem, timers):
         sys.exit()
 
-# implement interval setter!!! (see how constraints handle priority! -> use same implementation)
 class Timers(AllMethodsStatic):
     def update_clock(root_elem, timer, timers):
         ''' interval=0.5 '''
