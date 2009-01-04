@@ -4,9 +4,6 @@ from abstract import AbstractLayout, AbstractObject
 class FreeLayout(AbstractLayout):
     def __init__(self):
         render_coordinate = super(AbstractLayout, self).__init__()
-        
-        # FIXME: this gets past cyclic dependency. perhaps there's a nicer solution
-        self.is_free = True
     
     def render(self, render_coordinate=None):
         render_coordinate = super(AbstractLayout, self).render(render_coordinate)

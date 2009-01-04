@@ -2,6 +2,7 @@
 from bui.backend.serializer import unserialize
 from bui.utils.errors import ValueMissingError
 from bui.utils.parser import read_yaml
+from bui.utils.tree import TreeChild
 from constraint import BaseConstraintManager
 from event import BaseEventManager
 from timer import BaseTimerManager
@@ -100,10 +101,12 @@ class BaseWindowContainer(list):
             window.run()
 
 # note that this should be easy to extend!!!
-class BaseWindow(object):
+class BaseWindow(TreeChild):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  element_height, start_timers, structure_document, structure,
                  hotkeys, initializer):
+        super(BaseWindow, self).__init__()
+        
         self.name = name
         self.label = label
         self.width = width
@@ -121,6 +124,7 @@ class BaseWindow(object):
         # TODO: move this test to unserialize???
         if structure_document and structure:
             self.root_layout = unserialize(structure_document, structure)
+            self.root_layout.parent = self
         else:
             # TODO: should give nice warning (or just use assert?)
             print structure_document, structure

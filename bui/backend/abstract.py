@@ -49,7 +49,12 @@ class AbstractObject(TreeChild):
     def get_height(self):
         if self._height is not None:
             return self._height
-        return 0 # XXX: should return element height (defined in config. WindowManager should know this?
+        
+        root_object = self.find_root()
+        if hasattr(root_object, 'element_height'):
+            return root_object.element_height
+        
+        return 0
     def set_height(self, height):
         self._height = max(height, 0) or None
     height = property(get_height, set_height)
@@ -64,7 +69,8 @@ class AbstractObject(TreeChild):
     
     def get_max_width(self):
         if hasattr(self, '_max_width') and self.parent:
-            if self._max_width < self.parent.width or self.parent.is_free:
+            from layout import FreeLayout # FIXME: hack to solve cyclic dependency
+            if self._max_width < self.parent.width or isinstance(self.parent, FreeLayout):
                 return self._max_width
             return self.parent.width
         
@@ -82,8 +88,6 @@ class AbstractObject(TreeChild):
                 
                 if self._width == 'auto':
                     width = self.parent.width
-            #elif XXX: self.common.window_manager: (should have parent, if doesn't have one, skip?)
-            #    width = self.common.window_manager.width
             elif self._width != 'auto':
                 width = self._width
         
@@ -123,16 +127,10 @@ class AbstractObject(TreeChild):
     
     def render_bg_color(self, render_coordinate):
         if self.bg_color:
-            width_hack = self._width or 200 # FIXME!!! see XXX in property
-            
             draw_rectangle(self.bg_color, render_coordinate.x, render_coordinate.y,
-                           render_coordinate.x + width_hack, render_coordinate.y + self.height)
+                           render_coordinate.x + self.width, render_coordinate.y + self.height)
 
 class AbstractLayout(TreeParent, AbstractObject):
-    def __init__(self):
-        super(AbstractLayout, self).__init__()
-        self.is_free = False
-    
     def render_child(self, child, render_coordinate):
         if child.visible:
             if isinstance(child, AbstractLayout):

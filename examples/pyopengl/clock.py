@@ -48,14 +48,13 @@ class UIStructure():
     root_structure = '''
     HorizontalLayout:
         bg_color: [1.0, 0.0, 0.0]
-        # width: 200 # doesn't work as it should?
         children:
             - Label:
                 name: current_time
                 label: foobar # TODO: get rid of this
                 bg_color: [0.0, 1.0, 0.0]
-                height: 80
-                width: 100 # TODO: doesn't work. check get/set width!!!
+                height: 80 # TODO: gives error without height! check out!
+                #width: 100 # TODO: doesn't work. check get/set width!!!
     '''
 
 class Hotkeys():

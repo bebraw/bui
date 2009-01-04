@@ -10,6 +10,10 @@ def test_read_valid_file():
     file_content = read_yaml('valid.yaml') 
     assert file_content == {'a': 1, 'b': {'c': 5, 'd': 4, }, }, 'This test fails if it is run at some other directory than in which the test is!'
 
+def test_read_empty_structure():
+    structure_content = read_yaml('')
+    assert structure_content == {}
+
 structure_with_one_item = '''
 - some_item:
 '''
