@@ -43,7 +43,8 @@ class AbstractObject(TreeChild):
             
             # TODO: get rid of callable?
             if not callable(attr) and name in kvargs:
-                setattr(self, name, kvargs[name])
+                if name is not 'children':
+                    setattr(self, name, kvargs[name])
     
     def initialize_attributes(self):
         self.height = self.height

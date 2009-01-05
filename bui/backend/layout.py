@@ -62,9 +62,7 @@ class HorizontalLayout(AbstractLayout):
             child.width = children_widths[i]
     
     def get_height(self):
-        if hasattr(self, '_height'):
-            return self._height
-        return self._find_child_max_height()
+        return self._height or self._find_child_max_height()
     height = property(get_height, AbstractLayout.set_height)
     
     def _find_child_max_height(self):
@@ -93,13 +91,12 @@ class VerticalLayout(AbstractLayout):
             
             element_height = self.find_element_height() or 0
             
-            if hasattr(self, 'children'):
-                for child in self.children:
-                    if child.visible:
-                        if child.height:
-                            heights.append(child.height)
-                        else:
-                            heights.append(element_height)
+            for child in self.children:
+                if child.visible:
+                    if child.height:
+                        heights.append(child.height)
+                    else:
+                        heights.append(element_height)
             
             return sum(heights)
         
