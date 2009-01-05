@@ -93,6 +93,8 @@ def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     assert root_layout.height == 400
     assert root_layout.element_height == 400
     
+    root_layout.render()
+    
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)
     assert child_fill_1.width == 50
@@ -121,6 +123,8 @@ def test_foobar():
     assert root_layout.element_height == 500
     
     root_layout.element_height = 70
+    
+    root_layout.render()
     
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)
@@ -151,6 +155,8 @@ def test_unserialize_structure_with_horizontal_layout_partial_children_widths():
     
     assert isinstance(root_layout, HorizontalLayout)
     assert root_layout.width == 300
+    
+    root_layout.render()
     
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)

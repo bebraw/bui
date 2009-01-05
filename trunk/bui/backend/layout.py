@@ -16,6 +16,8 @@ class HorizontalLayout(AbstractLayout):
         
         tmp_x = render_coordinate.x
         
+        self._calculate_children_widths()
+        
         for child in self.children:
             tmp_y = None
             
@@ -31,32 +33,7 @@ class HorizontalLayout(AbstractLayout):
         
         return render_coordinate
     
-    def get_height(self):
-        if hasattr(self, '_height'):
-            return self._height
-        return self._find_child_max_height()
-    height = property(get_height, AbstractLayout.set_height)
-    
-    def _find_child_max_height(self):
-        record_height = 0
-        
-        for child in self.children:
-            if hasattr(child, 'height'):
-                record_height = max(record_height, child.height)
-        
-        return record_height
-    
-    def set_width(self, width):
-        super(HorizontalLayout, self).set_width(width)
-        
-        if self._width:
-            self._calculate_children_widths()
-    width = property(AbstractObject.get_width, set_width)
-    
     def _calculate_children_widths(self):
-        if not hasattr(self, 'children'):
-            return
-        
         children_widths = len(self.children)*[None]
         width_left = self.width
         free_indices = []
@@ -83,6 +60,20 @@ class HorizontalLayout(AbstractLayout):
         # assign new widths
         for i, child in enumerate(self.children):
             child.width = children_widths[i]
+    
+    def get_height(self):
+        if hasattr(self, '_height'):
+            return self._height
+        return self._find_child_max_height()
+    height = property(get_height, AbstractLayout.set_height)
+    
+    def _find_child_max_height(self):
+        record_height = 0
+        
+        for child in self.children:
+            record_height = max(record_height, child.height)
+        
+        return record_height
 
 class VerticalLayout(AbstractLayout):
     def render(self, render_coordinate=None):
@@ -104,7 +95,7 @@ class VerticalLayout(AbstractLayout):
             
             if hasattr(self, 'children'):
                 for child in self.children:
-                    if child.visible and hasattr(child, 'height'):
+                    if child.visible:
                         if child.height:
                             heights.append(child.height)
                         else:
