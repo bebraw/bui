@@ -42,7 +42,6 @@ class BaseWindowManager(AttributeSetter):
         
         self.parse_configuration(configuration)
         
-        # Note that everything after this does not affect configuration parsing!
         self.structure_document = structure_document
         if self.structure_document and self.structure:
             self.structure = getattr(self.structure_document, self.structure)

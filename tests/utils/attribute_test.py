@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from py.test import raises
 from bui.utils.attribute import AttributeSetter, BooleanAttribute, IntegerAttribute, StringAttribute
 
 class BooleanClass(AttributeSetter):
@@ -7,6 +8,8 @@ class BooleanClass(AttributeSetter):
         self.show_fps = False
         
         self.start_timers = BooleanAttribute(value=False)
+        
+        self.regular_attribute = 53
 
 def test_boolean_attribute():
     boolean_class = BooleanClass()
@@ -14,8 +17,16 @@ def test_boolean_attribute():
     
     assert boolean_class.start_timers == False
     
-    #this should raise an exception (invalid type or something like that)
-    #boolean_class.start_timers = 'cat'
+    boolean_class.start_timers = True
+    assert boolean_class.start_timers == True
+    
+    assert boolean_class.regular_attribute == 53
+    
+    def assign():
+        boolean_class = BooleanClass()
+        boolean_class.start_timers = 'cat'
+    
+    raises(TypeError, assign)
 
 class IntegerClass(AttributeSetter):
     def __init__(self):
@@ -29,9 +40,9 @@ class IntegerClass(AttributeSetter):
 
 def test_integer_attribute():
     integer_class = IntegerClass()
-    assert integer_class.age == 12, setter.age
-    assert integer_class.age.min == 2, setter.age.min
-    assert integer_class.age.max == 40, setter.age.max
+    assert integer_class.age == 12
+    assert integer_class.age.min == 2
+    assert integer_class.age.max == 40
     
     assert integer_class.width == 50
     assert integer_class.width.min == 1
@@ -47,6 +58,12 @@ def test_integer_attribute():
     assert integer_class.min_bigger_than_max.min == 100
     assert integer_class.min_bigger_than_max.max == 100
     
+    def assign():
+        integer_class = IntegerClass()
+        integer_class.age = 'cat'
+    
+    raises(TypeError, assign)
+
 class StringClass(AttributeSetter):
     def __init__(self):
         self.name = StringAttribute(value='John')
@@ -59,7 +76,9 @@ def test_string_attribute():
     assert string_class.name == 'Jack'
     
     assert string_class.surname == 'Doe'
-
-# TODO: add exceptional cases (type checking!)
-# TODO: add messages for exceptions
-# TODO: add factory (handles base message and constructs attributes)
+    
+    def assign():
+        string_class = StringClass()
+        string_class.name = 13
+    
+    raises(TypeError, assign)
