@@ -6,13 +6,19 @@ class AttributeSetter(object):
         if isinstance(value, Attribute):
             self.__dict__[instance] = value
         else:
-            if hasattr(instance, 'value'): # FIXME: a bit weak
-                self.__dict__[instance].value = value
+            self_vars = vars(self)
+            
+            if self_vars.has_key(instance):
+                attribute = self_vars[instance]
+                
+                if not hasattr(attribute, 'type'):
+                    self.__dict__[instance] = value
+                elif attribute.type is type(value):
+                    attribute.value = value
+                else:
+                    raise TypeError, "Types of attribute and value assigned don't match!"
             else:
                 self.__dict__[instance] = value
-
-class AttributeFactory(object):
-    pass
 
 class Attribute(object):
     def __init__(self, value):
@@ -28,10 +34,14 @@ class Attribute(object):
         return cmp(self.value, other)
 
 class BooleanAttribute(Attribute):
-    pass
+    def __init__(self, value):
+        super(BooleanAttribute, self).__init__(value)
+        self.type = bool
 
 class IntegerAttribute(Attribute):
     def __init__(self, value, min, max):
+        self.type = int
+        
         self._value = value
         self.min = min
         self._max = max
@@ -55,6 +65,11 @@ class IntegerAttribute(Attribute):
             return self.value
         except:
             raise AttributeError, name
+    
+    #def __setattr__(self, instance, value):
+    #    print instance, value
 
 class StringAttribute(Attribute):
-    pass
+    def __init__(self, value):
+        super(StringAttribute, self).__init__(value)
+        self.type = str

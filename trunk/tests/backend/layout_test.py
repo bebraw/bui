@@ -46,11 +46,11 @@ def test_base_window_manager_with_free_layout():
     
     child_fill_1 = root_layout.children[0]
     assert child_fill_1.width == 400
-    assert child_fill_1.height == 0
+    assert child_fill_1.height == 1
     
     child_fill_2 = root_layout.children[1]
     assert child_fill_2.width == 400
-    assert child_fill_2.height == 0
+    assert child_fill_2.height == 1
     assert child_fill_2.x == 40
     assert child_fill_2.y == 500
     
