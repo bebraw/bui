@@ -1,5 +1,18 @@
 # -*- coding: utf-8 -*-
 
+class fsdf():
+    root_structure = '''
+    VerticalLayout:
+        name: root_vertical
+        bg_color: [0.2, 0.5, 0.6]
+        width: auto
+        children:
+            - VerticalLayout:
+                children:
+                    - Label:
+                        label: Some label
+    '''
+
 class StructureWithUIStructure():   
     root_structure = '''
     VerticalLayout:
@@ -148,6 +161,7 @@ class StructureWithHorizontalLayoutNoChildrenWidths():
     root_structure = '''
     HorizontalLayout:
         height: 400
+        element_height: 500
         width: 100
         children:
             - Fill:

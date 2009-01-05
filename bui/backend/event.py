@@ -43,7 +43,7 @@ class BaseEventManager(object):
         
         if isinstance(keys_structure, dict):
             for key, value in keys_structure.items():
-                if key_mapping and key_mapping.has_key(key):
+                if key_mapping and key in key_mapping:
                     key = key_mapping[key]
                 elif len(key) == 1:
                     key = ord(key)
@@ -69,7 +69,7 @@ class BaseEventManager(object):
                 self.construct_state_event_ids(child)
     
     def element_event(self, evt):
-        if self.element_events.has_key(evt):
+        if evt in self.element_events:
             elem = self.element_events[evt].element
             func = self.element_events[evt].handler
             
@@ -79,7 +79,7 @@ class BaseEventManager(object):
             func(elem)
     
     def key_event(self, evt, pressed):
-        if self.key_events.has_key(evt):
+        if evt in self.key_events:
             key_event = self.key_events[evt]
             
             if pressed and key_event.press:
@@ -102,7 +102,7 @@ class BaseEventManager(object):
 class EventContainer(dict):
     def append(self, element, handler, event):
         if handler:
-            if not self.has_key(element):
+            if element not in self:
                 self[element] = Event()
             
             setattr(self[element], event, handler)

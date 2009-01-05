@@ -4,17 +4,18 @@ from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
 from label import Label
 
+# would it make sense just to inherit label instead???
+
 class Separator(AbstractObject):
-    def initialize(self, **kvargs):
+    def __init__(self, **kvargs):
         self.label = ''
         self.color = 3*[0.0]
         self.alpha = 1.0
         self.font_name = 'Vera'
         
-        super(Separator, self).initialize(**kvargs)
+        super(Separator, self).__init__(**kvargs)
         
-        self.text_label = Label()
-        self.text_label.initialize(**kvargs)
+        self.text_label = Label(**kvargs)
     
     def render(self):
         line_width = 0.5
@@ -31,7 +32,7 @@ class Separator(AbstractObject):
             
             self.text_label.height = self.height # XXX: without this draw_line starts to complain
             
-            bbox = self.text_label.font.get_bounding_box()
+            bbox = self.text_label.font.get_bounding_box(self.text_label)
             text_width = bbox.width
             
             text_x = self.x + (self.width - text_width) / 2.0

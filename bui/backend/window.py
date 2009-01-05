@@ -31,7 +31,7 @@ class BaseWindowManager(object):
         self.show_fps = False
         self.logging = False
         self.alignment = 'center'
-        self.element_height = 1
+        self.element_height = 1 # TODO: rename as default element height?
         self.start_timers = False
         
         self.structure = None
@@ -40,6 +40,10 @@ class BaseWindowManager(object):
         self.initializer = None
         
         self.parse_configuration(configuration)
+        
+        assert self.width > 0, 'Width set too small!'
+        assert self.height > 0, 'Height set too small!'
+        assert self.element_height > 0, 'Default element height set too small!'
         
         self.structure_document = structure_document
         if self.structure_document and self.structure:
@@ -60,7 +64,7 @@ class BaseWindowManager(object):
         parsed_configuration = read_yaml(configuration)
         
         for item, value in parsed_configuration.items():
-            if self.__dict__.has_key(item):
+            if item in self.__dict__:
                 self.__dict__[item] = value
     
     def initialize_timers(self):
