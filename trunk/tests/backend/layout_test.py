@@ -91,6 +91,7 @@ def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     assert isinstance(root_layout, HorizontalLayout)
     assert root_layout.width == 100
     assert root_layout.height == 400
+    assert root_layout.element_height == 400
     
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)
@@ -101,6 +102,35 @@ def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     assert isinstance(child_fill_2, Fill)
     assert child_fill_2.width == 50
     assert child_fill_2.height == 400
+
+configuration_element_height_defined = '''
+    width: 500
+    height: 1000
+    structure: root_structure
+    element_height: 20
+'''
+#unserialize_structure_with_horizontal_layout_no_children_widths_and_element_height_defined
+def test_foobar():
+    window_manager = BaseWindowManager(configuration_element_height_defined,
+                                       structure_document=StructureWithHorizontalLayoutNoChildrenWidths)
+    root_layout = window_manager.windows[0].root_layout
+    
+    assert isinstance(root_layout, HorizontalLayout)
+    assert root_layout.width == 100
+    assert root_layout.height == 400
+    assert root_layout.element_height == 500
+    
+    root_layout.element_height = 70
+    
+    child_fill_1 = root_layout.children[0]
+    assert isinstance(child_fill_1, Fill)
+    assert child_fill_1.width == 50
+    assert child_fill_1.height == 70
+    
+    child_fill_2 = root_layout.children[1]
+    assert isinstance(child_fill_2, Fill)
+    assert child_fill_2.width == 50
+    assert child_fill_2.height == 70
 
 def test_unserialize_structure_with_horizontal_layout_children_widths():
     root_layout = unserialize(StructureWithHorizontalLayoutChildrenWidths)
@@ -137,7 +167,7 @@ def test_unserialize_structure_with_auto_width():
     root_layout = unserialize(StructureWithAutoWidth)
     
     assert isinstance(root_layout, VerticalLayout)
-    assert root_layout._width == 'auto'
+    assert root_layout.auto_width == True
     assert root_layout.width == 0
     assert root_layout.height == 0
     assert len(root_layout.children) == 2

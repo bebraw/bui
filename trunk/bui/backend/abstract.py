@@ -6,15 +6,14 @@ from bui.utils.math import clamp
 from bui.utils.tree import TreeChild, TreeParent
 
 # TODO: figure out how to solve invert_y (to lower level?)
-# TODO: root aObject should have window as its parent?
 # should it be possible to access sibling of window???
+# TODO: rethink the property based system (minimize amount of calculation needed
+# by using listener based setup?
 
 class AbstractObject(TreeChild):
-    def initialize(self, **kvargs):
-        '''
-        The idea is that unserialize calls this and provides kvargs
-        that are then passed on to defined attributes.
-        '''
+    def __init__(self, **kvargs):
+        super(AbstractObject, self).__init__(**kvargs)
+        
         self.name = ''
         self.tooltip = ''
         
@@ -25,6 +24,7 @@ class AbstractObject(TreeChild):
         self.x = 0
         self.y = 0
         
+        self.auto_width = False
         self.width = 0
         self.min_width = 0
         self.max_width = sys.maxint
@@ -42,26 +42,45 @@ class AbstractObject(TreeChild):
             attr = getattr(self, name)
             
             # TODO: get rid of callable?
-            if not callable(attr) and kvargs.has_key(name):
+            if not callable(attr) and name in kvargs:
                 setattr(self, name, kvargs[name])
+    
+    def initialize_attributes(self):
+        self.height = self.height
+        self.width = self.width
     
     # TODO: should there be min and max height just like for width???
     
     def get_height(self):
+        print 'get height'
+        # XXX: this gets stuck in recursion in simple.py
+        
         if hasattr(self, '_height') and self._height:
             return self._height
         
-        root_object = self.find_root()
-        if hasattr(root_object, 'element_height'):
-            return root_object.element_height
+        element_height = self.find_element_height()
         
-        if self.parent:
-            return self.parent.height
+        if element_height:
+            return element_height
         
         return 0
     def set_height(self, height):
         self._height = max(height, 0) or None
     height = property(get_height, set_height)
+    
+    def find_element_height(self):
+        parent = None
+        
+        if hasattr(self, 'parent'):
+            parent = self.parent
+        
+        if not parent:
+            return None
+        
+        if hasattr(parent, 'element_height') and parent.element_height:
+            return parent.element_height
+        
+        return parent.find_element_height()
     
     def get_min_width(self):
         if hasattr(self, '_min_width'):
@@ -72,7 +91,7 @@ class AbstractObject(TreeChild):
     min_width = property(get_min_width, set_min_width)
     
     def get_max_width(self):
-        if hasattr(self, '_max_width') and self.parent:
+        if hasattr(self, '_max_width') and hasattr(self, 'parent') and self.parent:
             from layout import FreeLayout # FIXME: hack to solve cyclic dependency
             if self._max_width < self.parent.width or isinstance(self.parent, FreeLayout):
                 return self._max_width
@@ -84,19 +103,24 @@ class AbstractObject(TreeChild):
     max_width = property(get_max_width, set_max_width)
     
     def get_width(self):
+        print 'get width'
+        
         width = 0
         
         if hasattr(self, '_width'):
-            if self.parent:
+            if hasattr(self, 'parent') and self.parent:
                 width = self._width if self._width else self.parent.width
                 
-                if self._width == 'auto':
+                if self.auto_width:
                     width = self.parent.width
-            elif self._width != 'auto':
+            elif not self.auto_width:
                 width = self._width
         
         return clamp(width, self.min_width, self.max_width)
     def set_width(self, width):
+        if width == 'auto':
+            self.auto_width = True
+        
         self._width = width
     width = property(get_width, set_width)
     
@@ -129,6 +153,23 @@ class AbstractObject(TreeChild):
                            render_coordinate.x + self.width, render_coordinate.y + self.height)
 
 class AbstractLayout(TreeParent, AbstractObject):
+    def __init__(self, **kvargs):
+        #super(TreeParent, self).__init__()
+        self.element_height = None
+        super(AbstractLayout, self).__init__(**kvargs)
+    
+    def get_element_height(self):
+        if hasattr(self, '_element_height'):
+            if self.parent:
+                return min(self.parent.height, self._element_height)
+            
+            return min(self._height, self._element_height)
+        
+        return None
+    def set_element_height(self, element_height):
+        self._element_height = element_height
+    element_height = property(get_element_height, set_element_height)
+    
     def render_child(self, child, render_coordinate):
         if child.visible:
             if isinstance(child, AbstractLayout):

@@ -13,17 +13,12 @@ from decorators import enable_alpha, enable_texture2d
 from transformations import mirror_y, translate
 from with_statements import matrix_stack
 
-# TODO: trigger update to self.font if self.parent_object.font_name changes!
-# TODO: same thing with self.parent_object.height!!!
-
 class Font():
-    def __init__(self, parent_object):
-        self.parent_object = parent_object
-        font_path = get_font_path(self.parent_object.font_name)
+    def __init__(self, font_name):
+        font_path = get_font_path(font_name)
         self.font = TextureFont(font_path)
-        self.font.FaceSize(self.parent_object.height)
     
-    def get_bounding_box(self):
+    def get_bounding_box(self, parent):
         class BoundingBox():
             def __init__(self, bbox):
                 self.bottom_left = Coordinate(x=bbox[0], y=bbox[1])
@@ -36,22 +31,23 @@ class Font():
             def get_height(self):
                 return self.top_right.y - self.bottom_left.y
             height = property(get_height)
-        self.font.FaceSize(self.parent_object.height) # TODO: refactor out
-        bbox = self.font.BBox(self.parent_object.label)
+        
+        self.font.FaceSize(parent.height)
+        bbox = self.font.BBox(parent.label)
         return BoundingBox(bbox)
     
     @enable_alpha
     @enable_texture2d
-    def render(self):
+    def render(self, parent):
         # FIXME: bit of a hack but can't allow too small labels to be drawn
-        if self.parent_object.height > 0:
-            self.font.FaceSize(self.parent_object.height) # TODO: refactor out
+        if parent.height > 0:
+            self.font.FaceSize(parent.height)
             
-            set_color(self.parent_object.color, self.parent_object.alpha)
+            set_color(parent.color, parent.alpha)
             
             with matrix_stack():
                 # note that FTGL uses OpenGL drawing convention by default!
-                translate(self.parent_object.x, self.parent_object.y + self.parent_object.height)
+                translate(parent.x, parent.y + parent.height)
                 mirror_y()
                 
-                self.font.Render(self.parent_object.label)
+                self.font.Render(parent.label)

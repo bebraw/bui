@@ -47,7 +47,7 @@ class ConstraintContainer(object):
     def append(self, func):
         priority = self.get_priority(func)
         
-        if self.constraints.has_key(priority):
+        if priority in self.constraints:
             self.constraints[priority].append(func)
         else:
             self.constraints[priority] = [func, ]

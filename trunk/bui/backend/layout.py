@@ -2,9 +2,6 @@
 from abstract import AbstractLayout, AbstractObject
 
 class FreeLayout(AbstractLayout):
-    def __init__(self):
-        render_coordinate = super(AbstractLayout, self).__init__()
-    
     def render(self, render_coordinate=None):
         render_coordinate = super(AbstractLayout, self).render(render_coordinate)
         
@@ -44,8 +41,8 @@ class HorizontalLayout(AbstractLayout):
         record_height = 0
         
         for child in self.children:
-            if hasattr(child, '_height'):
-                record_height = max(record_height, child._height)
+            if hasattr(child, 'height'):
+                record_height = max(record_height, child.height)
         
         return record_height
     
@@ -57,6 +54,9 @@ class HorizontalLayout(AbstractLayout):
     width = property(AbstractObject.get_width, set_width)
     
     def _calculate_children_widths(self):
+        if not hasattr(self, 'children'):
+            return
+        
         children_widths = len(self.children)*[None]
         width_left = self.width
         free_indices = []
@@ -99,15 +99,16 @@ class VerticalLayout(AbstractLayout):
     def get_height(self):
         if self.visible:
             heights = []
-            for child in self.children:
-                if child.visible and hasattr(child, '_height'):
-                    if child._height:
-                        heights.append(child._height)
-                    else:
-                        root_object = self.find_root()
-                        
-                        if hasattr(root_object, 'element_height'):
-                            heights.append(root_object.element_height)
+            
+            element_height = self.find_element_height() or 0
+            
+            if hasattr(self, 'children'):
+                for child in self.children:
+                    if child.visible and hasattr(child, 'height'):
+                        if child.height:
+                            heights.append(child.height)
+                        else:
+                            heights.append(element_height)
             
             return sum(heights)
         

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 class TreeChild(object):
-    def __init__(self, parent=None):
-        super(TreeChild, self).__init__()
-        self.parent = parent #kvargs['parent'] if kvargs.has_key('parent') else None
+    def __init__(self, parent=None, **kvargs):
+        self.parent = parent
+        super(TreeChild, self).__init__(**kvargs)
     
     def _parent_recursion(self, variable_name, variable_value):
         try:
@@ -34,14 +34,14 @@ class TreeChild(object):
         return self.parent.find_root()
 
 class TreeParent(object):
-    def __init__(self):
-        super(TreeParent, self).__init__()
+    def __init__(self, **kvargs):
+        super(TreeParent, self).__init__(**kvargs)
         self.children = []
     
     def _child_recursion(self, variable_name, variable_value):
         if self.children:
             for child in self.children:
-                if child and child.__dict__.has_key(variable_name):
+                if child and variable_name in child.__dict__:
                     if child.__dict__[variable_name] == variable_value:
                         return child
                 
