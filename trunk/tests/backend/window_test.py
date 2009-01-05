@@ -39,7 +39,7 @@ class TestSingleWindowApplication():
         assert window_manager.show_fps == False
         assert window_manager.logging == False
         assert window_manager.alignment == 'center'
-        assert window_manager.element_height == 0
+        assert window_manager.element_height == 1
         assert window_manager.start_timers == False
         assert window_manager.structure == None
         assert window_manager.hotkeys == None
@@ -55,7 +55,7 @@ class TestSingleWindowApplication():
         assert window.show_fps == False
         assert window.logging == False
         assert window.alignment == 'center' # defined only initially and used on window creation. should this be retained?
-        assert window.element_height == 0
+        assert window.element_height == 1
         assert window.start_timers == False # same thing as with alignment!
         assert window.root_layout == None
         assert window.hotkeys == None

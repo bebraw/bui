@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.backend.serializer import unserialize
+from bui.utils.attribute import AttributeSetter, BooleanAttribute, IntegerAttribute, StringAttribute
 from bui.utils.errors import ValueMissingError
 from bui.utils.parser import read_yaml
 from bui.utils.tree import TreeChild, TreeParent
@@ -12,7 +13,7 @@ from serializer import unserialize
 # to make testing easier
 
 # this class should handle global constraints/events/timers!
-class BaseWindowManager(object):
+class BaseWindowManager(AttributeSetter):
     def __init__(self, configuration, structure_document=None, hotkeys=None, events=None,
                  timers=None, constraints=None, initializers=None):
         # TODO: should handle both global and local constraints. move part to Window level?
@@ -22,17 +23,17 @@ class BaseWindowManager(object):
         #self.windows = BaseWindowContainer(configuration, structure, hotkeys, events,
         #                                   timers, constraints, initializers)
         
-        self.name = ''
-        self.label = ''
-        self.width = None
-        self.height = None
-        self.full_screen = False
-        self.v_sync = False
-        self.show_fps = False
-        self.logging = False
-        self.alignment = 'center'
-        self.element_height = 0
-        self.start_timers = False
+        self.name = StringAttribute(value='')
+        self.label = StringAttribute(value='')
+        self.width = IntegerAttribute(value=1, min=1, max=10000)
+        self.height = IntegerAttribute(value=1, min=1, max=10000)
+        self.full_screen = BooleanAttribute(value=False)
+        self.v_sync = BooleanAttribute(value=False)
+        self.show_fps = BooleanAttribute(value=False)
+        self.logging = BooleanAttribute(value=False)
+        self.alignment = StringAttribute(value='center')
+        self.element_height = IntegerAttribute(value=1, min=1, max=10000)
+        self.start_timers = BooleanAttribute(value=False)
         
         self.structure = None
         
