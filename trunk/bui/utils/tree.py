@@ -35,8 +35,8 @@ class TreeChild(object):
 
 class TreeParent(object):
     def __init__(self, **kvargs):
-        super(TreeParent, self).__init__(**kvargs)
         self.children = []
+        super(TreeParent, self).__init__(**kvargs)
     
     def _child_recursion(self, variable_name, variable_value):
         if self.children:
