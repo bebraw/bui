@@ -46,10 +46,6 @@ class AbstractObject(TreeChild):
                 if name is not 'children':
                     setattr(self, name, kvargs[name])
     
-    def initialize_attributes(self):
-        self.height = self.height
-        self.width = self.width
-    
     # TODO: should there be min and max height just like for width???
     
     def get_height(self):
@@ -66,7 +62,7 @@ class AbstractObject(TreeChild):
         
         return 0
     def set_height(self, height):
-        self._height = max(height, 0) or None
+        self._height = max(height, 0)
     height = property(get_height, set_height)
     
     def find_element_height(self):
