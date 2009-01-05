@@ -48,7 +48,7 @@ class UIStructure():
     root_structure = '''
     HorizontalLayout:
         bg_color: [1.0, 0.0, 0.0]
-        height: 80 # children should scale to fit height! if not set, use 'auto' height
+        height: 80 # TODO: children should scale to fit height! if not set, use 'auto' height
         children:
             - Label:
                 name: current_time
