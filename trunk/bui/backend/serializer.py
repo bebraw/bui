@@ -19,9 +19,7 @@ def unserialize(document_container, root_structure=None):
                     class_args = root_object[1]
                 
                 class_instance = globals()[class_name](**class_args)
-                
                 current_object.append(class_instance)
-                
                 construct_hierarchy(class_instance, class_args, document_container)
     
     document_root = root_structure or document_container.root_structure
@@ -32,7 +30,5 @@ def unserialize(document_container, root_structure=None):
     root_object = globals()[root_object_name](**root_object_args)
     
     construct_hierarchy(root_object, root_object_args, document_container)
-    
-    root_object.initialize_attributes()
     
     return root_object

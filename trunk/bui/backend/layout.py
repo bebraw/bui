@@ -80,8 +80,8 @@ class VerticalLayout(AbstractLayout):
         for child in self.children:
             render_coordinate = self.render_child(child, render_coordinate)
             
-            if not isinstance(child, VerticalLayout):
-                render_coordinate.y += child.height
+            #if not isinstance(child, VerticalLayout):
+            render_coordinate.y += child.height
         
         return render_coordinate
     
@@ -93,10 +93,7 @@ class VerticalLayout(AbstractLayout):
             
             for child in self.children:
                 if child.visible:
-                    if child.height:
-                        heights.append(child.height)
-                    else:
-                        heights.append(element_height)
+                    heights.append(child.height or element_height)
             
             return sum(heights)
         
