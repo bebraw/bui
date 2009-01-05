@@ -19,17 +19,17 @@ class AbstractObject(TreeChild):
         
         # TODO: convert bg_color to just bg (container) that can contain color/gradient/texture/etc. ?
         self.bg_color = None 
-        self.visible = True
+        self._visible = True
         
         self.x = 0
         self.y = 0
         
         self.auto_width = False
-        self.width = 0
-        self.min_width = 0
-        self.max_width = sys.maxint
+        self._width = 0
+        self._min_width = 0
+        self._max_width = sys.maxint
         
-        self.height = None
+        self._height = None
         # self.min_width = 0 # TODO
         # self.max_width = sys.maxint # TODO
         
@@ -55,7 +55,7 @@ class AbstractObject(TreeChild):
         print 'get height'
         # XXX: this gets stuck in recursion in simple.py
         
-        if hasattr(self, '_height') and self._height:
+        if self._height:
             return self._height
         
         element_height = self.find_element_height()
@@ -69,10 +69,7 @@ class AbstractObject(TreeChild):
     height = property(get_height, set_height)
     
     def find_element_height(self):
-        parent = None
-        
-        if hasattr(self, 'parent'):
-            parent = self.parent
+        parent = self.parent
         
         if not parent:
             return None
@@ -83,15 +80,13 @@ class AbstractObject(TreeChild):
         return parent.find_element_height()
     
     def get_min_width(self):
-        if hasattr(self, '_min_width'):
-            return self._min_width
-        return 0
+        return self._min_width
     def set_min_width(self, min_width):
         self._min_width = max(min(min_width, self.max_width), 0)
     min_width = property(get_min_width, set_min_width)
     
     def get_max_width(self):
-        if hasattr(self, '_max_width') and hasattr(self, 'parent') and self.parent:
+        if self.parent:
             from layout import FreeLayout # FIXME: hack to solve cyclic dependency
             if self._max_width < self.parent.width or isinstance(self.parent, FreeLayout):
                 return self._max_width
@@ -107,14 +102,13 @@ class AbstractObject(TreeChild):
         
         width = 0
         
-        if hasattr(self, '_width'):
-            if hasattr(self, 'parent') and self.parent:
-                width = self._width if self._width else self.parent.width
-                
-                if self.auto_width:
-                    width = self.parent.width
-            elif not self.auto_width:
-                width = self._width
+        if self.parent:
+            width = self._width if self._width else self.parent.width
+            
+            if self.auto_width:
+                width = self.parent.width
+        elif not self.auto_width:
+            width = self._width
         
         return clamp(width, self.min_width, self.max_width)
     def set_width(self, width):
@@ -128,10 +122,7 @@ class AbstractObject(TreeChild):
         if self.find_parent(visible=False):
             return False
         
-        if hasattr(self, '_visible'):
-            return self._visible
-        
-        return True
+        return self._visible
     def set_visible(self, visible):
         self._visible = visible
     visible = property(get_visible, set_visible)
@@ -155,17 +146,14 @@ class AbstractObject(TreeChild):
 class AbstractLayout(TreeParent, AbstractObject):
     def __init__(self, **kvargs):
         #super(TreeParent, self).__init__()
-        self.element_height = None
+        self._element_height = None
         super(AbstractLayout, self).__init__(**kvargs)
     
     def get_element_height(self):
-        if hasattr(self, '_element_height'):
-            if self.parent:
-                return min(self.parent.height, self._element_height)
-            
-            return min(self._height, self._element_height)
+        if self.parent:
+            return min(self.parent.height, self._element_height)
         
-        return None
+        return min(self._height, self._element_height)
     def set_element_height(self, element_height):
         self._element_height = element_height
     element_height = property(get_element_height, set_element_height)
