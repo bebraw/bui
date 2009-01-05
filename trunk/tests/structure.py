@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-class fsdf():
+# TODO: test this in unserialize!
+class SimplePyBug():
     root_structure = '''
     VerticalLayout:
         name: root_vertical
