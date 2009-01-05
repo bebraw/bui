@@ -17,15 +17,16 @@ from bui.utils.math import lerp
 from bui.utils.meta import AllMethodsStatic
 
 # TODO: make it possible to use an element as root (scales to window width/height unless set otherwise!)
+# TODO: check how to handle label text width (scales as the label width scales???)
 
 # note that this sets up a single window with given attributes
 configuration = '''
     label: Clock test
-    width: 400 # if not set, give exception (add full screen option!) (special case: there is global window width setting (use this instead!). see multi_window.py)
-    height: 200 # if not set, give exception
-    start_timers: True # False by default if not set
-    hotkeys: hotkeys # checks the hotkey container for this name. uses the first found by default?
-    structure: root_structure # should check for root_structure automagically???
+    width: 400
+    height: 200
+    start_timers: True
+    hotkeys: hotkeys
+    structure: root_structure
     element_height: 20
 '''
 
@@ -47,12 +48,11 @@ class UIStructure():
     root_structure = '''
     HorizontalLayout:
         bg_color: [1.0, 0.0, 0.0]
+        height: 80 # children should scale to fit height! if not set, use 'auto' height
         children:
             - Label:
                 name: current_time
-                bg_color: [0.0, 1.0, 0.0]
-                #height: 80
-                #width: 100 # TODO: should this case scale text to fit???
+                #height: 80 # <= parent height if set
     '''
 
 class Hotkeys():
@@ -82,7 +82,7 @@ class Timers(AllMethodsStatic):
         clock.bg_color = lerp(clock.new_color, clock.old_color, fac)
     
     def generate_new_clock_color(root_elem, timer, timers):
-        ''' interval=5.0 '''
+        ''' interval=5 '''
         clock = root_elem.find_child(name='current_time')
         
         if not hasattr(clock, 'new_color'):

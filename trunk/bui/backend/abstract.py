@@ -25,11 +25,11 @@ class AbstractObject(TreeChild):
         self.x = 0
         self.y = 0
         
-        self.width = None
+        self.width = 0
         self.min_width = 0
         self.max_width = sys.maxint
         
-        self.height = 0
+        self.height = None
         # self.min_width = 0 # TODO
         # self.max_width = sys.maxint # TODO
         
@@ -48,12 +48,15 @@ class AbstractObject(TreeChild):
     # TODO: should there be min and max height just like for width???
     
     def get_height(self):
-        if self._height is not None:
+        if hasattr(self, '_height') and self._height:
             return self._height
         
         root_object = self.find_root()
         if hasattr(root_object, 'element_height'):
             return root_object.element_height
+        
+        if self.parent:
+            return self.parent.height
         
         return 0
     def set_height(self, height):
@@ -101,19 +104,13 @@ class AbstractObject(TreeChild):
         if self.find_parent(visible=False):
             return False
         
-        return self._visible
+        if hasattr(self, '_visible'):
+            return self._visible
+        
+        return True
     def set_visible(self, visible):
         self._visible = visible
     visible = property(get_visible, set_visible)
-    
-    def get_y(self):
-        # XXX: handle on lower level?
-        #if self.common.invert_y and self.common.window_manager:
-        #    return self.common.window_manager.height - self._y - self.height
-        return self._y
-    def set_y(self, y):
-        self._y = y
-    y = property(get_y, set_y)
     
     def render(self, render_coordinate=None):
         if render_coordinate:

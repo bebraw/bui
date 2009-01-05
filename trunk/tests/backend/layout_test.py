@@ -85,20 +85,22 @@ def test_base_window_manager_with_free_layout_and_element_height_defined():
     assert child_fill_3.width == 800
     assert child_fill_3.height == 800
 
-
 def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     root_layout = unserialize(StructureWithHorizontalLayoutNoChildrenWidths)
     
     assert isinstance(root_layout, HorizontalLayout)
     assert root_layout.width == 100
+    assert root_layout.height == 400
     
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)
     assert child_fill_1.width == 50
+    assert child_fill_1.height == 400
     
     child_fill_2 = root_layout.children[1]
     assert isinstance(child_fill_2, Fill)
     assert child_fill_2.width == 50
+    assert child_fill_2.height == 400
 
 def test_unserialize_structure_with_horizontal_layout_children_widths():
     root_layout = unserialize(StructureWithHorizontalLayoutChildrenWidths)
