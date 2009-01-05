@@ -35,19 +35,17 @@ class HorizontalLayout(AbstractLayout):
         return render_coordinate
     
     def get_height(self):
-        record_height = self._find_child_max_height()
-        
-        if record_height > self._height:
-            return record_height
-        return self._height
+        if hasattr(self, '_height'):
+            return self._height
+        return self._find_child_max_height()
     height = property(get_height, AbstractLayout.set_height)
     
-    # TODO: add a test case for this
     def _find_child_max_height(self):
         record_height = 0
         
         for child in self.children:
-            record_height = max(record_height, child.height)
+            if hasattr(child, '_height'):
+                record_height = max(record_height, child._height)
         
         return record_height
     
@@ -100,14 +98,18 @@ class VerticalLayout(AbstractLayout):
     
     def get_height(self):
         if self.visible:
-            self._height = 0
-            
             heights = []
             for child in self.children:
-                if child.visible and child.height:
-                    heights.append(child.height)
+                if child.visible and hasattr(child, '_height'):
+                    if child._height:
+                        heights.append(child._height)
+                    else:
+                        root_object = self.find_root()
+                        
+                        if hasattr(root_object, 'element_height'):
+                            heights.append(root_object.element_height)
             
-            self._height = sum(heights)
+            return sum(heights)
         
         return super(AbstractLayout, self).get_height()
     height = property(get_height, AbstractObject.set_height)

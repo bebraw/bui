@@ -147,6 +147,7 @@ class StructureWithFreeLayout():
 class StructureWithHorizontalLayoutNoChildrenWidths():
     root_structure = '''
     HorizontalLayout:
+        height: 400
         width: 100
         children:
             - Fill:
