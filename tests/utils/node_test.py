@@ -171,6 +171,7 @@ class TestNode():
         assert node1.find_parent(value=13) == node1a2
         assert node1.find_parent(find_me=True) == node1b1
         assert node1.find_parent(color='blue') == [node1a1, node1b1]
+        assert node1.find_parent(find_me=True, color='blue') == node1b1
     
     def test_find_root_node(self):
         node1, node1a, node1b, node1a1 = Node(), Node(), Node(), Node()
