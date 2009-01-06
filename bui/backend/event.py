@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
-from abstract import AbstractLayout
+from layout import Layout
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class BaseEventManager(object):
     def __init__(self, root_elem, keys, events):
-        assert isinstance(root_elem, AbstractLayout)
+        assert isinstance(root_elem, Layout)
         assert isinstance(keys, str)
         
         self.root_elem = root_elem

@@ -9,6 +9,10 @@ from ..structure import StructureWithAutoWidth, \
                         StructureWithHorizontalLayoutChildrenWidths, \
                         StructureWithHorizontalLayoutPartialChildrenWidths
 
+class TestLayoutNode():
+    def test_create_layout_node(self):
+        pass
+
 def test_unserialize_structure_with_free_layout():
     root_layout = unserialize(StructureWithFreeLayout)
     

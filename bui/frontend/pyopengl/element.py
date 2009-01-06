@@ -2,10 +2,41 @@
 from bui.backend.abstract import AbstractObject
 from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
-from label import Label
+from bui.graphics.opengl.font import Font
+
+
+# TODO: it might be nicer to use inspect module for this
+# see http://ginstrom.com/scribbles/2007/10/24/python-introspection-with-the-inspect-module/
+
+# TODO: make this dynamic if possible
+# TODO: update and introspect this module directly! -> convert this whole thing to a func
+module_names = ('label', 'separator', )
+
+serializer = __import__('bui.backend.serializer', globals(), locals(), 'bui')
+
+for module_name in module_names:
+    module = __import__(module_name, globals(), locals())
+
+    for var_name, var_item in vars(module).items():
+        if type(var_item) == type:
+            setattr(serializer, var_name, var_item)
+
+
+class Label(AbstractObject):
+    def __init__(self, **kvargs):
+        self.label = ''
+        self.color = 3*[0.0]
+        self.alpha = 1.0
+        self.font_name = 'Vera'
+        
+        super(Label, self).__init__(**kvargs)
+        
+        self.font = Font(self.font_name)
+    
+    def render(self):
+        self.font.render(self)
 
 # would it make sense just to inherit label instead???
-
 class Separator(AbstractObject):
     def __init__(self, **kvargs):
         self.label = ''
