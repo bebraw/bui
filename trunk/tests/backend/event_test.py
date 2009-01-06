@@ -27,7 +27,7 @@ class Events(AllMethodsStatic):
         pass
     
     def add_to_ui_structure(elem):
-        root_elem = elem.find_root()
+        root_elem = elem.find_root_node()
         structure_root = unserialize(MinimalStructure())
         root_elem.append(structure_root)
 
@@ -92,7 +92,7 @@ class StateEvents():
 class TestStateEvents():
     def setup_method(self, method):
         self.root_layout = unserialize(StructureForStateEventTests)
-        self.print_foo_elem = self.root_layout.render_node.children[0]
+        self.print_foo_elem = self.root_layout.children[0]
         self.event_manager = BaseEventManager(self.root_layout, structure_keys, StateEvents)
     
     def test_manager_has_right_element_events(self):
