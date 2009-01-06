@@ -1,71 +1,76 @@
 # -*- coding: utf-8 -*-
 
-class TreeChild(object):
-    def __init__(self, parent=None, **kvargs):
-        self.parent = parent
-        super(TreeChild, self).__init__(**kvargs)
-    
-    def _parent_recursion(self, variable_name, variable_value):
-        try:
-            variable_index = dir(self.parent).index(variable_name)
-            variable = getattr(self.parent, dir(self.parent)[variable_index])
-        except:
-            variable = None
-        
-        if variable is not None:
-            if variable == variable_value:
-                return self.parent
-        
-        if hasattr(self, 'parent') and self.parent:
-            return self.parent._parent_recursion(variable_name, variable_value)
-    
-    def find_parent(self, **kvargs):
-        if len(kvargs) == 1:
-            arg_key = kvargs.keys()[0]
-            arg_value = kvargs.values()[0]
-            return self._parent_recursion(arg_key, arg_value)
-    
-    def find_root(self):
-        parent = self.parent
-        
-        if not parent:
-            return self
-        
-        return self.parent.find_root()
+# TODO: rename this module as node! (TreeNode -> Node!)
 
-class TreeParent(object):
-    def __init__(self, **kvargs):
-        self.children = []
-        super(TreeParent, self).__init__(**kvargs)
-    
-    def _child_recursion(self, variable_name, variable_value):
-        if self.children:
-            for child in self.children:
-                if child and variable_name in child.__dict__:
-                    if child.__dict__[variable_name] == variable_value:
-                        return child
-                
-                if isinstance(child, TreeParent):
-                    ret = child._child_recursion(variable_name, variable_value)
-                    
-                    if ret:
-                        return ret
+# TODO: make this generic so multiple attributes can be checked at once!
+def parse_kvargs(**kvargs):
+    if len(kvargs) == 1:
+        arg_key = kvargs.keys()[0]
+        arg_value = kvargs.values()[0]
+        
+        return arg_key, arg_value
+    raise ValueError
+
+# TODO: add find_root, remove_children, remove_parents?
+class TreeNode(object):
+    def __init__(self):
+        self.children = TreeNodeContainer(self, complementary_items_name='parents')
+        self.parents = TreeNodeContainer(self, complementary_items_name='children')
     
     def find_child(self, **kvargs):
-        if len(kvargs) == 1:
-            arg_key = kvargs.keys()[0]
-            arg_value = kvargs.values()[0]
-            return self._child_recursion(arg_key, arg_value)
+        return self._generic_find(item_to_find='children', **kvargs)
     
-    def append(self, abstract_object):
-        abstract_object.parent = self
-        self.children.append(abstract_object)
+    def find_parent(self, **kvargs):
+        return self._generic_find(item_to_find='parents', **kvargs)
     
-    def remove(self, abstract_object):
-        self.children.remove(abstract_object)
+    def _generic_find(self, item_to_find, **kvargs):
+        try:
+            arg_key, arg_value = parse_kvargs(**kvargs)
+            found_nodes = self._generic_recursion(item_to_find, arg_key, arg_value, [])
+            
+            return self.check_found_nodes(found_nodes)
+        except ValueError:
+            pass
     
-    def remove_children(self):
-        for child in self.children:
-            child.parent = None
+    def _generic_recursion(self, items_name, wanted_attribute, wanted_value, found_nodes):
+        items = getattr(self, items_name)
         
-        self.children = []
+        for item in items:
+            try:
+                attribute = getattr(item, wanted_attribute)
+                
+                if attribute == wanted_value:
+                    found_nodes.append(item)
+            except AttributeError:
+                pass
+            
+            item._generic_recursion(items_name, wanted_attribute, wanted_value, found_nodes)
+        
+        return found_nodes
+    
+    def check_found_nodes(self, found_nodes):
+        if len(found_nodes) == 1:
+            return found_nodes[0]
+        
+        if len(found_nodes) == 0:
+            return None
+        
+        return found_nodes
+
+class TreeNodeContainer(list):
+    def __init__(self, owner, complementary_items_name):
+        super(TreeNodeContainer, self).__init__()
+        self.owner = owner
+        self.complementary_items_name = complementary_items_name
+    
+    def append(self, item):
+        if item not in self:
+            super(TreeNodeContainer, self).append(item)
+            complementary_items = getattr(item, self.complementary_items_name)
+            complementary_items.append(self.owner)
+    
+    def remove(self, item):
+        if item in self:
+            super(TreeNodeContainer, self).remove(item)
+            complementary_items = getattr(item, self.complementary_items_name)
+            complementary_items.remove(self.owner)

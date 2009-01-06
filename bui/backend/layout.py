@@ -1,18 +1,62 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractLayout, AbstractObject
+from abstract import AbstractObject
+from render import RenderNode
 
-class FreeLayout(AbstractLayout):
+class Layout(AbstractObject):
+    def append(self, item):
+        self.render_node.append(item)
+    
+    def remove(self, item):
+        self.render_node.remove(item)
+
+class LayoutNode(RenderNode):
+    def __init__(self, **kvargs):
+        self._element_height = None
+        super(LayoutNode, self).__init__(**kvargs)
+    
+    def get_element_height(self):
+        if self.parent:
+            return min(self.parent.height, self._element_height)
+        
+        return min(self._height, self._element_height)
+    def set_element_height(self, element_height):
+        self._element_height = element_height
+    element_height = property(get_element_height, set_element_height)
+    
+    def render_child(self, child, render_coordinate):
+        if child.visible:
+            if isinstance(child, AbstractLayout):
+                render_coordinate = child.render(render_coordinate)
+            else:
+                child.x = render_coordinate.x
+                child.y = render_coordinate.y
+                child.render_bg_color(render_coordinate)
+                child.render()
+        
+        return render_coordinate
+
+class FreeLayout(Layout):
+    def __init__(self, **kvargs):
+        self.render_node = FreeLayoutNode(**kvargs)
+        super(FreeLayout, self).__init__(**kvargs)
+
+class FreeLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
+        render_coordinate = super(FreeLayoutNode, self).render(render_coordinate)
         
         for child in self.children:
             self.render_child(child, render_coordinate=None)
         
         return render_coordinate
 
-class HorizontalLayout(AbstractLayout):
+class HorizontalLayout(Layout):
+    def __init__(self, **kvargs):
+        self.render_node = HorizontalLayoutNode(**kvargs)
+        super(HorizontalLayout, self).__init__(**kvargs)
+
+class HorizontalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
+        render_coordinate = super(HorizontalLayoutNode, self).render(render_coordinate)
         
         tmp_x = render_coordinate.x
         
@@ -38,6 +82,7 @@ class HorizontalLayout(AbstractLayout):
         width_left = self.width
         free_indices = []
         
+        # XXX: _ notation needed??? (goes past property!!!)
         for i, child in enumerate(self.children):
             children_widths[i] = child._width
             
@@ -63,7 +108,7 @@ class HorizontalLayout(AbstractLayout):
     
     def get_height(self):
         return self._height or self._find_child_max_height()
-    height = property(get_height, AbstractLayout.set_height)
+    height = property(get_height, LayoutNode.set_height)
     
     def _find_child_max_height(self):
         record_height = 0
@@ -73,9 +118,14 @@ class HorizontalLayout(AbstractLayout):
         
         return record_height
 
-class VerticalLayout(AbstractLayout):
+class VerticalLayout(Layout):
+    def __init__(self, **kvargs):
+        self.render_node = VerticalLayoutNode(**kvargs)
+        super(VerticalLayout, self).__init__(**kvargs)
+
+class VerticalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(AbstractLayout, self).render(render_coordinate)
+        render_coordinate = super(VerticalLayoutNode, self).render(render_coordinate)
         
         for child in self.children:
             render_coordinate = self.render_child(child, render_coordinate)
@@ -97,5 +147,5 @@ class VerticalLayout(AbstractLayout):
             
             return sum(heights)
         
-        return super(AbstractLayout, self).get_height()
-    height = property(get_height, AbstractObject.set_height)
+        return super(LayoutNode, self).get_height()
+    height = property(get_height, LayoutNode.set_height)
