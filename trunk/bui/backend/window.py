@@ -113,6 +113,7 @@ class BaseWindowContainer(list):
 
 # note that this should be easy to extend!!!
 # XXX: should contain Node instead???
+# this should be inherited from AbstractObject (init needs to be changed to conform with this! **kvargs)
 class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  element_height, start_timers, structure_document, structure,
@@ -136,8 +137,11 @@ class BaseWindow(Node):
         # TODO: move this test to unserialize???
         if structure_document and structure:
             self.root_layout = unserialize(structure_document, structure)
-            self.root_layout.parent = self
-            self.children.append(self.root_layout)
+            
+            self.children.append(self.root_layout.render_node) # XXX
+            
+            #self.root_layout.parent = self
+            #self.children.append(self.root_layout)
             # could use self.append also but i think this is neater as it's explicit
             # TODO: check this out
         else:

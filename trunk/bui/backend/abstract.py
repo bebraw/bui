@@ -7,11 +7,10 @@ class AbstractObject(object):
         super(AbstractObject, self).__init__(**kvargs)
         
         self.name = ''
-        self.tooltip = ''
         
         # TODO: check if this should be here! -> to event stuff???
-        self.events = []
-        self.event_index = 0
+        #self.events = []
+        #self.event_index = 0
         
         set_attributes_based_on_kvargs(self, **kvargs)
         
@@ -19,3 +18,16 @@ class AbstractObject(object):
     
     def render(self):
         self.render_node.render()
+
+class AbstractElement(AbstractObject):
+    def __init__(self, **kvargs):
+        self.tooltip = ''
+        
+        super(Element, self).__init__(**kvargs)
+
+class AbstractLayout(AbstractObject):
+    def append(self, item):
+        self.render_node.append(item)
+    
+    def remove(self, item):
+        self.render_node.remove(item)

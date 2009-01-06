@@ -12,6 +12,8 @@ from bui.utils.node import Node
 
 class RenderNode(Node):
     def __init__(self, **kvargs):
+        super(RenderNode, self).__init__()
+        
         # TODO: convert bg_color to just bg (container) that can contain color/gradient/texture/etc. ?
         self.bg_color = None 
         
@@ -26,17 +28,34 @@ class RenderNode(Node):
         self._max_width = sys.maxint
         
         self.auto_height = False
-        self._height = None
-        self._min_width = 0 # TODO
-        self._max_width = sys.maxint # TODO
+        self._height = 0
+        self._min_height = 0 # TODO
+        self._max_height = sys.maxint # TODO
         
-        set_attributes_based_on_kvargs(self, **kvargs)
+        set_attributes_based_on_kvargs(self, **kvargs) # TEST!!! esp. children reference is important
     
     def append(self, item):
-        pass # should append to children by default!
+        self.children.append(item)
     
     def remove(self, item):
-        pass # should remove from children by default!
+        self.children.remove(item)
+    
+    def get_parent(self):
+        if hasattr(self, 'parents') and len(self.parents) > 0:
+            return self.parents[0]
+    parent = property(get_parent)
+    
+    def get_min_height(self):
+        return self._min_height
+    def set_min_height(self, min_height):
+        self._min_height = min_height
+    min_height = property(get_min_height, set_min_height)
+    
+    def get_max_height(self):
+        return self._max_height
+    def set_max_height(self, max_height):
+        self._max_height = max_height
+    max_height = property(get_max_height, set_max_height)
     
     def get_height(self):
         print 'get height'

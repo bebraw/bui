@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractObject
+from abstract import AbstractLayout
 from render import RenderNode
-
-class Layout(AbstractObject):
-    def append(self, item):
-        self.render_node.append(item)
-    
-    def remove(self, item):
-        self.render_node.remove(item)
 
 class LayoutNode(RenderNode):
     def __init__(self, **kvargs):
@@ -18,7 +11,10 @@ class LayoutNode(RenderNode):
         if self.parent:
             return min(self.parent.height, self._element_height)
         
-        return min(self._height, self._element_height)
+        if hasattr(self, '_element_height'):
+            return min(self._height, self._element_height)
+        
+        return None
     def set_element_height(self, element_height):
         self._element_height = element_height
     element_height = property(get_element_height, set_element_height)
@@ -35,7 +31,7 @@ class LayoutNode(RenderNode):
         
         return render_coordinate
 
-class FreeLayout(Layout):
+class FreeLayout(AbstractLayout):
     def __init__(self, **kvargs):
         self.render_node = FreeLayoutNode(**kvargs)
         super(FreeLayout, self).__init__(**kvargs)
@@ -49,7 +45,7 @@ class FreeLayoutNode(LayoutNode):
         
         return render_coordinate
 
-class HorizontalLayout(Layout):
+class HorizontalLayout(AbstractLayout):
     def __init__(self, **kvargs):
         self.render_node = HorizontalLayoutNode(**kvargs)
         super(HorizontalLayout, self).__init__(**kvargs)
@@ -118,7 +114,7 @@ class HorizontalLayoutNode(LayoutNode):
         
         return record_height
 
-class VerticalLayout(Layout):
+class VerticalLayout(AbstractLayout):
     def __init__(self, **kvargs):
         self.render_node = VerticalLayoutNode(**kvargs)
         super(VerticalLayout, self).__init__(**kvargs)
