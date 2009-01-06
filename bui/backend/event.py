@@ -21,7 +21,7 @@ class BaseEventManager(object):
         self.construct_state_event_ids(self.root_elem)
     
     def construct_element_event_ids(self, elem):
-        for child in elem.render_node.children:
+        for child in elem.children:
             if child.name: # XXX !!!
                 handler_name = (child.name).replace(' ', '_').lower()
                 

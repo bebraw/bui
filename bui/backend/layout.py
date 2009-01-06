@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractObject
-from render import RenderNode
 
 # TODO: rename element_height and width to default_element_height etc. !
 
 class Layout(AbstractObject):
-    def append(self, item):
-        self.render_node.append(item.render_node)
-    
-    def remove(self, item):
-        self.render_node.remove(item.render_node)
-
-class LayoutNode(RenderNode):
     def __init__(self, **kvargs):
         self._element_width = None
         self._element_height = None
-        super(LayoutNode, self).__init__(**kvargs)
+        super(Layout, self).__init__(**kvargs)
+    
+    def append(self, item):
+        self.children.append(item)
+    
+    def remove(self, item):
+        self.children.remove(item)
     
     def get_element_width(self):
         return self._element_width
@@ -48,13 +46,8 @@ class LayoutNode(RenderNode):
         return render_coordinate
 
 class FreeLayout(Layout):
-    def __init__(self, **kvargs):
-        super(FreeLayout, self).__init__(**kvargs)
-        self.render_node = FreeLayoutNode(**kvargs)
-
-class FreeLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(FreeLayoutNode, self).render(render_coordinate)
+        render_coordinate = super(Layout, self).render(render_coordinate)
         
         for child in self.children:
             self.render_child(child, render_coordinate=None)
@@ -62,13 +55,8 @@ class FreeLayoutNode(LayoutNode):
         return render_coordinate
 
 class HorizontalLayout(Layout):
-    def __init__(self, **kvargs):
-        super(HorizontalLayout, self).__init__(**kvargs)
-        self.render_node = HorizontalLayoutNode(**kvargs)
-
-class HorizontalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(HorizontalLayoutNode, self).render(render_coordinate)
+        render_coordinate = super(Layout, self).render(render_coordinate)
         
         tmp_x = render_coordinate.x
         
@@ -120,7 +108,7 @@ class HorizontalLayoutNode(LayoutNode):
     
     def get_height(self):
         return self._height or self._find_child_max_height()
-    height = property(get_height, LayoutNode.set_height)
+    height = property(get_height, Layout.set_height)
     
     def _find_child_max_height(self):
         record_height = 0
@@ -131,13 +119,8 @@ class HorizontalLayoutNode(LayoutNode):
         return record_height
 
 class VerticalLayout(Layout):
-    def __init__(self, **kvargs):
-        super(VerticalLayout, self).__init__(**kvargs)
-        self.render_node = VerticalLayoutNode(**kvargs)
-
-class VerticalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
-        render_coordinate = super(VerticalLayoutNode, self).render(render_coordinate)
+        render_coordinate = super(Layout, self).render(render_coordinate)
         
         for child in self.children:
             render_coordinate = self.render_child(child, render_coordinate)
@@ -159,5 +142,5 @@ class VerticalLayoutNode(LayoutNode):
             
             return sum(heights)
         
-        return super(LayoutNode, self).get_height()
-    height = property(get_height, LayoutNode.set_height)
+        return super(Layout, self).get_height()
+    height = property(get_height, Layout.set_height)

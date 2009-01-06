@@ -138,7 +138,7 @@ class BaseWindow(Node):
         if structure_document and structure:
             self.root_layout = unserialize(structure_document, structure)
             
-            self.children.append(self.root_layout.render_node) # XXX
+            self.children.append(self.root_layout) # XXX
             
             #self.root_layout.parent = self
             #self.children.append(self.root_layout)
