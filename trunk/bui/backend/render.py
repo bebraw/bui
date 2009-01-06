@@ -4,13 +4,13 @@ from bui.graphics.opengl.draw import draw_rectangle
 from bui.utils.attribute import set_attributes_based_on_kvargs
 from bui.utils.coordinate import Coordinate
 from bui.utils.math import clamp
-from bui.utils.tree import TreeNode
+from bui.utils.node import Node
 
 # set width/height to auto if value is zero? else auto is false?
 # TODO: figure out how to solve invert_y (to lower level?)
 # TODO: abstract width/height?
 
-class RenderNode(TreeNode):
+class RenderNode(Node):
     def __init__(self, **kvargs):
         # TODO: convert bg_color to just bg (container) that can contain color/gradient/texture/etc. ?
         self.bg_color = None 
