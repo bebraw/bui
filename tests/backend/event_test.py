@@ -92,7 +92,7 @@ class StateEvents():
 class TestStateEvents():
     def setup_method(self, method):
         self.root_layout = unserialize(StructureForStateEventTests)
-        self.print_foo_elem = self.root_layout.children[0]
+        self.print_foo_elem = self.root_layout.render_node.children[0]
         self.event_manager = BaseEventManager(self.root_layout, structure_keys, StateEvents)
     
     def test_manager_has_right_element_events(self):

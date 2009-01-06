@@ -1,11 +1,27 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractLayout
+from abstract import AbstractObject
 from render import RenderNode
+
+# TODO: rename element_height and width to default_element_height etc. !
+
+class Layout(AbstractObject):
+    def append(self, item):
+        self.render_node.append(item.render_node)
+    
+    def remove(self, item):
+        self.render_node.remove(item.render_node)
 
 class LayoutNode(RenderNode):
     def __init__(self, **kvargs):
+        self._element_width = None
         self._element_height = None
         super(LayoutNode, self).__init__(**kvargs)
+    
+    def get_element_width(self):
+        return self._element_width
+    def set_element_width(self, element_width):
+        self._element_width = element_width
+    element_width = property(get_element_width, set_element_width)
     
     def get_element_height(self):
         if self.parent:
@@ -21,7 +37,7 @@ class LayoutNode(RenderNode):
     
     def render_child(self, child, render_coordinate):
         if child.visible:
-            if isinstance(child, AbstractLayout):
+            if isinstance(child, Layout):
                 render_coordinate = child.render(render_coordinate)
             else:
                 child.x = render_coordinate.x
@@ -31,10 +47,10 @@ class LayoutNode(RenderNode):
         
         return render_coordinate
 
-class FreeLayout(AbstractLayout):
+class FreeLayout(Layout):
     def __init__(self, **kvargs):
-        self.render_node = FreeLayoutNode(**kvargs)
         super(FreeLayout, self).__init__(**kvargs)
+        self.render_node = FreeLayoutNode(**kvargs)
 
 class FreeLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
@@ -45,10 +61,10 @@ class FreeLayoutNode(LayoutNode):
         
         return render_coordinate
 
-class HorizontalLayout(AbstractLayout):
+class HorizontalLayout(Layout):
     def __init__(self, **kvargs):
-        self.render_node = HorizontalLayoutNode(**kvargs)
         super(HorizontalLayout, self).__init__(**kvargs)
+        self.render_node = HorizontalLayoutNode(**kvargs)
 
 class HorizontalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
@@ -114,10 +130,10 @@ class HorizontalLayoutNode(LayoutNode):
         
         return record_height
 
-class VerticalLayout(AbstractLayout):
+class VerticalLayout(Layout):
     def __init__(self, **kvargs):
-        self.render_node = VerticalLayoutNode(**kvargs)
         super(VerticalLayout, self).__init__(**kvargs)
+        self.render_node = VerticalLayoutNode(**kvargs)
 
 class VerticalLayoutNode(LayoutNode):
     def render(self, render_coordinate=None):
