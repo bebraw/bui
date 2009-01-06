@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
-from element.fill import Fill
+from element import Fill
 from layout import *
 
 def unserialize(document_container, root_structure=None):

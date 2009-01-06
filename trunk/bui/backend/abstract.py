@@ -22,12 +22,4 @@ class AbstractObject(object):
 class AbstractElement(AbstractObject):
     def __init__(self, **kvargs):
         self.tooltip = ''
-        
-        super(Element, self).__init__(**kvargs)
-
-class AbstractLayout(AbstractObject):
-    def append(self, item):
-        self.render_node.append(item)
-    
-    def remove(self, item):
-        self.render_node.remove(item)
+        super(AbstractElement, self).__init__(**kvargs)

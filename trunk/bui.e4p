@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-06, 20:04:51 -->
+<!-- Saved: 2009-01-06, 20:07:07 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -89,15 +89,10 @@
     <Source>bui/frontend/blender/element/image.py</Source>
     <Source>bui/frontend/blender/element/separator.py</Source>
     <Source>bui/frontend/blender/element/utils.py</Source>
-    <Source>bui/frontend/pyopengl/element/__init__.py</Source>
-    <Source>bui/frontend/pyopengl/element/label.py</Source>
-    <Source>bui/backend/element/__init__.py</Source>
-    <Source>bui/backend/element/fill.py</Source>
     <Source>bui/graphics/opengl/transformations.py</Source>
     <Source>bui/utils/path.py</Source>
     <Source>bui/graphics/opengl/font.py</Source>
     <Source>bui/graphics/opengl/with_statements.py</Source>
-    <Source>bui/frontend/pyopengl/element/separator.py</Source>
     <Source>bui/backend/layout.py</Source>
     <Source>examples/pyopengl/free.py</Source>
     <Source>tests/utils/coordinate_test.py</Source>

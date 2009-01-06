@@ -32,7 +32,14 @@ class RenderNode(Node):
         self._min_height = 0 # TODO
         self._max_height = sys.maxint # TODO
         
-        set_attributes_based_on_kvargs(self, **kvargs) # TEST!!! esp. children reference is important
+        #set_attributes_based_on_kvargs(self, **kvargs) # TEST!!! esp. children reference is important
+        # XXX: copied from attribute module
+        for name in ( n for n in dir(self) if n[0] != '_' ):
+            attr = getattr(self, name)
+            
+            if not callable(attr) and name in kvargs:
+                if name not in ('children', ): # XXX: hack
+                    setattr(self, name, kvargs[name])
     
     def append(self, item):
         self.children.append(item)
@@ -150,3 +157,26 @@ class RenderNode(Node):
         if self.bg_color:
             draw_rectangle(self.bg_color, render_coordinate.x, render_coordinate.y,
                            render_coordinate.x + self.width, render_coordinate.y + self.height)
+
+class ConstrainedIntFactory():
+    def create_width(self, value, min_value, max_value, auto):
+        width = Width(value)
+        width.initialize(min_value, max_value, auto)
+        return width
+    
+    def create_height(self, value, min_value, max_value, auto):
+        height = Height(value)
+        height.initialize(min_value, max_value, auto)
+        return height
+
+class ConstrainedInt(int):
+    def initialize(self, min_value, max_value, auto):
+        self.min_value = min_value
+        self.max_value = max_value
+        self.auto = auto
+
+class Width(ConstrainedInt):
+    pass # add width related logic here
+
+class Height(ConstrainedInt):
+    pass # add height related logic here
