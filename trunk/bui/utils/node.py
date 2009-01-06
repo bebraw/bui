@@ -1,14 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# TODO: make this generic so multiple attributes can be checked at once!
-def parse_kvargs(**kvargs):
-    if len(kvargs) == 1:
-        arg_key = kvargs.keys()[0]
-        arg_value = kvargs.values()[0]
-        
-        return arg_key, arg_value
-    raise ValueError
-
 class Node(object):
     def __init__(self):
         self.children = NodeContainer(self, complementary_items_name='parents')
@@ -24,30 +15,30 @@ class Node(object):
         return self._generic_find(item_to_find='parents', parents=[])
     
     def _generic_find(self, item_to_find, **kvargs):
-        try:
-            arg_key, arg_value = parse_kvargs(**kvargs)
-            found_nodes = self._generic_recursion(item_to_find, arg_key, arg_value, [], [])
-            return self._check_found_nodes(found_nodes)
-        except ValueError:
-            pass
+        found_nodes = self._generic_recursion(item_to_find, kvargs, [], [])
+        return self._check_found_nodes(found_nodes)
     
-    def _generic_recursion(self, items_name, wanted_attribute, wanted_value,
-                           found_nodes, visited_nodes):
+    def _generic_recursion(self, items_name, search_clauses, found_nodes, visited_nodes):
         visited_nodes.append(self)
         items = getattr(self, items_name)
         
         for item in items:
             try:
-                attribute = getattr(item, wanted_attribute)
+                all_match = True
+                for wanted_attribute, wanted_value in search_clauses.items():
+                    attribute = getattr(item, wanted_attribute)
+                    
+                    if attribute != wanted_value:
+                        all_match = False
+                        break
                 
-                if attribute == wanted_value:
+                if all_match:
                     found_nodes.append(item)
             except AttributeError:
                 pass
             
             if item not in visited_nodes:
-                item._generic_recursion(items_name, wanted_attribute, wanted_value,
-                                        found_nodes, visited_nodes)
+                item._generic_recursion(items_name, search_clauses, found_nodes, visited_nodes)
         
         return found_nodes
     
