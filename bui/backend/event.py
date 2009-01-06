@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
-from bui.utils.tree import TreeParent
 from abstract import AbstractLayout
 
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
@@ -22,16 +21,15 @@ class BaseEventManager(object):
         self.construct_state_event_ids(self.root_elem)
     
     def construct_element_event_ids(self, elem):
-        if isinstance(elem, TreeParent):
-            for child in elem.children:
-                if child.name:
-                    handler_name = (child.name).replace(' ', '_').lower()
-                    
-                    if hasattr(self.events, handler_name):
-                        event_handler = getattr(self.events, handler_name)
-                        self.element_events.append(child, event_handler)
+        for child in elem.children:
+            if child.name:
+                handler_name = (child.name).replace(' ', '_').lower()
                 
-                self.construct_element_event_ids(child)
+                if hasattr(self.events, handler_name):
+                    event_handler = getattr(self.events, handler_name)
+                    self.element_events.append(child, event_handler)
+            
+            self.construct_element_event_ids(child)
     
     def construct_key_event_ids(self, keys, key_mapping=None):
         def append_key_event(key, func_name, event):
@@ -55,18 +53,17 @@ class BaseEventManager(object):
                     append_key_event(key, value, 'press')
     
     def construct_state_event_ids(self, elem):
-        if isinstance(elem, TreeParent):
-            for child in elem.children:
-                if type(child.events) == dict:
-                    for event, func_name in child.events.items():
-                        event_handler = None
-                        
-                        if hasattr(self.events, func_name):
-                            event_handler = getattr(self.events, func_name)
-                        
-                        self.state_events.append(child, event_handler, event)
-                
-                self.construct_state_event_ids(child)
+        for child in elem.children:
+            if type(child.events) == dict:
+                for event, func_name in child.events.items():
+                    event_handler = None
+                    
+                    if hasattr(self.events, func_name):
+                        event_handler = getattr(self.events, func_name)
+                    
+                    self.state_events.append(child, event_handler, event)
+            
+            self.construct_state_event_ids(child)
     
     def element_event(self, evt):
         if evt in self.element_events:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-03, 19:11:45 -->
+<!-- Saved: 2009-01-06, 16:15:48 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -119,6 +119,8 @@
     <Source>tests/initializers.py</Source>
     <Source>tests/hotkeys.py</Source>
     <Source>bui/utils/test.py</Source>
+    <Source>bui/utils/attribute.py</Source>
+    <Source>bui/backend/render.py</Source>
   </Sources>
   <Forms>
   </Forms>

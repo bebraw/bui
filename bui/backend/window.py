@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from bui.backend.serializer import unserialize
 from bui.utils.errors import ValueMissingError
+from bui.utils.node import Node
 from bui.utils.parser import read_yaml
-from bui.utils.tree import TreeChild, TreeParent
 from constraint import BaseConstraintManager
 from event import BaseEventManager
 from timer import BaseTimerManager
@@ -112,7 +112,8 @@ class BaseWindowContainer(list):
             window.run()
 
 # note that this should be easy to extend!!!
-class BaseWindow(TreeChild, TreeParent):
+# XXX: should contain Node instead???
+class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  element_height, start_timers, structure_document, structure,
                  hotkeys, initializer):
