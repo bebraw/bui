@@ -192,3 +192,12 @@ class TestNode():
         
         assert node1.find_root_node() == None
         assert node2.find_root_node() == None
+    
+    def test_find_parent_with_value_name(self):
+        node1, node2, node3 = Node(), Node(), Node()
+        node3.attribute_to_find = 'find me'
+        
+        node1.parents.append(node2)
+        node2.parents.append(node3)
+        
+        assert node1.find_parent_with_attribute('attribute_to_find') == node3

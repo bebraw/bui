@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from abstract import AbstractObject
 
-# TODO: rename element_height and width to default_element_height etc. !
-
 class Layout(AbstractObject):
     def __init__(self, **kvargs):
-        self._element_width = None
-        self._element_height = None
+        self.default_node_width = 0
+        self.default_node_height = 0
         super(Layout, self).__init__(**kvargs)
     
     def append(self, item):
@@ -14,24 +12,6 @@ class Layout(AbstractObject):
     
     def remove(self, item):
         self.children.remove(item)
-    
-    def get_element_width(self):
-        return self._element_width
-    def set_element_width(self, element_width):
-        self._element_width = element_width
-    element_width = property(get_element_width, set_element_width)
-    
-    def get_element_height(self):
-        if self.parent:
-            return min(self.parent.height, self._element_height)
-        
-        if hasattr(self, '_element_height'):
-            return min(self._height, self._element_height)
-        
-        return None
-    def set_element_height(self, element_height):
-        self._element_height = element_height
-    element_height = property(get_element_height, set_element_height)
     
     def render_child(self, child, render_coordinate):
         if child.visible:
@@ -82,12 +62,11 @@ class HorizontalLayout(Layout):
         width_left = self.width
         free_indices = []
         
-        # XXX: _ notation needed??? (goes past property!!!)
         for i, child in enumerate(self.children):
-            children_widths[i] = child._width
+            children_widths[i] = child.width
             
-            if child._width:
-                width_left -= child._width
+            if child.width:
+                width_left -= child.width
             else:
                 free_indices.append(i)
         
@@ -105,42 +84,17 @@ class HorizontalLayout(Layout):
         # assign new widths
         for i, child in enumerate(self.children):
             child.width = children_widths[i]
-    
-    def get_height(self):
-        return self._height or self._find_child_max_height()
-    height = property(get_height, Layout.set_height)
-    
-    def _find_child_max_height(self):
-        record_height = 0
-        
-        for child in self.children:
-            record_height = max(record_height, child.height)
-        
-        return record_height
 
 class VerticalLayout(Layout):
     def render(self, render_coordinate=None):
         render_coordinate = super(Layout, self).render(render_coordinate)
         
+        # XXX: calculate children heights
+        # self._calculate_children_heights()
+        
         for child in self.children:
             render_coordinate = self.render_child(child, render_coordinate)
             
-            #if not isinstance(child, VerticalLayout):
             render_coordinate.y += child.height
         
         return render_coordinate
-    
-    def get_height(self):
-        if self.visible:
-            heights = []
-            
-            element_height = self.find_element_height() or 0
-            
-            for child in self.children:
-                if child.visible:
-                    heights.append(child.height or element_height)
-            
-            return sum(heights)
-        
-        return super(Layout, self).get_height()
-    height = property(get_height, Layout.set_height)

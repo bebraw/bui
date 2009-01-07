@@ -16,7 +16,7 @@ configuration = '''
     height: 480
     hotkeys: hotkeys
     structure: root_structure
-    element_height: 20 # TODO: should give warning if not defined!
+    default_node_height: 20
 '''
 
 class UIStructure():

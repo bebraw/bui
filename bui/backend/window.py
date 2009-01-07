@@ -31,7 +31,8 @@ class BaseWindowManager(object):
         self.show_fps = False
         self.logging = False
         self.alignment = 'center'
-        self.element_height = 1 # TODO: rename as default element height?
+        self.default_node_width = 0
+        self.default_node_height = 0
         self.start_timers = False
         
         self.structure = None
@@ -43,7 +44,8 @@ class BaseWindowManager(object):
         
         assert self.width > 0, 'Width set too small!'
         assert self.height > 0, 'Height set too small!'
-        assert self.element_height > 0, 'Default element height set too small!'
+        assert self.default_node_width >= 0, 'Default node width set too small!'
+        assert self.default_node_height >= 0, 'Default node height set too small!'
         
         self.structure_document = structure_document
         if self.structure_document and self.structure:
@@ -75,8 +77,9 @@ class BaseWindowManager(object):
         self.windows = []
         self.windows.append(BaseWindow(self.name, self.label, self.width, self.height,
                                        self.show_fps, self.logging, self.alignment,
-                                       self.element_height, self.start_timers,
-                                       self.structure_document, self.structure, self.hotkeys,
+                                       self.default_node_width, self.default_node_height,
+                                       self.start_timers, self.structure_document,
+                                       self.structure, self.hotkeys,
                                        self.initializer))
         
         #self.windows = BaseWindowContainer(...)
@@ -116,8 +119,8 @@ class BaseWindowContainer(list):
 # this should be inherited from AbstractObject (init needs to be changed to conform with this! **kvargs)
 class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
-                 element_height, start_timers, structure_document, structure,
-                 hotkeys, initializer):
+                 default_node_width, default_node_height, start_timers,
+                 structure_document, structure, hotkeys, initializer):
         super(BaseWindow, self).__init__()
         
         self.name = name
@@ -127,7 +130,8 @@ class BaseWindow(Node):
         self.show_fps = show_fps
         self.logging = logging
         self.alignment = alignment
-        self.element_height = element_height
+        self.default_node_width = default_node_width
+        self.default_node_height = default_node_height
         self.start_timers = start_timers
         self.hotkeys = hotkeys
         self.initializer = initializer

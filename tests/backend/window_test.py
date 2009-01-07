@@ -39,7 +39,7 @@ class TestSingleWindowApplication():
         assert window_manager.show_fps == False
         assert window_manager.logging == False
         assert window_manager.alignment == 'center'
-        assert window_manager.element_height == 1
+        assert window_manager.default_node_height == 0
         assert window_manager.start_timers == False
         assert window_manager.structure == None
         assert window_manager.hotkeys == None
@@ -55,7 +55,8 @@ class TestSingleWindowApplication():
         assert window.show_fps == False
         assert window.logging == False
         assert window.alignment == 'center' # defined only initially and used on window creation. should this be retained?
-        assert window.element_height == 1
+        assert window.default_node_width == 0
+        assert window.default_node_height == 0
         assert window.start_timers == False # same thing as with alignment!
         assert window.root_layout == None
         assert window.hotkeys == None
@@ -71,7 +72,8 @@ class TestSingleWindowApplication():
         show_fps: True
         logging: True
         alignment: 'right'
-        element_height: 50
+        default_node_width: 70
+        default_node_height: 50
         start_timers: True
         structure: minimal_structure # TODO: rename layout to structure or vice versa?
         hotkeys: hotkeys
@@ -93,7 +95,8 @@ class TestSingleWindowApplication():
         assert window_manager.show_fps == True
         assert window_manager.logging == True
         assert window_manager.alignment == 'right'
-        assert window_manager.element_height == 50
+        assert window_manager.default_node_width == 70
+        assert window_manager.default_node_height == 50
         assert window_manager.start_timers == True
         assert window_manager.structure == StructureWithUIStructure.minimal_structure
         assert window_manager.hotkeys == SimpleHotkeys.hotkeys
@@ -109,7 +112,8 @@ class TestSingleWindowApplication():
         assert window.show_fps == True
         assert window.logging == True
         assert window.alignment == 'right' # defined only initially and used on window creation. should this be retained?
-        assert window.element_height == 50
+        assert window.default_node_width == 70
+        assert window.default_node_height == 50
         assert window.start_timers == True # same thing as with alignment!
         assert window.hotkeys == SimpleHotkeys.hotkeys
         assert window.initializer == SimpleInitializers.simple_initializer # same thing as with alignment! used only on run!

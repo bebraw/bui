@@ -133,7 +133,7 @@ class FillElement():
 class StructureWithAutoWidth():
     root_structure = '''
     VerticalLayout:
-        width: auto
+        width_mode: auto
         children:
             - Fill:
                 name: filler
@@ -162,7 +162,7 @@ class StructureWithHorizontalLayoutNoChildrenWidths():
     root_structure = '''
     HorizontalLayout:
         height: 400
-        element_height: 500
+        default_node_height: 500
         width: 100
         children:
             - Fill:
