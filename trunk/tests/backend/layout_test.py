@@ -9,87 +9,42 @@ from ..structure import StructureWithAutoWidth, \
                         StructureWithHorizontalLayoutChildrenWidths, \
                         StructureWithHorizontalLayoutPartialChildrenWidths
 
-# TODO: generalize and combine tests!!! (esp. free/horizontal/vertical layout) (table based testing???)
-class TestFreeLayout():
-    def test_create_free_layout(self):
-        free_layout = FreeLayout()
+layout_classes = (FreeLayout, HorizontalLayout, VerticalLayout, )
+class TestLayouts():
+    def test_create_layout(self):
+        def check(layout_name):
+            layout = layout_name()
+            
+            assert layout.children == []
+            assert layout.parents == []
+            assert layout.parent == None
         
-        assert free_layout.element_width == None
-        assert free_layout.element_height == None
-        assert free_layout.children == []
-        assert free_layout.parents == []
-        assert free_layout.parent == None
+        for layout in layout_classes:
+            yield check, layout
     
-    def test_append_free_layout(self):
-        free_layout1, free_layout2 = FreeLayout(), FreeLayout()
+    def test_append_layout(self):
+        def check(layout_name):
+            layout1, layout2 = layout_name(), layout_name()
+            layout1.append(layout2)
+            
+            assert layout1.children[0] == layout2
         
-        free_layout1.append(free_layout2)
-        
-        assert free_layout1.children[0] == free_layout2
+        for layout in layout_classes:
+            yield check, layout
     
-    def test_remove_free_layout(self):
-        free_layout1, free_layout2 = FreeLayout(), FreeLayout()
+    def test_remove_layout(self):
+        def check(layout_name):
+            layout1, layout2 = layout_name(), layout_name()
+            
+            layout1.append(layout2)
+            layout1.remove(layout2)
+            
+            assert len(layout1.children) == 0
+            assert len(layout2.parents) == 0
+            assert layout2.parent == None
         
-        free_layout1.append(free_layout2)
-        free_layout1.remove(free_layout2)
-        
-        assert len(free_layout1.children) == 0
-        assert len(free_layout2.parents) == 0
-        assert free_layout2.parent == None
-
-class TestHorizontalLayout():
-    def test_create_horizontal_layout(self):
-        horizontal_layout = HorizontalLayout()
-        
-        assert horizontal_layout.element_width == None
-        assert horizontal_layout.element_height == None
-        assert horizontal_layout.children == []
-        assert horizontal_layout.parents == []
-        assert horizontal_layout.parent == None
-    
-    def test_append_horizontal_layout(self):
-        horizontal_layout1, horizontal_layout2 = HorizontalLayout(), HorizontalLayout()
-        
-        horizontal_layout1.append(horizontal_layout2)
-        
-        assert horizontal_layout1.children[0] == horizontal_layout2
-    
-    def test_remove_horizontal_layout(self):
-        horizontal_layout1, horizontal_layout2 = HorizontalLayout(), HorizontalLayout()
-        
-        horizontal_layout1.append(horizontal_layout2)
-        horizontal_layout1.remove(horizontal_layout2)
-        
-        assert len(horizontal_layout1.children) == 0
-        assert len(horizontal_layout2.parents) == 0
-        assert horizontal_layout2.parent == None
-
-class TestVerticalLayout():
-    def test_create_vertical_layout(self):
-        vertical_layout = VerticalLayout()
-        
-        assert vertical_layout.element_width == None
-        assert vertical_layout.element_height == None
-        assert vertical_layout.children == []
-        assert vertical_layout.parents == []
-        assert vertical_layout.parent == None
-    
-    def test_append_vertical_layout(self):
-        vertical_layout1, vertical_layout2 = VerticalLayout(), VerticalLayout()
-        
-        vertical_layout1.append(vertical_layout2)
-        
-        assert vertical_layout1.children[0] == vertical_layout2
-    
-    def test_remove_vertical_layout(self):
-        vertical_layout1, vertical_layout2 = VerticalLayout(), VerticalLayout()
-        
-        vertical_layout1.append(vertical_layout2)
-        vertical_layout1.remove(vertical_layout2)
-        
-        assert len(vertical_layout1.children) == 0
-        assert len(vertical_layout2.parents) == 0
-        assert vertical_layout2.parent == None
+        for layout in layout_classes:
+            yield check, layout
 
 def test_unserialize_structure_with_free_layout():
     root_layout = unserialize(StructureWithFreeLayout)
