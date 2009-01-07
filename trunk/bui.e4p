@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-06, 20:07:07 -->
+<!-- Saved: 2009-01-06, 21:35:38 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -119,6 +119,7 @@
     <Source>tests/backend/render_test.py</Source>
     <Source>bui/backend/element.py</Source>
     <Source>bui/frontend/pyopengl/element.py</Source>
+    <Source>tests/backend/abstract_test.py</Source>
   </Sources>
   <Forms>
   </Forms>

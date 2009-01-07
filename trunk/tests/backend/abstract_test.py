@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 from bui.backend.abstract import AbstractObject
+import bui.backend.value as value
 
 class TestAbstractObject():
     def test_create_abstract_object(self):
@@ -16,19 +17,18 @@ class TestAbstractObject():
         assert abstract_object.x == 0
         assert abstract_object.y == 0
         
-        # TODO: refactor
-        assert abstract_object.auto_width ==  False
         assert abstract_object.width == 0
+        assert abstract_object.width_mode == value.AUTO
         assert abstract_object.min_width == 0
         assert abstract_object.max_width == sys.maxint
         
-        # TODO: refactor
-        assert abstract_object.auto_height == False
         assert abstract_object.height == 0
+        assert abstract_object.width_mode == value.AUTO
         assert abstract_object.min_height == 0
         assert abstract_object.max_height == sys.maxint
     
-    # width
-    # height
-    # visibility
-    # render
+    def test_visibility(self):
+        pass # TODO: validate that if parent is not visible, neither is the child
+    
+    def test_render(self):
+        pass # TODO: (what to test?)

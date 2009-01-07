@@ -31,7 +31,7 @@ window_configuration = '''
     # full_screen: True # False by default if not set
     # v_sync: True # needed even?
     # alignment: left # could be center by default if not set
-    # element_height: 50 # 20 by default if not set?
+    # default_node_height: 50
     start_timers: True # False by default if not set
     # layout: some_layout # uses root_layout by default if not set
     # hotkeys: some_keys # checks the hotkey container for this name. uses the first found by default?
@@ -80,7 +80,7 @@ configuration = '''
         window_width: 300 # use this if width is not set for window
         window_height: 500 " use this if height is not set for window
         # other global defaults?
-        element_height: 40 # applies globally unless set per window
+        default_node_height: 40 # applies globally unless set per window
         timers: global_timers # these are seen by all windows
     - Windows:
         - Window:

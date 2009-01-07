@@ -27,7 +27,7 @@ configuration = '''
     start_timers: True
     hotkeys: hotkeys
     structure: root_structure
-    element_height: 20
+    default_node_height: 20
 '''
 
 # should use this instead!
@@ -43,7 +43,6 @@ class UIStructureProperOneSecond():
         Label: current_time
     '''
 
-# TODO: check how element_height should scale
 class UIStructure():
     root_structure = '''
     HorizontalLayout:

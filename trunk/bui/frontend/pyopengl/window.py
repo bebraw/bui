@@ -26,7 +26,8 @@ class WindowManager(BaseWindowManager):
     def initialize_windows(self):
         self.windows = []
         self.windows.append(Window(self.name, self.label, self.width, self.height, self.show_fps,
-                                   self.logging, self.alignment, self.element_height,
+                                   self.logging, self.alignment,
+                                   self.default_node_width, self.default_node_height,
                                    self.start_timers, self.structure_document, self.structure,
                                    self.hotkeys, self.initializer))
     
@@ -46,10 +47,12 @@ class WindowContainer(BaseWindowContainer):
 
 class Window(BaseWindow):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
-                 element_height, start_timers, structure_document, structure,
+                 default_node_width, default_node_height, start_timers,
+                 structure_document, structure,
                  hotkeys, initializer):
         super(Window, self).__init__(name, label, width, height, show_fps,
-                                         logging, alignment, element_height,
+                                         logging, alignment,
+                                         default_node_width, default_node_height,
                                          start_timers, structure_document,
                                          structure, hotkeys, initializer)
         glutInitWindowSize(self.width, self.height)
