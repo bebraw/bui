@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractNode
 from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
 from bui.graphics.opengl.font import Font
@@ -22,7 +22,7 @@ for module_name in module_names:
             setattr(serializer, var_name, var_item)
 
 
-class Label(AbstractObject):
+class Label(AbstractNode):
     def __init__(self, **kvargs):
         self.label = ''
         self.color = 3*[0.0]
@@ -37,7 +37,7 @@ class Label(AbstractObject):
         self.font.render(self)
 
 # would it make sense just to inherit label instead???
-class Separator(AbstractObject):
+class Separator(AbstractNode):
     def __init__(self, **kvargs):
         self.label = ''
         self.color = 3*[0.0]

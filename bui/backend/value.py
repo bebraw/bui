@@ -10,8 +10,7 @@ class ConstrainedValue(object):
     def __init__(self, attribute_name, owner, mode, value, min_value, max_value):
         assert attribute_name in ('width', 'height', )
         assert mode in MODES
-        assert min_value <= value <= max_value
-        assert min_value >= 0
+        assert 0 <= min_value <= max_value
         
         self.attribute_name = attribute_name
         self.owner = owner
@@ -19,8 +18,22 @@ class ConstrainedValue(object):
         self._value = value
         
         self.value = value
-        self.min_value = min_value
-        self.max_value = max_value
+        self._min_value = min_value
+        self._max_value = max_value
+    
+    def get_min_value(self):
+        return self._min_value
+    def set_min_value(self, min_value):
+        assert 0 <= min_value <= self.max_value
+        self._min_value = min_value
+    min_value = property(get_min_value, set_min_value)
+    
+    def get_max_value(self):
+        return self._max_value
+    def set_max_value(self, max_value):
+        assert self.min_value <= max_value
+        self._max_value = max_value
+    max_value = property(get_max_value, set_max_value)
     
     def get_mode(self):
         return self._mode
