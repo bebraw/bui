@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import sys
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractNode
 import bui.backend.value as value
 
-class TestAbstractObject():
+class TestAbstractNode():
     def test_create_abstract_object(self):
-        abstract_object = AbstractObject()
+        abstract_object = AbstractNode()
         
         assert abstract_object.children == []
         assert abstract_object.parents == []

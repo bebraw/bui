@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractNode
 
-class Element(AbstractObject):
+class Element(AbstractNode):
     def __init__(self, **kvargs):
         self.tooltip = ''
         super(Element, self).__init__(**kvargs)

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractNode
 import bui.backend.value as value
 from bui.backend.value import ConstrainedValue
 
 possible_values = ('width', 'height', )
 class TestConstrainedValue():
     def test_create_constrained_value(self):
-        abstract_object = AbstractObject()
+        abstract_object = AbstractNode()
         constrained_value = ConstrainedValue('width', abstract_object, value.ABSOLUTE, 5, 2, 20)
     
     def test_auto_mode(self):
         def check(value_name):
-            abstract_parent = AbstractObject(width=500, height=500)
-            abstract_child = AbstractObject(width=20, width_mode=value.AUTO,
+            abstract_parent = AbstractNode(width=500, height=500)
+            abstract_child = AbstractNode(width=20, width_mode=value.AUTO,
                                             height=20, height_mode=value.AUTO)
             abstract_parent.children.append(abstract_child)
             
@@ -33,8 +33,8 @@ class TestConstrainedValue():
     
     def test_absolute_mode(self):
         def check(value_name):
-            abstract_parent = AbstractObject(width=500, height=500)
-            abstract_child = AbstractObject(width=20, width_mode=value.ABSOLUTE,
+            abstract_parent = AbstractNode(width=500, height=500)
+            abstract_child = AbstractNode(width=20, width_mode=value.ABSOLUTE,
                                             height=20, height_mode=value.ABSOLUTE)
             abstract_parent.children.append(abstract_child)
             
@@ -45,8 +45,8 @@ class TestConstrainedValue():
     
     def test_relative_mode(self):
         def check(value_name):
-            abstract_parent = AbstractObject(width=500, height=500)
-            abstract_child = AbstractObject(width=20, width_mode=value.RELATIVE,
+            abstract_parent = AbstractNode(width=500, height=500)
+            abstract_child = AbstractNode(width=20, width_mode=value.RELATIVE,
                                             height=20, height_mode=value.RELATIVE)
             abstract_parent.children.append(abstract_child)
             

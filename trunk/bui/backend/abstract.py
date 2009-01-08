@@ -10,9 +10,9 @@ from value import ConstrainedValue
 # TODO: figure out how to solve invert_y (to lower level?)
 
 protected_attributes = ('children', 'parents', )
-class AbstractObject(Node):
+class AbstractNode(Node):
     def __init__(self, **kvargs):
-        super(AbstractObject, self).__init__()
+        super(AbstractNode, self).__init__()
         
         self.name = ''
         

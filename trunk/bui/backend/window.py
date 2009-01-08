@@ -8,9 +8,6 @@ from event import BaseEventManager
 from timer import BaseTimerManager
 from serializer import unserialize
 
-# TODO: should use a list based scheme to determine conf item names, types, min, max etc.
-# to make testing easier
-
 # this class should handle global constraints/events/timers!
 class BaseWindowManager(object):
     def __init__(self, configuration, structure_document=None, hotkeys=None, events=None,
@@ -114,9 +111,7 @@ class BaseWindowContainer(list):
         for window in self:
             window.run()
 
-# note that this should be easy to extend!!!
-# XXX: should contain Node instead???
-# this should be inherited from AbstractObject (init needs to be changed to conform with this! **kvargs)
+# use **kvargs and attribute module?)
 class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  default_node_width, default_node_height, start_timers,
@@ -136,7 +131,7 @@ class BaseWindow(Node):
         self.hotkeys = hotkeys
         self.initializer = initializer
         #self.initializer = UserInterfaceInitializer(initializer)
-        self.root_layout = None #EmptyLayout() # better to use AbstractObject instead???
+        self.root_layout = None #EmptyLayout() # better to use AbstractNode instead???
         
         # TODO: move this test to unserialize???
         if structure_document and structure:

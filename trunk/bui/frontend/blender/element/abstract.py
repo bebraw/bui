@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from bui.backend.abstract import AbstractObject
+from bui.backend.abstract import AbstractNode
 
-class AbstractBlenderElement(AbstractObject):
+class AbstractBlenderElement(AbstractNode):
     def update_value(self, evt, val):
         self.value = val

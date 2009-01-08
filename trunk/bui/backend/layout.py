@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from abstract import AbstractObject
+from abstract import AbstractNode
 
-class Layout(AbstractObject):
+class Layout(AbstractNode):
     def __init__(self, **kvargs):
         self.default_node_width = 0
         self.default_node_height = 0
@@ -57,6 +57,7 @@ class HorizontalLayout(Layout):
         
         return render_coordinate
     
+    # TODO: should generalize this and use for both vertical/horizontal layout!
     def _calculate_children_widths(self):
         children_widths = len(self.children)*[None]
         width_left = self.width
