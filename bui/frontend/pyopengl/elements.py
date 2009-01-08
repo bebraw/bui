@@ -4,24 +4,6 @@ from bui.backend.layout import *
 from bui.graphics.opengl.draw import draw_line
 from bui.graphics.opengl.font import Font
 
-
-# TODO: it might be nicer to use inspect module for this
-# see http://ginstrom.com/scribbles/2007/10/24/python-introspection-with-the-inspect-module/
-
-# TODO: make this dynamic if possible
-# TODO: update and introspect this module directly! -> convert this whole thing to a func
-module_names = ('label', 'separator', )
-
-serializer = __import__('bui.backend.serializer', globals(), locals(), 'bui')
-
-for module_name in module_names:
-    module = __import__(module_name, globals(), locals())
-
-    for var_name, var_item in vars(module).items():
-        if type(var_item) == type:
-            setattr(serializer, var_name, var_item)
-
-
 class Label(AbstractNode):
     def __init__(self, **kvargs):
         self.label = ''

@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 from bui.utils.parser import read_yaml
-from element import Fill
+from elements import Fill
 from layout import *
+
+FRONTEND = 'pyopengl' # figure out where to stash this setting
+
+if FRONTEND == 'blender':
+    from bui.frontend.blender.elements import *
+
+if FRONTEND == 'pyopengl':
+    from bui.frontend.pyopengl.elements import *
 
 def unserialize(document_container, root_structure=None):
     def construct_hierarchy(current_object, current_object_args, document_container):
