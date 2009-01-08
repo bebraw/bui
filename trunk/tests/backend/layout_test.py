@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bui.backend.element import Fill
+from bui.backend.elements import Fill
 from bui.backend.layout import *
 from bui.backend.serializer import unserialize
 from bui.backend.window import BaseWindowManager
