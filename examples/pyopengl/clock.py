@@ -16,42 +16,25 @@ from bui.utils.color import generate_color
 from bui.utils.math import lerp
 from bui.utils.meta import AllMethodsStatic
 
-# TODO: make it possible to use an element as root (scales to window width/height unless set otherwise!)
-# TODO: check how to handle label text width (scales as the label width scales???)
-
 # note that this sets up a single window with given attributes
 configuration = '''
     label: Clock test
-    width: 400
+    width: 1000
     height: 200
     start_timers: True
     hotkeys: hotkeys
     structure: root_structure
-    default_node_height: 20
+    #default_node_height: 20
 '''
 
-# should use this instead!
-class UIStructureProperOne():
-    root_structure = '''
-        Label:
-            name: current_time
-    '''
-
-# even neater one!
-class UIStructureProperOneSecond():
-    root_structure = '''
-        Label: current_time
-    '''
-
+# TODO: auto doesn't work with HorizontalLayout as it should?
+# TODO: see if width should affect label text too (should text fit to given width?)
 class UIStructure():
     root_structure = '''
-    HorizontalLayout:
-        bg_color: [1.0, 0.0, 0.0]
-        height: 80 # TODO: children should scale to fit height! if not set, use 'auto' height
+    VerticalLayout:
         children:
             - Label:
                 name: current_time
-                #height: 80 # <= parent height if set
     '''
 
 class Hotkeys():
