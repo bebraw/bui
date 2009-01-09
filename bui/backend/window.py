@@ -57,6 +57,8 @@ class BaseWindowManager(object):
         
         self.timers = timers
         
+        self.events = events
+        
         self.initialize_windows()
         self.initialize_timers()
     
@@ -79,7 +81,7 @@ class BaseWindowManager(object):
                                        self.bg_color,
                                        self.start_timers, self.structure_document,
                                        self.structure, self.hotkeys,
-                                       self.initializer))
+                                       self.initializer, self.events))
         
         #self.windows = BaseWindowContainer(...)
     
@@ -117,7 +119,7 @@ class BaseWindowContainer(list):
 class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  default_node_width, default_node_height, bg_color, start_timers,
-                 structure_document, structure, hotkeys, initializer):
+                 structure_document, structure, hotkeys, initializer, events):
         super(BaseWindow, self).__init__()
         
         self.name = name
@@ -136,6 +138,8 @@ class BaseWindow(Node):
         #self.initializer = UserInterfaceInitializer(initializer)
         self.root_layout = None #EmptyLayout() # better to use AbstractNode instead???
         
+        self.events = events
+        
         # TODO: move this test to unserialize???
         if structure_document and structure:
             self.root_layout = unserialize(structure_document, structure)
@@ -151,8 +155,8 @@ class BaseWindow(Node):
             print structure_document, structure
         
         # note that should also provide info about which structure to use if not default (set in config!)
-        # figure out how to handle keys and events (active context!!!)
-        #self.event_manager = BaseEventManager(self.root_layout, keys, events)
+        # figure out how to handle hotkeys and events (active context!!!)
+        #self.event_manager = BaseEventManager(self.root_layout, hotkeys, events)
         #self.constraint_manager
     
     def redraw(self):

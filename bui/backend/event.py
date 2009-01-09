@@ -5,20 +5,20 @@ from layout import Layout
 PRINT_BUTTON_EVENT_NAMES = True # put back to False at some point!
 
 class BaseEventManager(object):
-    def __init__(self, root_elem, keys, events):
-        assert isinstance(root_elem, Layout)
-        assert isinstance(keys, str)
+    def __init__(self, root_layout, hotkeys, events):
+        assert isinstance(root_layout, Layout)
+        assert isinstance(hotkeys, str)
         
-        self.root_elem = root_elem
+        self.root_layout = root_layout
         self.events = events
         
         self.element_events = ElementEventContainer()
         self.key_events = EventContainer()
         self.state_events = EventContainer()
         
-        self.construct_element_event_ids(self.root_elem)
-        self.construct_key_event_ids(keys)
-        self.construct_state_event_ids(self.root_elem)
+        self.construct_element_event_ids(self.root_layout)
+        self.construct_key_event_ids(hotkeys)
+        self.construct_state_event_ids(self.root_layout)
     
     def construct_element_event_ids(self, elem):
         for child in elem.children:
@@ -31,13 +31,13 @@ class BaseEventManager(object):
             
             self.construct_element_event_ids(child)
     
-    def construct_key_event_ids(self, keys, key_mapping=None):
+    def construct_key_event_ids(self, hotkeys, key_mapping=None):
         def append_key_event(key, func_name, event):
             if hasattr(self.events, func_name):
                 event_func = getattr(self.events, func_name)
                 self.key_events.append(key, event_func, event)
         
-        keys_structure = read_yaml(keys)
+        keys_structure = read_yaml(hotkeys)
         
         if isinstance(keys_structure, dict):
             for key, value in keys_structure.items():
@@ -80,9 +80,9 @@ class BaseEventManager(object):
             key_event = self.key_events[evt]
             
             if pressed and key_event.press:
-                key_event.press(self.root_elem)
+                key_event.press(self.root_layout)
             elif hasattr(key_event, 'release'):
-                key_event.release(self.root_elem)
+                key_event.release(self.root_layout)
     
     def check_state_events(self, coordinate):
         triggered_event = False
@@ -92,7 +92,7 @@ class BaseEventManager(object):
                 if coordinate.inside(element):
                     triggered_event = True
                     func = getattr(state_event, 'on_mouse_over')
-                    func(self.root_elem)
+                    func(self.root_layout)
         
         return triggered_event
 

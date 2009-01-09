@@ -36,8 +36,8 @@ class Events(AllMethodsStatic):
     def quit_script(elem):
         Draw.Exit()
     
-    def show_big_image(root_elem):
-        big_image_elem = root_elem.find_child(name='big_image')
+    def show_big_image(root_layout):
+        big_image_elem = root_layout.find_child(name='big_image')
         big_image_elem.append(Image(file='Mandril.png', width=10))
 
 if __name__ == '__main__':

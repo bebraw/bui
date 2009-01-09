@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
-#from abstract import AbstractLayout
+from layout import Layout
 
 class BaseConstraintManager(object):
-    def __init__(self, root_elem, constraints):
-        #assert isinstance(root_elem, AbstractLayout) # TODO: add this
+    def __init__(self, root_layout, constraints):
+        assert isinstance(root_layout, Layout)
         
-        self.root_elem = root_elem
+        self.root_layout = root_layout
         
         self.initialize_constraint_list(constraints)
     
@@ -20,7 +20,7 @@ class BaseConstraintManager(object):
     
     def check_constraints(self):
         for constraint in self.constraints:
-            constraint(self.root_elem)
+            constraint(self.root_layout)
 
 class ConstraintContainer(object):
     def __init__(self):

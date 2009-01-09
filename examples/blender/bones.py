@@ -55,7 +55,7 @@ class Events(AllMethodsStatic):
             pass
 
 class Constraints(AllMethodsStatic):
-    def check_bones_constraint(root_elem):
+    def check_bones_constraint(root_layout):
         scene = Scene.GetCurrent() 
         active = scene.objects.active     
         active_data = active.getData() 
@@ -69,16 +69,16 @@ class Constraints(AllMethodsStatic):
                 # check if a bone has to be added
                 for bone_name in p.bones.keys(): 
                     if bone_name[:3] == "SLI":
-                        bone_elem = root_elem.find_child(label=bone_name)
+                        bone_elem = root_layout.find_child(label=bone_name)
                         
                         if not bone_elem:
-                            armature_bones_elem = root_elem.find_child(name='armature_bones')
+                            armature_bones_elem = root_layout.find_child(name='armature_bones')
                             new_bone = unserialize(UIStructure, UIStructure.slider_structure)
                             armature_bones_elem.append(new_bone)
                             new_bone.label = bone_name
                 
                 # check if a bone has been removed
-                armature_bones = root_elem.find_child(name='armature_bones')
+                armature_bones = root_layout.find_child(name='armature_bones')
                 elems_to_remove = []
                 
                 for armature_bone in armature_bones.children:

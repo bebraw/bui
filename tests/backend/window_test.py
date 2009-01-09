@@ -64,6 +64,8 @@ class TestSingleWindowApplication():
         assert window.root_layout == None
         assert window.hotkeys == None
         assert window.initializer == None # same thing as with alignment! used only on run!
+        
+        assert window.events == None
     
     all_possible_settings_set_as_valid = '''
         name: test_application
@@ -123,6 +125,8 @@ class TestSingleWindowApplication():
         assert window.start_timers == True # same thing as with alignment!
         assert window.hotkeys == SimpleHotkeys.hotkeys
         assert window.initializer == SimpleInitializers.simple_initializer # same thing as with alignment! used only on run!
+        
+        assert window.events == None
         
         assert isinstance(window.root_layout, VerticalLayout)
     

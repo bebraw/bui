@@ -96,7 +96,7 @@ configuration = '''
 '''
 
 class Initializers(AllMethodsStatic):
-    def ui_initialize(root_elem, event_manager): # should use timer_manager instead
+    def ui_initialize(root_layout, event_manager): # should use timer_manager instead
         pass
         # timer_manager.timers.start() # starts all timers
         # timer_manager.timers.stop() # stops all timers

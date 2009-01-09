@@ -61,8 +61,8 @@ class Events(AllMethodsStatic):
     def quit_script(elem):
         Draw.Exit()
 
-def populate_container(root_elem, container_name, module):
-    containers_elem = root_elem.find_child(name=container_name)
+def populate_container(root_layout, container_name, module):
+    containers_elem = root_layout.find_child(name=container_name)
     
     for module_item_name in dir(module):
         module_item = getattr(module, module_item_name)
@@ -70,9 +70,9 @@ def populate_container(root_elem, container_name, module):
         if type(module_item) == type:
             containers_elem.append(Label(name=module_item_name))
 
-def ui_initialize(root_elem):
-    populate_container(root_elem, 'layouts', bui.backend.layout)
-    populate_container(root_elem, 'elements', bui.blender.element)
+def ui_initialize(root_layout):
+    populate_container(root_layout, 'layouts', bui.backend.layout)
+    populate_container(root_layout, 'elements', bui.blender.element)
 
 if __name__ == '__main__':
     app = Application(UIStructure, hotkeys, Events, ui_initializer=ui_initialize)
