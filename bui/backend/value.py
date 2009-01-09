@@ -55,6 +55,7 @@ class ConstrainedValue(object):
         if self.mode == RELATIVE:
             if self.owner.parent:
                 parent_value = getattr(self.owner.parent, self.attribute_name)
+                # TODO: should clamp this to min/max?
                 return parent_value * self._value / 100.0
         
         if self.mode == AUTO:
@@ -74,6 +75,7 @@ class ConstrainedValue(object):
                 parent_value = getattr(self.owner.parent, self.attribute_name)
                 return clamp(parent_value, self.min_value, self.max_value)
         
+        # TODO: should clamp this to min/max?
         return self._value
     def set_value(self, value):
         self._value = value

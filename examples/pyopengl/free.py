@@ -35,6 +35,7 @@ class UIStructure():
                 min_width: 300
                 max_width: 600
                 height: 100
+                default_node_height: 20 # FIXME: skips global setting?
                 children:
                     - Label:
                         label: Some label
