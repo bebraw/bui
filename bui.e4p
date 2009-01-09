@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-08, 20:26:19 -->
+<!-- Saved: 2009-01-08, 20:39:51 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -75,20 +75,6 @@
     <Source>tests/backend/event_test.py</Source>
     <Source>tests/frontend/blender/__init__.py</Source>
     <Source>bui/utils/math.py</Source>
-    <Source>bui/frontend/blender/element/number.py</Source>
-    <Source>bui/frontend/blender/element/button.py</Source>
-    <Source>bui/frontend/blender/element/__init__.py</Source>
-    <Source>bui/frontend/blender/element/textbox.py</Source>
-    <Source>bui/frontend/blender/element/icon.py</Source>
-    <Source>bui/frontend/blender/element/normal.py</Source>
-    <Source>bui/frontend/blender/element/slider.py</Source>
-    <Source>bui/frontend/blender/element/label.py</Source>
-    <Source>bui/frontend/blender/element/menu.py</Source>
-    <Source>bui/frontend/blender/element/colorpicker.py</Source>
-    <Source>bui/frontend/blender/element/abstract.py</Source>
-    <Source>bui/frontend/blender/element/image.py</Source>
-    <Source>bui/frontend/blender/element/separator.py</Source>
-    <Source>bui/frontend/blender/element/utils.py</Source>
     <Source>bui/graphics/opengl/transformations.py</Source>
     <Source>bui/utils/path.py</Source>
     <Source>bui/graphics/opengl/font.py</Source>
@@ -122,6 +108,7 @@
     <Source>bui/frontend/pyopengl/elements.py</Source>
     <Source>bui/frontend/blender/elements.py</Source>
     <Source>bui/frontend/blender/icons.py</Source>
+    <Source>bui/frontend/blender/utils.py</Source>
   </Sources>
   <Forms>
   </Forms>

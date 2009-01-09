@@ -39,7 +39,9 @@ class TestSingleWindowApplication():
         assert window_manager.show_fps == False
         assert window_manager.logging == False
         assert window_manager.alignment == 'center'
+        assert window_manager.default_node_width == 0
         assert window_manager.default_node_height == 0
+        assert window_manager.bg_color == [0.0, 0.0, 0.0]
         assert window_manager.start_timers == False
         assert window_manager.structure == None
         assert window_manager.hotkeys == None
@@ -57,6 +59,7 @@ class TestSingleWindowApplication():
         assert window.alignment == 'center' # defined only initially and used on window creation. should this be retained?
         assert window.default_node_width == 0
         assert window.default_node_height == 0
+        assert window.bg_color == [0.0, 0.0, 0.0]
         assert window.start_timers == False # same thing as with alignment!
         assert window.root_layout == None
         assert window.hotkeys == None
@@ -74,6 +77,7 @@ class TestSingleWindowApplication():
         alignment: 'right'
         default_node_width: 70
         default_node_height: 50
+        bg_color: [1.0, 0.0, 0.0]
         start_timers: True
         structure: minimal_structure # TODO: rename layout to structure or vice versa?
         hotkeys: hotkeys
@@ -97,6 +101,7 @@ class TestSingleWindowApplication():
         assert window_manager.alignment == 'right'
         assert window_manager.default_node_width == 70
         assert window_manager.default_node_height == 50
+        assert window_manager.bg_color == [1.0, 0.0, 0.0]
         assert window_manager.start_timers == True
         assert window_manager.structure == StructureWithUIStructure.minimal_structure
         assert window_manager.hotkeys == SimpleHotkeys.hotkeys
@@ -114,6 +119,7 @@ class TestSingleWindowApplication():
         assert window.alignment == 'right' # defined only initially and used on window creation. should this be retained?
         assert window.default_node_width == 70
         assert window.default_node_height == 50
+        assert window.bg_color == [1.0, 0.0, 0.0]
         assert window.start_timers == True # same thing as with alignment!
         assert window.hotkeys == SimpleHotkeys.hotkeys
         assert window.initializer == SimpleInitializers.simple_initializer # same thing as with alignment! used only on run!

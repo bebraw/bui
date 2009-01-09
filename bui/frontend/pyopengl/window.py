@@ -9,7 +9,7 @@ class WindowManager(BaseWindowManager):
     def __init__(self, configuration, structure_document=None, hotkeys=None, events=None,
                  timers=None, constraints=None, initializers=None):
         glutInit()
-        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH) # GLUT_DEPTH needed???
+        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
         
         super(WindowManager, self).__init__(configuration, structure_document, hotkeys,
                                             events, timers, constraints, initializers)
@@ -24,6 +24,7 @@ class WindowManager(BaseWindowManager):
         self.windows.append(Window(self.name, self.label, self.width, self.height, self.show_fps,
                                    self.logging, self.alignment,
                                    self.default_node_width, self.default_node_height,
+                                   self.bg_color,
                                    self.start_timers, self.structure_document, self.structure,
                                    self.hotkeys, self.initializer))
     
@@ -43,12 +44,13 @@ class WindowContainer(BaseWindowContainer):
 
 class Window(BaseWindow):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
-                 default_node_width, default_node_height, start_timers,
+                 default_node_width, default_node_height, bg_color, start_timers,
                  structure_document, structure,
                  hotkeys, initializer):
         super(Window, self).__init__(name, label, width, height, show_fps,
                                          logging, alignment,
                                          default_node_width, default_node_height,
+                                         bg_color,
                                          start_timers, structure_document,
                                          structure, hotkeys, initializer)
         glutInitWindowSize(self.width, self.height)
@@ -57,7 +59,7 @@ class Window(BaseWindow):
         # TODO: hook up alignment with this!
         glutInitWindowPosition(0, 0)
         
-        self.window = glutCreateWindow(name) # might work even without self (even without assignment???)
+        self.window = glutCreateWindow(self.label) # check if window ID is actually needed for something
         
         # glutFullScreen() # TODO: hook up this with conf!
         
@@ -84,5 +86,5 @@ class Window(BaseWindow):
         glutPostRedisplay()
     
     def redraw(self):
-        clear_color() # TODO: provide bg color. this should probably happen on lower level (handles background automagically!)
+        clear_color(self.bg_color)
         super(Window, self).redraw()
