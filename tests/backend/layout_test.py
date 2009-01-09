@@ -68,8 +68,8 @@ def test_unserialize_structure_with_free_layout():
     
     child_fill_3 = root_layout.children[2]
     assert isinstance(child_fill_3, Fill)
-    assert child_fill_3.width == 0 # XXX: note freelayout parent
-    assert child_fill_3.height == 0 # XXX: note freelayout parent
+    assert child_fill_3.width == 800
+    assert child_fill_3.height == 800
 
 free_configuration = '''
     width: 400
@@ -94,7 +94,7 @@ def test_base_window_manager_with_free_layout():
     assert child_fill_2.y == 500
     
     child_fill_3 = root_layout.children[2]
-    # assert child_fill_3.width == 800 # XXX
+    assert child_fill_3.width == 800
     assert child_fill_3.height == 800
 
 free_configuration_with_node_height = '''
@@ -121,8 +121,8 @@ def test_base_window_manager_with_free_layout_and_node_height_defined():
     assert child_fill_2.y == 500
     
     child_fill_3 = root_layout.children[2]
-    assert child_fill_3.width == 400 # XXX should this be 800 because parent is freelayout and width is defined?
-    assert child_fill_3.height == 20 # XXX
+    assert child_fill_3.width == 800
+    assert child_fill_3.height == 800
 
 def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     root_layout = unserialize(StructureWithHorizontalLayoutNoChildrenWidths)
@@ -137,12 +137,12 @@ def test_unserialize_structure_with_horizontal_layout_no_children_widths():
     child_fill_1 = root_layout.children[0]
     assert isinstance(child_fill_1, Fill)
     assert child_fill_1.width == 50
-    assert child_fill_1.height == 500 # XXX should this be 400 (parent height constraints!)
+    assert child_fill_1.height == 400
     
     child_fill_2 = root_layout.children[1]
     assert isinstance(child_fill_2, Fill)
     assert child_fill_2.width == 50
-    assert child_fill_2.height == 500 # XXX should this be 400 (parent height constraints!)
+    assert child_fill_2.height == 400
 
 configuration_node_height_defined = '''
     width: 500

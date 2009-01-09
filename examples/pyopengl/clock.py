@@ -43,7 +43,7 @@ class Hotkeys():
     '''
 
 class Events(AllMethodsStatic):
-    def quit_script(elem, timers):
+    def quit_script(elem): #, timers): event handlers probably should be able to modify timers (stop/start)
         sys.exit()
 
 class Timers(AllMethodsStatic):
