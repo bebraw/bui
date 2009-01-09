@@ -10,6 +10,8 @@ sys.path.append(bui_path)
 from bui.frontend.pyopengl.window import WindowManager
 from bui.utils.meta import AllMethodsStatic
 
+# TODO: rename label "color" to label_color?
+
 configuration = '''
     label: Simple layout test
     width: 640
@@ -17,6 +19,7 @@ configuration = '''
     hotkeys: hotkeys
     structure: root_structure
     default_node_height: 20
+    bg_color: [0.8, 0.8, 0.8]
 '''
 
 class UIStructure():
@@ -37,18 +40,23 @@ class UIStructure():
                         label: Test separator
                     - Label:
                         label: Hello world!
-                        color: [0.0, 1.0, 0.0] # probably color: green would be nicer
+                        color: [0.1, 0.3, 0.1] # probably color: green would be nicer
             - HorizontalLayout:
-                bg_color: [0.5, 0.2, 0.2]
+                bg_color: [0.5, 0.8, 0.2]
+                height: 200
+                #width: 200 # if not set, uses auto layout (scales width to parent width)
+                default_node_height: 30 # overrides default for children!
                 children:
                     - Label:
                         label: First child
+                        color: [0.0, 0.5, 0.0]
                         bg_color: [0.4, 0.9, 0.2]
-                        width: 100
+                        #width: 100
                     - Label:
                         label: Second child
+                        color: [0.0, 0.5, 0.0]
                         bg_color: [0.3, 0.8, 0.5]
-                        width: 200
+                        #width: 200
     '''
 
 class Hotkeys():

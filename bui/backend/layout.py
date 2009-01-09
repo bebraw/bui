@@ -5,6 +5,7 @@ class Layout(AbstractNode):
     def __init__(self, **kvargs):
         self.default_node_width = 0
         self.default_node_height = 0
+        # TODO: add default_node_color here (add getter to use color of parent just like in case of width/height (same logic))
         super(Layout, self).__init__(**kvargs)
     
     def append(self, item):
@@ -40,6 +41,8 @@ class HorizontalLayout(Layout):
         
         tmp_x = render_coordinate.x
         
+        # FIXME: doesn't take children modes in count!
+        # this means that it calculates correctly only on first time! (after that width is set!)
         self._calculate_children_widths()
         
         for child in self.children:
@@ -58,6 +61,7 @@ class HorizontalLayout(Layout):
         return render_coordinate
     
     # TODO: should generalize this and use for both vertical/horizontal layout!
+    # TODO: make this dynamic and take children modes in count!
     def _calculate_children_widths(self):
         children_widths = len(self.children)*[None]
         width_left = self.width
