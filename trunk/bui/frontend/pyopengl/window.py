@@ -3,6 +3,7 @@ from OpenGL.GLUT import *
 from bui.backend.window import BaseWindow, BaseWindowContainer, BaseWindowManager
 from bui.graphics.opengl.color import clear_color
 from bui.graphics.opengl.projections import setup_2D_projection
+from event import EventManager
 from timer import TimerManager
 
 class WindowManager(BaseWindowManager):
@@ -26,7 +27,7 @@ class WindowManager(BaseWindowManager):
                                    self.default_node_width, self.default_node_height,
                                    self.bg_color,
                                    self.start_timers, self.structure_document, self.structure,
-                                   self.hotkeys, self.initializer))
+                                   self.hotkeys, self.initializer, self.events))
     
     def get_mouse_coordinates(self):
         return (0, 0) # TODO: implement
@@ -46,13 +47,14 @@ class Window(BaseWindow):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
                  default_node_width, default_node_height, bg_color, start_timers,
                  structure_document, structure,
-                 hotkeys, initializer):
+                 hotkeys, initializer, events):
         super(Window, self).__init__(name, label, width, height, show_fps,
                                          logging, alignment,
                                          default_node_width, default_node_height,
                                          bg_color,
                                          start_timers, structure_document,
-                                         structure, hotkeys, initializer)
+                                         structure, hotkeys, initializer, events)
+        
         glutInitWindowSize(self.width, self.height)
         
         # the window starts at the upper left corner of the screen
@@ -65,6 +67,8 @@ class Window(BaseWindow):
         
         glutReshapeFunc(self.resize)
         glutVisibilityFunc(self.visibility)
+        
+        self.event_manager = EventManager(self.root_layout, self.hotkeys, self.events)
         
         setup_2D_projection(self.width, self.height)
     

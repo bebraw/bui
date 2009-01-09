@@ -189,25 +189,25 @@ class Events(AllMethodsStatic):
         filter = elem.find_parent(name='filter')
         filters.remove(filter)
     
-    def root_container_up(root_elem):
+    def root_container_up(root_layout):
         elem.x += 20
     
-    def root_container_down(root_elem):
+    def root_container_down(root_layout):
         elem.x -= 20
     
-    def root_container_left(root_elem):
+    def root_container_left(root_layout):
         elem.y -= 20
     
-    def root_container_right(root_elem):
+    def root_container_right(root_layout):
         elem.y += 20
     
     def quit_script(elem):
         Draw.Exit()
 
 class Constraints(AllMethodsStatic):
-    def layer_number_constraint(root_elem):
+    def layer_number_constraint(root_layout):
         ''' priority=1 '''
-        layers = root_elem.find_child(name='layers')
+        layers = root_layout.find_child(name='layers')
         
         prev_layer_number = None
         
@@ -223,21 +223,21 @@ class Constraints(AllMethodsStatic):
         
         # TODO: add check for upper limit (19 is max, if it goes to 20, get rid of that layer!)
     
-    def layer_number_selection_status_constraint(root_elem):
-        layers = root_elem.find_child(name='layers')
+    def layer_number_selection_status_constraint(root_layout):
+        layers = root_layout.find_child(name='layers')
         view_layers = Window.ViewLayers()
         
         for i, layer in enumerate(layers.children):
             layer_number_elem = layer.find_child(name='layer_number')
             layer_number_elem.value = i + 1 in view_layers 
     
-    def show_filter_name_constraint(root_elem):
+    def show_filter_name_constraint(root_layout):
         def set_show_filter_label(filters_parent, label):
             layer = filters_parent.find_parent(name='layer')
             show_filter = layer.find_child(name='show_filter')
             show_filter.label = label
         
-        layers = root_elem.find_child(name='layers')
+        layers = root_layout.find_child(name='layers')
         
         for layer in layers.children:
             filters = layer.find_child(name='filters')
@@ -248,17 +248,17 @@ class Constraints(AllMethodsStatic):
             
             set_show_filter_label(filters, label)
     
-    def filter_visibility_constraint(root_elem):
-        layers = root_elem.find_child(name='layers')
+    def filter_visibility_constraint(root_layout):
+        layers = root_layout.find_child(name='layers')
         
         for layer in layers.children:
             show_filter = layer.find_child(name='show_filter')
             filters = layer.find_child(name='filters_container')
             filters.visible = show_filter.value
     
-    def layer_objects_constraint(root_elem):
+    def layer_objects_constraint(root_layout):
         object_filter = ObjectFilter(scene=Scene.GetCurrent())
-        layers = root_elem.find_child(name='layers')
+        layers = root_layout.find_child(name='layers')
         
         assign_all_objects_to_layer(layer=20)
         

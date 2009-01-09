@@ -47,15 +47,15 @@ class Events(AllMethodsStatic):
         sys.exit()
 
 class Timers(AllMethodsStatic):
-    def update_clock(root_elem, timer, timers):
+    def update_clock(root_layout, timer, timers):
         ''' interval=0.5 '''
         current_time = get_current_time_as_formatted_string()
-        clock = root_elem.find_child(name='current_time')
+        clock = root_layout.find_child(name='current_time')
         clock.label = current_time
     
-    def update_clock_color(root_elem, timer, timers):
+    def update_clock_color(root_layout, timer, timers):
         ''' interval=1/24 '''
-        clock = root_elem.find_child(name='current_time')
+        clock = root_layout.find_child(name='current_time')
         current_time = time()
         
         fac = (current_time-clock.new_color_start_time) / clock.new_color_interval
@@ -63,9 +63,9 @@ class Timers(AllMethodsStatic):
         
         clock.bg_color = lerp(clock.new_color, clock.old_color, fac)
     
-    def generate_new_clock_color(root_elem, timer, timers):
+    def generate_new_clock_color(root_layout, timer, timers):
         ''' interval=5 '''
-        clock = root_elem.find_child(name='current_time')
+        clock = root_layout.find_child(name='current_time')
         
         if not hasattr(clock, 'new_color'):
             clock.new_color = generate_color()

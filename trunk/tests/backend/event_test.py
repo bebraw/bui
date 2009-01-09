@@ -27,9 +27,9 @@ class Events(AllMethodsStatic):
         pass
     
     def add_to_ui_structure(elem):
-        root_elem = elem.find_root_node()
+        root_layout = elem.find_root_node()
         structure_root = unserialize(MinimalStructure())
-        root_elem.append(structure_root)
+        root_layout.append(structure_root)
 
 class TestBaseEventManager():
     def setup_method(self, method):

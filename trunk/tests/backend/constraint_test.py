@@ -1,37 +1,38 @@
 # -*- coding: utf-8 -*-
 import sys
 from bui.backend.constraint import BaseConstraintManager, ConstraintContainer
+from bui.backend.layout import Layout
 from bui.utils.meta import AllMethodsStatic
 
-root_layout_name = 'test_container'
+root_layout_name = Layout()
 
 class Constraints(AllMethodsStatic):
-    def priority_is_zero_constraint(root_elem):
+    def priority_is_zero_constraint(root_layout):
         '''priority=0'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def priority_is_one_constraint(root_elem):
+    def priority_is_one_constraint(root_layout):
         '''priority=1'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def priority_is_two_constraint(root_elem):
+    def priority_is_two_constraint(root_layout):
         '''priority=2'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def priority_is_two_too_constraint(root_elem):
+    def priority_is_two_too_constraint(root_layout):
         '''priority=2'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def priority_is_negative_constraint(root_elem):
+    def priority_is_negative_constraint(root_layout):
         '''priority=-3'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def priority_is_not_int_constraint(root_elem):
+    def priority_is_not_int_constraint(root_layout):
         '''priority=cat'''
-        assert root_elem == root_layout_name
+        assert root_layout == root_layout_name
     
-    def some_constraint(root_elem):
-        assert root_elem == root_layout_name
+    def some_constraint(root_layout):
+        assert root_layout == root_layout_name
 
 class TestBaseConstraintManager():
     def setup_method(self, method):
