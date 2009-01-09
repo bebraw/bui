@@ -22,12 +22,11 @@ class BaseEventManager(object):
     
     def construct_element_event_ids(self, elem):
         for child in elem.children:
-            if child.name: # XXX !!!
-                handler_name = (child.name).replace(' ', '_').lower()
-                
-                if hasattr(self.events, handler_name):
-                    event_handler = getattr(self.events, handler_name)
-                    self.element_events.append(child, event_handler)
+            handler_name = (child.name).replace(' ', '_').lower()
+            
+            if hasattr(self.events, handler_name):
+                event_handler = getattr(self.events, handler_name)
+                self.element_events.append(child, event_handler)
             
             self.construct_element_event_ids(child)
     

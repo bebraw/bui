@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 from bui.utils.math import clamp
 
 ABSOLUTE = 'absolute'
@@ -44,7 +45,9 @@ class ConstrainedValue(object):
     
     def get_value(self):
         if self.mode == ABSOLUTE:
-            if self.owner.parent:
+            # cyclic dependency!
+            from layout import FreeLayout
+            if self.owner.parent and not isinstance(self.owner.parent, FreeLayout):
                 parent_value = getattr(self.owner.parent, self.attribute_name)
                 real_max = min(parent_value, self.max_value)
                 return clamp(self._value, self.min_value, real_max)
@@ -58,9 +61,14 @@ class ConstrainedValue(object):
             default_value = self.owner.find_default_value(self.attribute_name)
             
             if default_value:
-                return default_value
+                parent_value = sys.maxint
+                
+                if self.owner.parent:
+                    parent_value = getattr(self.owner.parent, self.attribute_name)
+                
+                return min(default_value, parent_value)
             
-            # FIXME: cyclic dependency!
+            # cyclic dependency!
             from layout import HorizontalLayout
             if self.owner.parent and not isinstance(self.owner.parent, HorizontalLayout):
                 parent_value = getattr(self.owner.parent, self.attribute_name)

@@ -20,7 +20,7 @@ class Font():
     
     def get_bounding_box(self, parent):
         class BoundingBox():
-            def __init__(self, bbox):
+            def __init__(self, bbox=None):
                 self.bottom_left = Coordinate(x=bbox[0], y=bbox[1])
                 self.top_right = Coordinate(x=bbox[3], y=bbox[4])
             
@@ -32,9 +32,10 @@ class Font():
                 return self.top_right.y - self.bottom_left.y
             height = property(get_height)
         
-        self.font.FaceSize(parent.height)
-        bbox = self.font.BBox(parent.label)
-        return BoundingBox(bbox)
+        if parent.height > 0:
+            self.font.FaceSize(parent.height)
+            bbox = self.font.BBox(parent.label)
+            return BoundingBox(bbox)
     
     @enable_alpha
     @enable_texture2d

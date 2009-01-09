@@ -30,6 +30,17 @@ class Separator(AbstractNode):
         
         self.text_label = Label(**kvargs)
     
+    # set text_label height listen to height of separator
+    # there might be a cleaner way to do this (observer pattern)
+    def get_height(self):
+        height = self._constrained_height.value
+        
+        if hasattr(self, 'text_label'):
+            self.text_label.height = height
+        
+        return height
+    height = property(get_height, AbstractNode.set_height)
+    
     def render(self):
         line_width = 0.5
         text_sep_dist = 10
@@ -42,8 +53,6 @@ class Separator(AbstractNode):
         
         if isinstance(self.parent, VerticalLayout):
             y_coord = self.y + self.height / 2.0
-            
-            self.text_label.height = self.height # XXX: without this draw_line starts to complain
             
             bbox = self.text_label.font.get_bounding_box(self.text_label)
             text_width = bbox.width
