@@ -10,6 +10,8 @@ sys.path.append(bui_path)
 from bui.frontend.pyopengl.window import WindowManager
 from bui.utils.meta import AllMethodsStatic
 
+# TODO: should bg color of layout cascade to its children like default values do?
+
 configuration = '''
     label: Free layout test
     width: 640
@@ -17,6 +19,7 @@ configuration = '''
     hotkeys: hotkeys
     structure: root_structure
     default_node_height: 20
+    bg_color: [0.8, 0.8, 0.8]
 '''
 
 class UIStructure():
@@ -24,43 +27,47 @@ class UIStructure():
     FreeLayout:
         name: free root
         bg_color: [0.2, 0.5, 0.6]
-        width: auto
-        height: 300 # add auto setting? without width/height should use window dimensions? (x/y?)
         children:
             - VerticalLayout:
                 x: 10
                 y: 20
+                bg_color: [0.0, 0.1, 0.4]
                 min_width: 300
                 max_width: 600
                 height: 100
                 children:
                     - Label:
                         label: Some label
+                        color: [1.0, 0.0, 0.0]
                     - Label:
                         label: Another label
+                        color: [1.0, 0.0, 0.0]
                         alpha: 0.5
                     - Separator:
                         label: Test separator
                     - Label:
                         label: Hello world!
-                        color: [0.0, 1.0, 0.0] # TODO: probably color: green would be nicer
+                        color: [0.1, 0.4, 0.1] # TODO: probably color: green would be nicer
                     - Label:
                         label: Hello world 2!
                         color: [1.0, 1.0, 0.0]
             - HorizontalLayout:
                 x: 50
                 y: 150
-                width: auto
                 height: 100
-                bg_color: [0.5, 0.2, 0.2]
+                bg_color: [0.0, 0.0, 1.0]
+                default_node_height: 20
+                default_node_width: 100
                 children:
                     - Label:
                         label: First child
-                        width: 300
+                        bg_color: [0.2, 0.5, 0.6]
+                        color: [1.0, 1.0, 0.0]
+                        height: 30
                     - Label:
                         label: Second child
-                        bg_color: [0.3, 0.8, 0.5]
-                        width: 200
+                        bg_color: [1.0, 0.0, 0.0]
+                        color: [1.0, 1.0, 0.0]
     '''
 
 class Hotkeys():

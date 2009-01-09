@@ -30,6 +30,7 @@ class BaseWindowManager(object):
         self.alignment = 'center'
         self.default_node_width = 0
         self.default_node_height = 0
+        self.bg_color = [0.0, 0.0, 0.0] # generalize as background? rename as default?
         self.start_timers = False
         
         self.structure = None
@@ -75,6 +76,7 @@ class BaseWindowManager(object):
         self.windows.append(BaseWindow(self.name, self.label, self.width, self.height,
                                        self.show_fps, self.logging, self.alignment,
                                        self.default_node_width, self.default_node_height,
+                                       self.bg_color,
                                        self.start_timers, self.structure_document,
                                        self.structure, self.hotkeys,
                                        self.initializer))
@@ -114,7 +116,7 @@ class BaseWindowContainer(list):
 # use **kvargs and attribute module?)
 class BaseWindow(Node):
     def __init__(self, name, label, width, height, show_fps, logging, alignment,
-                 default_node_width, default_node_height, start_timers,
+                 default_node_width, default_node_height, bg_color, start_timers,
                  structure_document, structure, hotkeys, initializer):
         super(BaseWindow, self).__init__()
         
@@ -127,6 +129,7 @@ class BaseWindow(Node):
         self.alignment = alignment
         self.default_node_width = default_node_width
         self.default_node_height = default_node_height
+        self.bg_color = bg_color
         self.start_timers = start_timers
         self.hotkeys = hotkeys
         self.initializer = initializer
