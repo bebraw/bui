@@ -7,6 +7,55 @@ RELATIVE = 'relative'
 AUTO = 'auto'
 MODES = (ABSOLUTE, RELATIVE, AUTO, )
 
+class ConstrainedValueProperties(object):
+    def get_width(self):
+        return self._constrained_width.value
+    def set_width(self, width):
+        self._constrained_width.value = width
+    width = property(get_width, set_width)
+    
+    def get_width_mode(self):
+        return self._constrained_width.mode
+    def set_width_mode(self, width_mode):
+        self._constrained_width.mode = width_mode
+    width_mode = property(get_width_mode, set_width_mode)
+    
+    def get_min_width(self):
+        return self._constrained_width.min_value
+    def set_min_width(self, min_width):
+        self._constrained_width.min_value = min_width
+    min_width = property(get_min_width, set_min_width)
+    
+    def get_max_width(self):
+        return self._constrained_width.max_value
+    def set_max_width(self, max_width):
+        self._constrained_width.max_value = max_width
+    max_width = property(get_max_width, set_max_width)
+    
+    def get_height(self):
+        return self._constrained_height.value
+    def set_height(self, height):
+        self._constrained_height.value = height
+    height = property(get_height, set_height)
+    
+    def get_height_mode(self):
+        return self._constrained_height.mode
+    def set_height_mode(self, height_mode):
+        self._constrained_height.mode = height_mode
+    height_mode = property(get_height_mode, set_height_mode)
+    
+    def get_min_height(self):
+        return self._constrained_height.min_value
+    def set_min_height(self, min_height):
+        self._constrained_height.min_value = min_height
+    min_height = property(get_min_height, set_min_height)
+    
+    def get_max_height(self):
+        return self._constrained_height.max_value
+    def set_max_height(self, max_height):
+        self._constrained_height.max_value = max_height
+    max_height = property(get_max_height, set_max_height)
+
 class ConstrainedValue(object):
     def __init__(self, attribute_name, owner, mode, value, min_value, max_value):
         assert attribute_name in ('width', 'height', )

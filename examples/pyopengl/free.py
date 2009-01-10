@@ -27,6 +27,7 @@ class UIStructure():
     FreeLayout:
         name: free root
         bg_color: [0.2, 0.5, 0.6]
+        #default_node_height: 20
         children:
             - VerticalLayout:
                 x: 10
