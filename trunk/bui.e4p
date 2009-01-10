@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project bui -->
-<!-- Saved: 2009-01-08, 20:39:51 -->
+<!-- Saved: 2009-01-09, 20:43:05 -->
 <!-- Copyright (C) 2009 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -109,6 +109,7 @@
     <Source>bui/frontend/blender/elements.py</Source>
     <Source>bui/frontend/blender/icons.py</Source>
     <Source>bui/frontend/blender/utils.py</Source>
+    <Source>examples/pyopengl/node_editor.py</Source>
   </Sources>
   <Forms>
   </Forms>

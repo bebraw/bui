@@ -31,7 +31,7 @@ class FreeLayout(Layout):
         render_coordinate = super(Layout, self).render(render_coordinate)
         
         for child in self.children:
-            self.render_child(child, render_coordinate=None)
+            self.render_child(child, render_coordinate)
         
         return render_coordinate
 
